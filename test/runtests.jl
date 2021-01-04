@@ -6,5 +6,6 @@ using Test
 @testset "directories" begin
     @test isdir("data/lycian/editing")
 end
+
 include("repository.jl")
-#include("textcatalog.jl")
+include("textcatalog.jl")
