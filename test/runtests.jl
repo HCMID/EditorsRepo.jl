@@ -7,5 +7,7 @@ using Test
     @test isdir("data/lycian/editing")
 end
 
-include("repository.jl")
-include("textcatalog.jl")
+
+
+include("test_repository.jl")
+include("test_textcatalog.jl")
