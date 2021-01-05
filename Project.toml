@@ -16,7 +16,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 CSV = "0.8"
-CitableBase = "0.1"
+CitableBase = "1.1"
 CitableObject = "0.1"
 CitableTeiReaders = "0.1"
 CitableText = "0.2"
