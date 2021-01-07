@@ -1,6 +1,6 @@
 
-@testset "Test text catalog" begin
+@testset "Test finding xml files" begin
     lyctestrepo  = EditingRepository("data/lycian", "editing", "dse")
-    catalog = textcatalog(lyctestrepo, "catalog.cex")
-    #@test catalog == ""
+    #catalog = textcatalog(lyctestrepo, "catalog.cex")
+    #@test catalog == ""    
 end

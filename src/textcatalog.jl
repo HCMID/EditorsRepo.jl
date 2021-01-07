@@ -12,3 +12,4 @@ function textcatalog(repo, catalogname::AbstractString, delimiter::AbstractStrin
     map(row -> CatalogedText(row,delimiter), rawdata)
     #fromfile(CatalogedText, filename)
 end
+
