@@ -1,3 +1,7 @@
+"""
+$(SIGNATURES)
+List `.cex` files in DSE directory.
+"""
 function dsefiles(repository)
     fullpath = readdir(repository.root * "/" * repository.dse)
     filenames = filter(f -> endswith(f, "cex"), fullpath)        
