@@ -3,9 +3,10 @@ struct EditingRepository
     root::AbstractString
     editions::AbstractString
     dse::AbstractString
-    function EditingRepository(r, e, d)
-        root = endswith(r,'/') ? chop(r, head=0, tail=1) : r
+    configs::AbstractString
 
+    function EditingRepository(r, e, d, c)
+        root = endswith(r,'/') ? chop(r, head=0, tail=1) : r
         editions = endswith(e, '/') ? chop(e, head=0, tail=1) : e
         editingdir = root * "/" * editions
         if (! isdir(editingdir))
@@ -18,6 +19,11 @@ struct EditingRepository
             throw(ArgumentError("DSE directory $(dsedir) does not exist."))
         end
         
-        new(root, editions, dse)
+        config = endswith(c, "/") ? chop(c, head=0, tail=1)  : c
+        configdir = root * "/" * config
+        if (! isdir(configdir))
+            throw(ArgumentError("Configuration directory $(configdir) does not exist."))
+        end
+        new(root, editions, dse, config)
     end
 end

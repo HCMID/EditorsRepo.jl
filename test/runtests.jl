@@ -11,5 +11,5 @@ end
 
 include("test_repository.jl")
 include("test_editions.jl")
-include("test_textcatalog.jl")
+#include("test_textcatalog.jl")
 include("test_dse.jl")
