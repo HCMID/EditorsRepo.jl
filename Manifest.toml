@@ -41,11 +41,11 @@ version = "0.1.1"
 
 [[CitableTeiReaders]]
 deps = ["CitableText", "DocStringExtensions", "Documenter", "EzXML", "Test"]
-git-tree-sha1 = "2c3616d13149d1dcb39f8c2263c6a51e1ca28b59"
+git-tree-sha1 = "5e2b46fd913111335ccfdcefc5e9920aafff3082"
 repo-rev = "main"
 repo-url = "https://github.com/HCMID/CitableTeiReaders.jl"
 uuid = "b4325aa9-906c-402e-9c3f-19ab8a88308e"
-version = "0.1.0"
+version = "0.2.0"
 
 [[CitableText]]
 deps = ["BenchmarkTools", "CSV", "CitableBase", "DataFrames", "DocStringExtensions", "Documenter", "HTTP", "Test"]
