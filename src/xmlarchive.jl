@@ -7,3 +7,9 @@ function xmlfiles(repository::EditingRepository)
     filenames = filter(f -> endswith(f, "xml"), fullpath)        
 	filenames
 end
+
+
+function xmlfiles_df(repository::EditingRepository)
+    fnames = xmlfiles(repository)
+    DataFrame(filename = fnames)
+end
