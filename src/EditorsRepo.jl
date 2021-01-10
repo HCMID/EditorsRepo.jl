@@ -8,7 +8,7 @@ using CitableText, CitableTeiReaders
 export EditingRepository
 export textcatalog
 export dsefiles
-export xmlfiles
+export xmlfiles, xmlfiles_df
 export citation_df
 
 
