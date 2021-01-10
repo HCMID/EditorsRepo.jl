@@ -15,7 +15,7 @@ export xmlfiles
 include("repository.jl")
 include("textcatalog.jl")
 include("dse.jl")
-include("editions.jl")
+include("xmlarchive.jl")
 
 
 end # module
