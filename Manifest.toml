@@ -39,6 +39,12 @@ git-tree-sha1 = "74ffdeb078a9b21667168c59bab9446a57c1fba7"
 uuid = "e2b2f5ea-1cd8-4ce8-9b2b-05dad64c2a57"
 version = "0.2.1"
 
+[[CitablePhysicalText]]
+deps = ["CitableObject", "CitableText", "DataFrames", "DocStringExtensions", "Documenter", "Test"]
+git-tree-sha1 = "bb6cea258c75fc0066ca595e85c14072c8582cfb"
+uuid = "e38a874e-a7c2-4ff3-8dea-81ae2e5c9b07"
+version = "0.2.0"
+
 [[CitableTeiReaders]]
 deps = ["CitableText", "DocStringExtensions", "Documenter", "EzXML", "Test"]
 git-tree-sha1 = "bc4e88adcef8ab7f681c906b96883dca6548e547"

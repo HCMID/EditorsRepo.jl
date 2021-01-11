@@ -1,12 +1,13 @@
 name = "EditorsRepo"
 uuid = "3fa2051c-bcb6-4d65-8a68-41ff86d56437"
 authors = ["nsmith "]
-version = "0.3.1"
+version = "0.3.2"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 CitableBase = "d6f014bd-995c-41bd-9893-703339864534"
 CitableObject = "e2b2f5ea-1cd8-4ce8-9b2b-05dad64c2a57"
+CitablePhysicalText = "e38a874e-a7c2-4ff3-8dea-81ae2e5c9b07"
 CitableTeiReaders = "b4325aa9-906c-402e-9c3f-19ab8a88308e"
 CitableText = "41e66566-473b-49d4-85b7-da83b66615d8"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
@@ -18,6 +19,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 CSV = "0.8"
 CitableBase = "1.1"
 CitableObject = "0.2"
+CitablePhysicalText = "0.2"
 CitableTeiReaders = "0.2"
 CitableText = "0.4"
 DataFrames = "0.22"
