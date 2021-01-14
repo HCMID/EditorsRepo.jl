@@ -18,9 +18,9 @@ end
 
 """
 $(SIGNATURES)
-Lookup file name for a text identified by URN.
+Lookup file name in a repository for a text identified by URN.
 """
-function filename(repo, u)
+function filename(repo::EditingRepository, u)
 	df = citation_df(repo)
 	filtered = filter(r -> r[:urn] == u, df )
 	filtered[1,:file]
@@ -28,10 +28,30 @@ end
 
 """
 $(SIGNATURES)
-Lookup ohco2 converter for a text identified by URN.
+Lookup file name in a DataFame for a text identified by URN.
 """
-function o2converter(repo, u)
+function filename(df, u)
+	filtered = filter(r -> r[:urn] == u, df )
+	filtered[1,:file]
+end
+
+
+
+"""
+$(SIGNATURES)
+Lookup ohco2 converter in a repository for a text identified by URN.
+"""
+function o2converter(repo::EditingRepository, u)
 	df = citation_df(repo)
+	filtered = filter(r -> r[:urn] == u, df )
+	filtered[1,:o2converter]
+end
+
+"""
+$(SIGNATURES)
+Lookup ohco2 converter in a DataFrame for a text identified by URN.
+"""
+function o2converter(df, u)
 	filtered = filter(r -> r[:urn] == u, df )
 	filtered[1,:o2converter]
 end
@@ -39,9 +59,9 @@ end
 
 """
 $(SIGNATURES)
-Lookup builder for diplomatic edition for a text identified by URN.
+Lookup in a repository the builder for diplomatic edition for a text identified by URN.
 """
-function diplomaticbuilder(repo, u)
+function diplomaticbuilder(repo::EditingRepository, u)
 	df = citation_df(repo)
 	filtered = filter(r -> r[:urn] == u, df )
 	filtered[1,:diplomatic]
@@ -49,23 +69,49 @@ end
 
 """
 $(SIGNATURES)
-Lookup builder for diplomatic edition for a text identified by URN.
+Lookup in a DataFrame the builder for diplomatic edition for a text identified by URN.
 """
-function normalizedbuilder(repo, u)
+function diplomaticbuilder(df, u)
+	filtered = filter(r -> r[:urn] == u, df )
+	filtered[1,:diplomatic]
+end
+
+
+"""
+$(SIGNATURES)
+Lookup in a repository the builder for diplomatic edition for a text identified by URN.
+"""
+function normalizedbuilder(repo::EditingRepository, u)
 	df = citation_df(repo)
 	filtered = filter(r -> r[:urn] == u, df )
 	filtered[1,:normalized]
 end
 
-
+"""
+$(SIGNATURES)
+Lookup in a DataFrame the builder for diplomatic edition for a text identified by URN.
+"""
+function normalizedbuilder(df, u)
+	filtered = filter(r -> r[:urn] == u, df )
+	filtered[1,:normalized]
+end
 
 
 """
 $(SIGNATURES)
-Lookup builder for diplomatic edition for a text identified by URN.
+Lookup in a repository the orthogaraphic system for a text identified by URN.
 """
-function orthography(repo, u)
+function orthography(repo::EditingRepository, u)
 	df = citation_df(repo)
+	filtered = filter(r -> r[:urn] == u, df )
+	filtered[1,:orthography]
+end
+
+"""
+$(SIGNATURES)
+Lookup in a DataFrame the orthogaraphic system for a text identified by URN.
+"""
+function orthography(df, u)
 	filtered = filter(r -> r[:urn] == u, df )
 	filtered[1,:orthography]
 end

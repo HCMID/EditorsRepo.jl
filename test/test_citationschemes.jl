@@ -7,43 +7,50 @@ end
 
 @testset "Lookup filename for URN" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
-    df = citation_df(repo)
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
-    
+
+    df = citation_df(repo)
+    @test filename(df,urn) == "tl3.xml"
     @test filename(repo,urn) == "tl3.xml"
 end
 
 @testset "Lookup ohco2 converter for URN" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
-    df = citation_df(repo)
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
     
+    df = citation_df(repo)
+    @test o2converter(df,urn) ==  simpleAbReader
     @test o2converter(repo,urn) ==  simpleAbReader
 end
 
 
 @testset "Lookup diplomatic edition builder for URN" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
-    df = citation_df(repo)
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
     
+    df = citation_df(repo)
+    @test diplomaticbuilder(df,urn) ===  nothing
     @test diplomaticbuilder(repo,urn) ===  nothing
 end
 
 
 @testset "Lookup normalized edition builder for URN" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
-    df = citation_df(repo)
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
-    
+
+    df = citation_df(repo)    
+    @test normalizedbuilder(df,urn) ===  nothing    
     @test normalizedbuilder(repo,urn) ===  nothing
 end
 
 
 @testset "Lookup orthography for URN" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
-    df = citation_df(repo)
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
-    
-    @test orthography(repo,urn) ===  nothing
+
+    df = citation_df(repo)    
+    @test orthography(df,urn) ===  nothing
+    @test orthography(repo,urn) ===  nothing    
 end
+
+
