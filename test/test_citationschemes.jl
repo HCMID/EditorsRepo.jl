@@ -19,8 +19,8 @@ end
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
     
     df = citation_df(repo)
-    @test o2converter(df,urn) ==  simpleAbReader
-    @test o2converter(repo,urn) ==  simpleAbReader
+    @test o2converter(df,urn) ==  "simpleAbReader"
+    @test o2converter(repo,urn) ==  "simpleAbReader"
 end
 
 
@@ -29,8 +29,8 @@ end
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
     
     df = citation_df(repo)
-    @test diplomaticbuilder(df,urn) ===  nothing
-    @test diplomaticbuilder(repo,urn) ===  nothing
+    @test diplomaticbuilder(df,urn) ==  "nothing"
+    @test diplomaticbuilder(repo,urn) ==  "nothing"
 end
 
 
@@ -39,8 +39,8 @@ end
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
 
     df = citation_df(repo)    
-    @test normalizedbuilder(df,urn) ===  nothing    
-    @test normalizedbuilder(repo,urn) ===  nothing
+    @test normalizedbuilder(df,urn) ==  "nothing"
+    @test normalizedbuilder(repo,urn) ==  "nothing"
 end
 
 
@@ -49,8 +49,8 @@ end
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
 
     df = citation_df(repo)    
-    @test orthography(df,urn) ===  nothing
-    @test orthography(repo,urn) ===  nothing    
+    @test orthography(df,urn) ==  "nothing"
+    @test orthography(repo,urn) ==  "nothing"
 end
 
 
