@@ -27,6 +27,9 @@ o2converter(df, u)
 diplomaticbuilder(df, u)
 normalizedbuilder(df, u)
 orthography(df, u)
+fileforurn(repo, u)
+ohco2forurn(textconfig, urn)
+orthographyforurn(textconfig, urn)
 ```
 ## Index
 ```@index

@@ -27,7 +27,7 @@ end
     @test o2converter(repo,urn) ==  "simpleAbReader"
 end
 
-#=
+
 @testset "Lookup diplomatic edition builder for URN" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
@@ -57,4 +57,4 @@ end
     @test orthography(df,urn) ==  "SimpleAscii()"
     @test orthography(repo,urn) ==  "SimpleAscii()"
 end
-=#
+

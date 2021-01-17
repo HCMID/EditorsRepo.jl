@@ -123,12 +123,3 @@ function orthography(df, u)
 	filtered[1,:orthography]
 end
 
-
-function fileforurn(repo, textconfig, urn)
-	row = filter(r -> droppassage(urn) == r[:urn], textconfig)
-	f= repo.root * "/" * repo.editions * "/" *	row[1,:file]
-	contents = open(f) do file
-		read(file, String)
-	end
-	contents
-end
