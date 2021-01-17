@@ -1,3 +1,4 @@
+import CitableTeiReaders.poeticLineReader
 
 @testset "Test reading configuration of citation schemes" begin
     repo = EditingRepository("data/lycian", "editing", "dse", "config")
@@ -19,14 +20,14 @@ end
 
 @testset "Lookup ohco2 converter for URN" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
-    urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
+    urn = CtsUrn("urn:cts:trmilli:tl.25.v1:")
     
     df = citation_df(repo)
-    @test o2converter(df,urn) ==  "poeticLineReader"
-    @test o2converter(repo,urn) ==  "poeticLineReader"
+    @test o2converter(df,urn) ==  "simpleAbReader"
+    @test o2converter(repo,urn) ==  "simpleAbReader"
 end
 
-
+#=
 @testset "Lookup diplomatic edition builder for URN" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
@@ -44,6 +45,7 @@ end
     df = citation_df(repo)    
     @test normalizedbuilder(df,urn) ==  "LiteralTextBuilder(\"Literal text builder\",\"rawtext\")"
     @test normalizedbuilder(repo,urn) ==  "LiteralTextBuilder(\"Literal text builder\",\"rawtext\")"
+
 end
 
 
@@ -55,4 +57,4 @@ end
     @test orthography(df,urn) ==  "SimpleAscii()"
     @test orthography(repo,urn) ==  "SimpleAscii()"
 end
-
+=#
