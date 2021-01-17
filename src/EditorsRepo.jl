@@ -2,7 +2,7 @@ module EditorsRepo
 
 using Test, Documenter, DocStringExtensions
 using CSV, DataFrames
-using CitableText, CitableTeiReaders, Orthography
+using CitableText, CitableTeiReaders, Orthography, EditionBuilders
 using CitableObject
 
 export EditingRepository
@@ -11,7 +11,8 @@ export dsefiles, dse_df, surfaces, passages, images
 export xmlfiles, xmlfiles_df
 export citation_df, filename, o2converter, 
     diplomaticbuilder, normalizedbuilder, orthography
-export fileforurn, ohco2forurn, orthographyforurn
+export textforurn, ohco2forurn, orthographyforurn, diplomaticforurn, normalizerforurn
+export diplomaticnodes, normalizednodes
 
 include("repository.jl")
 include("textcatalog.jl")
