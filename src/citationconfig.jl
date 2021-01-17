@@ -3,7 +3,8 @@ $(SIGNATURES)
 Read citation configuration into a DataFrame.
 """
 function citation_df(repo::EditingRepository)
-	arr = CSV.File(repo.root * "/" * repo.configs * "/citation.cex", skipto=2, delim="|") |> Array
+	arr = CSV.File(repo.root * "/" * repo.configs * "/citation.cex", skipto=2, delim="|", 
+	quotechar='&', escapechar='&') |> Array
 	urns = map(row -> CtsUrn(row[1]), arr)
 	files = map(row -> row[2], arr)
 
