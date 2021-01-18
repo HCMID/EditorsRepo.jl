@@ -25,6 +25,10 @@ end
     df = citation_df(repo)
     @test o2converter(df,urn) ==  "simpleAbReader"
     @test o2converter(repo,urn) ==  "simpleAbReader"
+
+    missingurn = CtsUrn("urn:cts:trmilli:tl.MISSING:")
+    @test o2converter(df,missingurn) === nothing
+    @test o2converter(repo,missingurn) === nothing
 end
 
 
@@ -35,6 +39,10 @@ end
     df = citation_df(repo)
     @test diplomaticbuilder(df,urn) ==  "LiteralTextBuilder(\"Literal text builder\",\"rawtext\")"
     @test diplomaticbuilder(repo,urn) ==  "LiteralTextBuilder(\"Literal text builder\",\"rawtext\")"
+
+    missingurn = CtsUrn("urn:cts:trmilli:tl.MISSING:")
+    @test diplomaticbuilder(df,missingurn) === nothing
+    @test diplomaticbuilder(repo,missingurn) === nothing
 end
 
 
@@ -46,6 +54,9 @@ end
     @test normalizedbuilder(df,urn) ==  "LiteralTextBuilder(\"Literal text builder\",\"rawtext\")"
     @test normalizedbuilder(repo,urn) ==  "LiteralTextBuilder(\"Literal text builder\",\"rawtext\")"
 
+    missingurn = CtsUrn("urn:cts:trmilli:tl.MISSING:")
+    @test normalizedbuilder(df,missingurn) === nothing
+    @test normalizedbuilder(repo,missingurn) === nothing
 end
 
 
@@ -56,5 +67,9 @@ end
     df = citation_df(repo)    
     @test orthography(df,urn) ==  "SimpleAscii()"
     @test orthography(repo,urn) ==  "SimpleAscii()"
+
+    missingurn = CtsUrn("urn:cts:trmilli:tl.MISSING:")
+    @test orthography(df,missingurn) === nothing
+    @test orthography(repo,missingurn) === nothing
 end
 
