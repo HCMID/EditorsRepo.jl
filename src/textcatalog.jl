@@ -9,7 +9,6 @@ function textcatalog(repo, catalogname::AbstractString, delimiter::AbstractStrin
         throw(ArgumentError("No text catalog file $(filename) exists."))
     end
     rawdata = CSV.File(filename, skipto=2, delim=delimiter)  |> Array
-    #map(row -> CatalogedText(row,delimiter), rawdata)
-    #fromfile(CatalogedText, filename)
+   
 end
 
