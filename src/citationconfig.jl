@@ -7,17 +7,11 @@ function citation_df(repo::EditingRepository)
 	quotechar='&', escapechar='&') |> Array
 	urns = map(row -> CtsUrn(row[1]), arr)
 	files = map(row -> row[2], arr)
-
 	ohco2s = map(row -> row[3], arr)
 	dipls = map(row -> row[4], arr)
 	norms = map(row -> row[5], arr)
 	orthos = map(row -> row[6], arr)
-	#=
-	ohco2s = map(row -> eval(Meta.parse(row[3])), arr)
-	dipls = map(row -> eval(Meta.parse(row[4])), arr)
-	norms = map(row -> eval(Meta.parse(row[5])), arr)
-	orthos = map(row -> eval(Meta.parse(row[6])), arr)
-	=#
+
 	DataFrame(urn = urns, file = files, 
 	o2converter = ohco2s, diplomatic = dipls,
 	normalized = norms, orthography = orthos)
@@ -30,7 +24,11 @@ Lookup file name in a repository for a text identified by URN.
 function filename(repo::EditingRepository, u)
 	df = citation_df(repo)
 	filtered = filter(r -> r[:urn] == u, df )
-	filtered[1,:file]
+	if nrow(filtered) == 0
+		nothing
+	else
+		filtered[1,:file]
+	end
 end
 
 """
@@ -39,7 +37,11 @@ Lookup file name in a DataFame for a text identified by URN.
 """
 function filename(df, u)
 	filtered = filter(r -> r[:urn] == u, df )
-	filtered[1,:file]
+	if nrow(filtered) == 0
+		nothing
+	else
+		filtered[1,:file]
+	end
 end
 
 
@@ -51,7 +53,11 @@ Lookup ohco2 converter in a repository for a text identified by URN.
 function o2converter(repo::EditingRepository, u)
 	df = citation_df(repo)
 	filtered = filter(r -> r[:urn] == u, df )
-	filtered[1,:o2converter]
+	if nrow(filtered) == 0
+		nothing
+	else
+		filtered[1,:o2converter]
+	end
 end
 
 """
@@ -60,7 +66,11 @@ Lookup ohco2 converter in a DataFrame for a text identified by URN.
 """
 function o2converter(df, u)
 	filtered = filter(r -> r[:urn] == u, df )
-	filtered[1,:o2converter]
+	if nrow(filtered) == 0
+		nothing
+	else
+		filtered[1,:o2converter]
+	end
 end
 
 
@@ -71,7 +81,11 @@ Lookup in a repository the builder for diplomatic edition for a text identified 
 function diplomaticbuilder(repo::EditingRepository, u)
 	df = citation_df(repo)
 	filtered = filter(r -> r[:urn] == u, df )
-	filtered[1,:diplomatic]
+	if nrow(filtered) == 0
+		nothing
+	else
+		filtered[1,:diplomatic]
+	end
 end
 
 """
@@ -80,7 +94,11 @@ Lookup in a DataFrame the builder for diplomatic edition for a text identified b
 """
 function diplomaticbuilder(df, u)
 	filtered = filter(r -> r[:urn] == u, df )
-	filtered[1,:diplomatic]
+	if nrow(filtered) == 0
+		nothing
+	else
+		filtered[1,:diplomatic]
+	end
 end
 
 
@@ -91,7 +109,11 @@ Lookup in a repository the builder for diplomatic edition for a text identified 
 function normalizedbuilder(repo::EditingRepository, u)
 	df = citation_df(repo)
 	filtered = filter(r -> r[:urn] == u, df )
-	filtered[1,:normalized]
+	if nrow(filtered) == 0
+		nothing
+	else
+		filtered[1,:normalized]
+	end
 end
 
 """
@@ -100,7 +122,11 @@ Lookup in a DataFrame the builder for diplomatic edition for a text identified b
 """
 function normalizedbuilder(df, u)
 	filtered = filter(r -> r[:urn] == u, df )
-	filtered[1,:normalized]
+	if nrow(filtered) == 0
+		nothing
+	else
+		filtered[1,:normalized]
+	end
 end
 
 
@@ -111,7 +137,11 @@ Lookup in a repository the orthogaraphic system for a text identified by URN.
 function orthography(repo::EditingRepository, u)
 	df = citation_df(repo)
 	filtered = filter(r -> r[:urn] == u, df )
-	filtered[1,:orthography]
+	if nrow(filtered) == 0
+		nothing
+	else
+		filtered[1,:orthography]
+	end
 end
 
 """
@@ -120,6 +150,10 @@ Lookup in a DataFrame the orthogaraphic system for a text identified by URN.
 """
 function orthography(df, u)
 	filtered = filter(r -> r[:urn] == u, df )
-	filtered[1,:orthography]
+	if nrow(filtered) == 0
+		nothing
+	else
+		filtered[1,:orthography]
+	end
 end
 
