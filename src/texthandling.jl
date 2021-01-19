@@ -20,7 +20,11 @@ function ohco2forurn(textconfig, urn)
 	if nrow(row) == 0
 		nothing
 	else
-		eval(Meta.parse(row[1,:o2converter]))
+		try
+			eval(Meta.parse(row[1,:o2converter]))
+		catch e
+			nothing
+		end
 	end
 end
 
@@ -31,8 +35,12 @@ function orthographyforurn(textconfig, urn)
 	if nrow(row) == 0
 		nothing
 	else 
-    	orthostring = row[1,:orthography]
-		eval(Meta.parse(orthostring))
+		orthostring = row[1,:orthography]
+		try
+			eval(Meta.parse(orthostring))
+		catch e
+			nothing
+		end
 	end
 end
 
@@ -44,7 +52,11 @@ function diplomaticforurn(textconfig, urn)
 	if nrow(row) == 0
 		nothing
 	else
-		eval(Meta.parse(row[1,:diplomatic]))
+		try
+			eval(Meta.parse(row[1,:diplomatic]))
+		catch e
+			nothing
+		end
 	end
 end
 
@@ -54,7 +66,11 @@ function normalizerforurn(textconfig, urn)
 	if nrow(row) == 0
 		nothing
 	else 
-		eval(Meta.parse(row[1,:normalized]))
+		try
+			eval(Meta.parse(row[1,:normalized]))
+		catch e
+			nothing
+		end
 	end
 end
 
