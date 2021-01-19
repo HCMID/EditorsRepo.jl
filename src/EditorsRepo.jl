@@ -15,6 +15,7 @@ export textforurn, ohco2forurn, orthographyforurn, diplomaticforurn, normalizerf
 export diplomaticnodes, normalizednodes
 export citationmatches, citationonly, catalogonly
 export filesmatch, filesonly, citedonly
+export missingcitation
 
 include("repository.jl")
 include("textcatalog.jl")
