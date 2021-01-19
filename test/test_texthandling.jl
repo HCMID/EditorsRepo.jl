@@ -1,5 +1,4 @@
 
-
 @testset "Test reading file contents given a URN" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
@@ -59,7 +58,6 @@ end
 end
 
 
-
 @testset "Test instantiating a normalized edition builder" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
     citation = citation_df(repo)
@@ -67,7 +65,6 @@ end
     dipl = normalizerforurn(citation, urn)
     @test isa( dipl, LiteralTextBuilder)
 end
-
 
 
 
