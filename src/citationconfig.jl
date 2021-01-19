@@ -18,6 +18,10 @@ function citation_df(repo::EditingRepository)
 	dropmissing(df)
 end
 
+"""
+$(SIGNATURES)
+List entries with `missing` values in citation configuration.
+"""
 function missingcitation(repo::EditingRepository)
 	arr = CSV.File(repo.root * "/" * repo.configs * "/citation.cex", skipto=2, delim="|", 
 	quotechar='&', escapechar='&') |> Array
