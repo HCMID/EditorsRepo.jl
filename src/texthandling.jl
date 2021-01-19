@@ -80,11 +80,14 @@ function diplomaticnodes(repo, urn)
 	# Instantiate configured converter and edition builder:
 	reader = ohco2forurn(textconfig, urn)
 	diplbuilder = diplomaticforurn(textconfig, urn)
-	# Read text contents
+	# Read text contents and construct a corpus if everyting is OK
 	xml = textforurn(repo, urn)
-	corpus = reader(xml, urn)
-	
-	map(cn -> editednode(diplbuilder, cn), corpus.corpus)
+	if nothing in [textconfig, reader, diplbuilder, xml]
+		nothing
+	else 
+		corpus = reader(xml, urn)
+		map(cn -> editednode(diplbuilder, cn), corpus.corpus)
+	end
 end
 
 "Compose an array of `CitableNode`s for a normalized reading of a text identified by CtsUrn."
@@ -93,9 +96,12 @@ function normalizednodes(repo, urn)
 	# Instantiate configured converter and edition builder:
 	reader = ohco2forurn(textconfig, urn)
 	normbuilder = normalizerforurn(textconfig, urn)
-	# Read text contents
-	xml = textforurn(repo, urn)
-	corpus = reader(xml, urn)
-	
-	map(cn -> editednode(normbuilder, cn), corpus.corpus)
+	# Read text contents and construct a corpus
+	xml = textforurn(repo, urn)	
+	if nothing in [textconfig, reader, normbuilder, xml]
+		nothing
+	else 
+		corpus = reader(xml, urn)
+		map(cn -> editednode(normbuilder, cn), corpus.corpus)
+	end
 end

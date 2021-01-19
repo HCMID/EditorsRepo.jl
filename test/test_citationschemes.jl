@@ -2,16 +2,19 @@ import CitableTeiReaders.poeticLineReader
 
 
 @testset "Test finding citation entries with missing values" begin
-    #repo = EditingRepository("data/lycian", "editing", "dse", "config")
-    #markupschemes = citation_df(repo)
-    #@test isa(markupschemes, DataFrame)
+    repo = EditingRepository("data/lycian", "editing", "dse", "config")
+    markupschemes = citation_df(repo)
+    @test isa(markupschemes, DataFrame)
+    allgood = missingcitation(repo)
+    @test isempty(allgood)
 
 
     badrepo = EditingRepository("data/badconfig", "editions", "dse", "config")
     failures = missingcitation(badrepo)
-    @test length(failures) == 1
+    expectedfailures = 4
+    @test length(failures) == expectedfailures
 end
-#=
+
 @testset "Test reading configuration of citation schemes" begin
     repo = EditingRepository("data/lycian", "editing", "dse", "config")
     markupschemes = citation_df(repo)
@@ -92,5 +95,3 @@ end
     @test orthography(df,missingurn) === nothing
     @test orthography(repo,missingurn) === nothing
 end
-
-=#
