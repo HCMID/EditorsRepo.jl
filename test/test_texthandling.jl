@@ -13,7 +13,11 @@ end
     citation = citation_df(repo)
     urn = CtsUrn("urn:cts:latinLit:phi0881.phi003.bern88:")
     o2reader = ohco2forurn(citation, urn)
-    @test isa( o2reader, typeof(poeticLineReader))
+    @test isa(o2reader, typeof(poeticLineReader))
+
+    badurn = CtsUrn("urn:cts:latinLit:FAKETEXT:")
+    fakereader = ohco2forurn(citation, badurn)
+    @test fakereader === nothing
 end
 
 
@@ -23,6 +27,10 @@ end
     urn = CtsUrn("urn:cts:latinLit:phi0881.phi003.bern88:")
     ortho = orthographyforurn(citation, urn)
     @test supertype(typeof(ortho)) == OrthographicSystem
+
+    badurn = CtsUrn("urn:cts:latinLit:FAKETEXT:")
+    fakereader = orthographyforurn(citation, badurn)
+    @test fakereader === nothing
 end
 
 
@@ -32,6 +40,10 @@ end
     urn = CtsUrn("urn:cts:latinLit:phi0881.phi003.bern88:")
     dipl = diplomaticforurn(citation, urn)
     @test isa( dipl, LiteralTextBuilder)
+
+    badurn = CtsUrn("urn:cts:latinLit:FAKETEXT:")
+    fakereader = diplomaticforurn(citation, badurn)
+    @test fakereader === nothing
 end
 
 
