@@ -39,7 +39,7 @@ function orthographyforurn(textconfig, urn)
 		try
 			eval(Meta.parse(orthostring))
 		catch e
-			nothing
+			e
 		end
 	end
 end
