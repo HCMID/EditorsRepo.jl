@@ -88,8 +88,8 @@ end
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
 
     df = citation_df(repo)    
-    @test orthography(df,urn) ==  "SimpleAscii()"
-    @test orthography(repo,urn) ==  "SimpleAscii()"
+    @test orthography(df,urn) ==  "simpleAscii()"
+    @test orthography(repo,urn) ==  "simpleAscii()"
 
     missingurn = CtsUrn("urn:cts:trmilli:tl.MISSING:")
     @test orthography(df,missingurn) === nothing
