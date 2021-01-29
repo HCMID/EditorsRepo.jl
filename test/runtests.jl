@@ -1,5 +1,5 @@
-using EditorsRepo
 using CitableText, CitableTeiReaders
+using EditorsRepo
 using Orthography, EditionBuilders
 using DataFrames
 using Test

@@ -4,6 +4,8 @@ using Test, Documenter, DocStringExtensions
 using CSV, DataFrames
 using CitableText, CitableTeiReaders, Orthography, EditionBuilders
 using CitableObject
+using Lycian
+
 
 export EditingRepository
 export textcatalog

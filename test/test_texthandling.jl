@@ -33,6 +33,17 @@ end
 end
 
 
+
+
+@testset "Test instantiating a different orthographic system in the same repo" begin
+    repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
+    citation = citation_df(repo)
+    urn = CtsUrn("urn:cts:trmilli:tl.25.v1:")
+    ortho = orthographyforurn(citation, urn)
+    @test supertype(typeof(ortho)) == OrthographicSystem
+end
+
+
 @testset "Test instantiating a diplomatic edition builder" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
     citation = citation_df(repo)

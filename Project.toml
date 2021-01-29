@@ -1,7 +1,7 @@
 name = "EditorsRepo"
 uuid = "3fa2051c-bcb6-4d65-8a68-41ff86d56437"
 authors = ["nsmith "]
-version = "0.6.9"
+version = "0.6.10"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -14,6 +14,7 @@ DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 EditionBuilders = "2fb66cca-c1f8-4a32-85dd-1a01a9e8cd8f"
+Lycian = "7c215dd3-d1b4-4517-b6c6-0123f1059a20"
 Orthography = "0b4c9448-09b0-4e78-95ea-3eb3328be36d"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
@@ -28,5 +29,6 @@ DataFrames = "0.22"
 DocStringExtensions = "0.8"
 Documenter = "0.26"
 EditionBuilders = "0.2.2"
+Lycian = "0.1"
 Orthography = "0.4.1"
 julia = "1.5"
