@@ -14,6 +14,20 @@ function textforurn(repo, urn)
 	end
 end
 
+
+function textforurn_df(df, urn)
+	row = filter(r -> droppassage(urn) == r[:urn], df)
+	if nrow(row) == 0
+		nothing
+	else 
+		f= repo.root * "/" * repo.editions * "/" *	row[1,:file]
+		contents = open(f) do file
+			read(file, String)
+		end
+		contents
+	end
+end
+
 "Eval the string expression for the OHCO2 converter configured for a URN."
 function ohco2forurn(textconfig, urn)
 	row = filter(r -> droppassage(urn) == r[:urn], textconfig)
