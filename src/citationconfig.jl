@@ -1,3 +1,8 @@
+function citation(repo::EditingRepository)
+	arr = CSV.File(repo.root * "/" * repo.configs * "/citation.cex", skipto=2, delim="|", 
+	quotechar='&', escapechar='&') |> Array
+end
+
 """
 $(SIGNATURES)
 Read citation configuration into a DataFrame.
@@ -176,7 +181,7 @@ end
 
 """
 $(SIGNATURES)
-Lookup in a DataFrame the orthogaraphic system for a text identified by URN.
+Lookup in a DataFrame the orthographic system for a text identified by URN.
 """
 function orthography(df, u)
 	filtered = filter(r -> r[:urn] == u, df )
