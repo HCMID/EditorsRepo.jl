@@ -2,7 +2,7 @@
 "Read the text contents of the online file identified by `urn`."
 function textforurn(repo, urn)
     textconfig = citation_df(repo)
-	row = filter(r -> droppassage(urn) == r[:urn], textconfig)
+	row = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(row) == 0
 		nothing
 	else 
@@ -16,7 +16,7 @@ end
 
 
 function textforurn_df(df, urn)
-	row = filter(r -> droppassage(urn) == r[:urn], df)
+	row = filter(r -> urncontains(droppassage(urn), r[:urn]), df)
 	if nrow(row) == 0
 		nothing
 	else 
@@ -30,7 +30,7 @@ end
 
 "Eval the string expression for the OHCO2 converter configured for a URN."
 function ohco2forurn(textconfig, urn)
-	row = filter(r -> droppassage(urn) == r[:urn], textconfig)
+	row = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(row) == 0
 		nothing
 	else
@@ -45,7 +45,7 @@ end
 
 "Eval the string expression for the orthography system configured for a URN."
 function orthographyforurn(textconfig, urn)
-	row = filter(r -> droppassage(urn) == r[:urn], textconfig)
+	row = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(row) == 0
 		nothing
 	else 
@@ -60,9 +60,17 @@ end
 
 
 
-"Eval the string expression for the diplomatic builder configured for a URN."
+"""Eval the string expression for the diplomatic builder configured for a URN.
+
+$(SIGNATURES)
+
+# Arguments
+
+- `textconfig` configuration file
+- `urn` text to retrieve
+"""
 function diplomaticforurn(textconfig, urn)
-	row = filter(r -> droppassage(urn) == r[:urn], textconfig)
+	row = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(row) == 0
 		nothing
 	else
@@ -74,9 +82,11 @@ function diplomaticforurn(textconfig, urn)
 	end
 end
 
-"Eval the string expression for the normalized builder configured for a URN."
+"""Eval the string expression for the normalized builder configured for a URN.
+
+"""
 function normalizerforurn(textconfig, urn)
-	row = filter(r -> droppassage(urn) == r[:urn], textconfig)
+	row = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(row) == 0
 		nothing
 	else 

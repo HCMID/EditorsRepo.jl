@@ -151,9 +151,10 @@ function normalizedbuilder(repo::EditingRepository, u)
 	end
 end
 
-"""
+"""Lookup in a DataFrame the builder for diplomatic edition for a text identified by URN.
+
 $(SIGNATURES)
-Lookup in a DataFrame the builder for diplomatic edition for a text identified by URN.
+
 """
 function normalizedbuilder(df, u)
 	filtered = filter(r -> r[:urn] == u, df )
@@ -165,9 +166,10 @@ function normalizedbuilder(df, u)
 end
 
 
-"""
+"""Lookup in a repository the orthographic system for a text identified by URN.
+
 $(SIGNATURES)
-Lookup in a repository the orthogaraphic system for a text identified by URN.
+
 """
 function orthography(repo::EditingRepository, u)
 	df = citation_df(repo)
