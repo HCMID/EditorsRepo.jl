@@ -46,3 +46,13 @@ function textcatalog_df(repo::EditingRepository)
 	allcataloged = fromfile(CatalogedText, repo.root * "/" * repo.configs * "/catalog.cex")
 	filter(row -> row.online, allcataloged)
 end
+
+
+"""Find CTS URNs of all texts cataloged as online.
+
+$(SIGNATURES)
+"""
+function texturns(repo::EditingRepository)
+    texts = textcatalog_df(repo)
+    texts[:, :urn]
+end
