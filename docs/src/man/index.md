@@ -1,8 +1,16 @@
 # API documentation
 
+The starting point for EditorsRepo.jl is a directory in a local file system that includes subdirectories for standard kinds of content: editions of texts, indexing of texts to citable images and surfaces, and configuration files.
+
 ## Types
+
 ```@docs
 EditingRepository
+```
+
+## Extracting high-level data from the repository
+
+```@docs
 ```
 
 ## Functions
@@ -33,6 +41,4 @@ surfaces(repo::EditingRepository)
 passages(repo::EditingRepository)
 images(repo::EditingRepository)
 ```
-## Index
-```@index
-```
+
