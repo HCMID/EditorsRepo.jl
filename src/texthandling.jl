@@ -129,3 +129,24 @@ function normalizednodes(repo, urn)
 		map(cn -> editednode(normbuilder, cn), corpus.corpus)
 	end
 end
+
+
+
+
+"""Compose a diplomatic text for all texts in the repository.
+
+$(SIGNATURES)
+
+Uses the repository's configuration info to determine how to edit each cataloged text.
+"""
+function diplpassages(editorsrepo::EditingRepository)
+    urnlist = texturns(editorsrepo)
+	try 
+		diplomaticarrays = map(u -> diplomaticnodes(editorsrepo, u), urnlist)
+		singlearray = reduce(vcat, diplomaticarrays)
+		filter(psg -> psg !== nothing, singlearray)
+	catch e
+		@warn "Error building diplomatic passages: $e"
+		nothing
+	end
+end

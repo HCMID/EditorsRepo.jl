@@ -40,7 +40,6 @@ $(SIGNATURES)
 # Arguments
 
 - `repo` The editorial repository.
-
 """
 function textcatalog_df(repo::EditingRepository)
 	allcataloged = fromfile(CatalogedText, repo.root * "/" * repo.configs * "/catalog.cex")

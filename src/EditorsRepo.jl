@@ -9,7 +9,7 @@ using Lycian, PolytonicGreek
 
 
 export EditingRepository
-export textcatalog
+export textcatalog, textcatalog_df, texturns
 export dsefiles, dse_df, surfaces, passages, images
 export xmlfiles, xmlfiles_df
 export citation_df, filename, o2converter, 
