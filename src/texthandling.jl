@@ -150,3 +150,23 @@ function diplpassages(editorsrepo::EditingRepository)
 		nothing
 	end
 end
+
+
+
+"""Compose a normalized text for all texts in the repository.
+
+$(SIGNATURES)
+
+Uses the repository's configuration info to determine how to edit each cataloged text.
+"""
+function normedpassages(editorsrepo)
+    urnlist = texturns(editorsrepo)
+	try 
+		normedarrays = map(u -> normalizednodes(editorsrepo, u), urnlist)
+		singlearray = reduce(vcat, normedarrays)
+		filter(psg -> psg !== nothing, singlearray)
+	catch e
+		@warn "Error building normalized passages: $e"
+		nothing
+	end
+end
