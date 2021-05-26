@@ -95,3 +95,9 @@ end
     @test orthography(df,missingurn) === nothing
     @test orthography(repo,missingurn) === nothing
 end
+
+@testset "Lookup orthography for document edited in multiple files" begin
+    repo = EditingRepository("data/splitdocs", "editions", "dse", "config")
+    urn = CtsUrn("urn:cts:greekLit:tlg5026.e3.hmt:8.2")
+    @test orthography(repo,urn) == "literaryGreek()"
+end
