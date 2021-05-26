@@ -24,5 +24,5 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/HCMID/Orthography.jl.git",
+    repo = "github.com/HCMID/EditorsRepo.jl.git",
 )    
