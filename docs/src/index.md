@@ -33,11 +33,15 @@ repo = EditingRepository(reporoot, "editions", "dse", "config")
 Collect a corpus of normalized texts from the repository.
 
 
-
+```@example sample1
+using CitableText
+urn = CtsUrn("urn:cts:greekLit:tlg5026.e3.hmt:10.124r_1")
+normalizednodes(repo, urn) |> CitableCorpus
+```
 
 ## More information
 
 
 ```@contents
-Pages = ["guide/guide.md", "man/index.md", "man/textcatalog.md"]
+Pages = ["guide/guide.md", "man/index.md", "man/textcatalog.md", "man/texts.md"]
 ```

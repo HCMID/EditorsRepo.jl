@@ -11,6 +11,8 @@ textcatalog_df
 texturns
 missingcitation
 filesmatch
+catalogonly
+citedonly
 ```
 
 

@@ -1,6 +1,10 @@
 
-"Read the text contents of the online file identified by `urn`."
-function textforurn(repo, urn)
+"""
+Read the entire text contents of the online file identified by `urn`."
+
+$(SIGNATURES)
+"""
+function textforurn(repo::EditingRepository, urn::CtsUrn)
     textconfig = citation_df(repo)
 	row = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(row) == 0
@@ -15,7 +19,13 @@ function textforurn(repo, urn)
 end
 
 
-function textforurn_df(df, urn)
+
+"""
+Read the entire text contents of the online file identified by `urn`."
+
+$(SIGNATURES)
+"""
+function textforurn_df(df::DataFrame, urn::CtsUrn)
 	row = filter(r -> urncontains(droppassage(urn), r[:urn]), df)
 	if nrow(row) == 0
 		nothing

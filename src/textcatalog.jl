@@ -34,7 +34,7 @@ function online(repo::EditingRepository, catalogname::AbstractString, delimiter:
 end
 
 
-"""Loads catalog of texts from file as a DataFrame
+"""Load catalog of texts from file as a DataFrame
 $(SIGNATURES)
 
 # Arguments

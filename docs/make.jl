@@ -19,7 +19,9 @@ makedocs(
         ],
         "API documentation" => [
             "man/index.md",
-            "man/textcatalog.md"
+            "man/textcatalog.md",
+            "man/texts.md",
+            "man/dse.md"
         ]
     ]
 )
