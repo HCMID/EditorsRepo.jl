@@ -14,7 +14,7 @@ export dsefiles, dse_df, surfaces, passages, images
 export xmlfiles, xmlfiles_df
 export citation_df, filename, o2converter, 
     diplomaticbuilder, normalizedbuilder, orthography
-export textforurn, ohco2forurn, orthographyforurn, diplomaticforurn, normalizerforurn
+export textsourceforurn, ohco2forurn, orthographyforurn, diplomaticforurn, normalizerforurn
 export diplomaticnodes, normalizednodes
 export citationmatches, citationonly, catalogonly
 export filesmatch, filesonly, citedonly
@@ -25,7 +25,7 @@ include("textcatalog.jl")
 include("dse.jl")
 include("xmlarchive.jl")
 include("citationconfig.jl")
-include("texthandling.jl")
+include("textconfig.jl")
 include("textreading.jl")
 include("validateconfig.jl")
 
