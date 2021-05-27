@@ -1,11 +1,15 @@
+"""Read citation configuration into an Array.
+
+$(SIGNATURES)
+"""
 function citation(repo::EditingRepository)
 	arr = CSV.File(repo.root * "/" * repo.configs * "/citation.cex", skipto=2, delim="|", 
 	quotechar='&', escapechar='&') |> Array
 end
 
-"""
+"""Read citation configuration into a DataFrame.
+
 $(SIGNATURES)
-Read citation configuration into a DataFrame.
 """
 function citation_df(repo::EditingRepository)
 	arr = CSV.File(repo.root * "/" * repo.configs * "/citation.cex", skipto=2, delim="|", 

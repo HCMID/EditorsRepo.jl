@@ -10,36 +10,12 @@ The starting point for EditorsRepo.jl is a directory in a local file system that
 EditingRepository
 ```
 
-## Extracting high-level data from the repository
+
+## And still more
 
 ```@docs
-```
-
-
-## The text catalog
-
-```@docs
-citation_df
-textcatalog
-textcatalog_df
-texturns
-```
-
-
-## Functions
-```@docs
-missingcitation(repo::EditingRepository)
-filename(df, u)
-o2converter(df, u)
-diplomaticbuilder(df, u)
-normalizedbuilder(df, u)
-orthography(df, u)
 textforurn(repo, u)
-ohco2forurn(textconfig, urn)
-orthographyforurn(textconfig, urn)
-diplomaticforurn(textconfig, urn)
-normalizerforurn(textconfig, urn)
-filesmatch(repo, textconfig)
+
 catalogonly(catalogedtexts, textconfig)
 citedonly(repo, textconfig)
 
