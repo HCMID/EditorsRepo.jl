@@ -18,7 +18,10 @@ makedocs(
             "guide/guide.md"
         ],
         "API documentation" => [
-            "man/index.md"
+            "man/index.md",
+            "man/textcatalog.md",
+            "man/texts.md",
+            "man/dse.md"
         ]
     ]
 )
