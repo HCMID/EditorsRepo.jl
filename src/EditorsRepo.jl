@@ -26,6 +26,7 @@ include("dse.jl")
 include("xmlarchive.jl")
 include("citationconfig.jl")
 include("texthandling.jl")
+include("textreading.jl")
 include("validateconfig.jl")
 
 end # module

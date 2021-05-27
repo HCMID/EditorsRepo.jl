@@ -23,3 +23,9 @@ end
     urn8 =  CtsUrn("urn:cts:greekLit:tlg5026.e3.hmt:8.2")
     @test orthographyforurn(textconfig, urn8).codepoints == literaryGreek().codepoints
 end
+
+@testset "Lookup passages in split document" begin
+    repo = EditingRepository("data/splitdocs", "editions", "dse", "config")
+    normalizedpassages = repo |> EditorsRepo.normedpassages
+    @test length(normalizedpassages) == 6
+end
