@@ -12,5 +12,6 @@ include("test_dse.jl")
 include("test_citationschemes.jl")
 include("test_configvalidation.jl")
 include("test_texthandling.jl")
+include("test_splitdocs.jl")
 
 include("test_badeditions.jl")
