@@ -1,5 +1,5 @@
 
-# API documentation: text configuration
+# Text configuration
 
 
 ## Loading and verifying the text configuration
