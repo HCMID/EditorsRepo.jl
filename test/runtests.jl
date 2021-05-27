@@ -2,6 +2,7 @@ using CitableText, CitableTeiReaders
 using EditorsRepo
 using Orthography, EditionBuilders
 using DataFrames
+using PolytonicGreek
 using Test
 
 
