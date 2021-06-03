@@ -1,7 +1,7 @@
 name = "EditorsRepo"
 uuid = "3fa2051c-bcb6-4d65-8a68-41ff86d56437"
 authors = ["nsmith "]
-version = "0.9.0"
+version = "0.9.1"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -24,8 +24,8 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 [compat]
 CSV = "0.8"
 CitableBase = "1.1"
-CitableCorpus =  "0.1"
-CitableObject = "0.2, 0.3"
+CitableCorpus = "0.1"
+CitableObject = "0.4"
 CitablePhysicalText = "0.2"
 CitableTeiReaders = "0.6"
 CitableText = "0.7"
