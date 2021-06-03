@@ -1,4 +1,5 @@
-using CitableText, CitableTeiReaders
+using CitableText, CitableCorpus
+using CitableTeiReaders
 using EditorsRepo
 using Orthography, EditionBuilders
 using DataFrames

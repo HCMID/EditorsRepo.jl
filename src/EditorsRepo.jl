@@ -2,7 +2,8 @@ module EditorsRepo
 
 using Test, Documenter, DocStringExtensions
 using CSV, DataFrames
-using CitableText, CitableTeiReaders, Orthography, EditionBuilders
+using CitableText, CitableCorpus
+using CitableTeiReaders, Orthography, EditionBuilders
 using CitableObject
 using Lycian, PolytonicGreek
 
