@@ -22,14 +22,22 @@ end
 $(SIGNATURES)	
 """
 function orthographyforurn(textconfig, urn)
+	
 	row = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
+	@debug("URN $urn yields row $row")
 	if nrow(row) == 0
 		nothing
 	else 
 		orthostring = row[1,:orthography]
+		@debug("Ortho string for row 1 is $orthostring")
 		try
-			eval(Meta.parse(orthostring))
+			sym = Meta.parse(orthostring) 
+			@debug("Trying to eval symbol $sym")
+			valuable = eval(sym)
+			@debug("Succeeded!")
+			valuable
 		catch e
+			@warn("Couldn't eval $(Meta.parse(orthostring))")
 			e
 		end
 	end
