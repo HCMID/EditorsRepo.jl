@@ -12,12 +12,12 @@ xmlfiles_df
 Exported functions:
 
 ```@docs
-textforurn
 diplomaticnodes
 normalizednodes
 diplnodetext
 normednodetext
 textpassages
+normedtokens
 ```
 
 Internal functions:
@@ -25,4 +25,5 @@ Internal functions:
 ```@docs
 EditorsRepo.isref
 EditorsRepo.nodetext
+EditorsRepo.nodesfortokens
 ```

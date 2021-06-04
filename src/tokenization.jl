@@ -1,32 +1,74 @@
-
-"""Compose an edition of normalized tokens.
-Optionally, filter by a URN.
+"""Compose an edition of normalized tokens for allt exts in repository.
 
 $(SIGNATURES)
 """
-function normtokens(repo; urn = nothing)
+function normedtokens(repo)
     textconfig = citation_df(repo)  
+    ## REVERSE THIS:  go from URNs in textconfig to filter texts
+    # for particular orthography
+#=  psgs = repo |> EditorsRepo.normedpassages
 
-    psgs = []
-    if isnothing(urn)
-        psgs = repo |> EditorsRepo.normedpassages
-    else
         normalizedpassages = repo |> EditorsRepo.normedpassages
         psgs = textpassages(normalizedpassages, urn)
-        
-    end  
-    tknlist = []
-    for psg in psgs
-        reduced = baseurn(psg.urn)
-        ortho = orthographyforurn(textconfig, reduced)
-        if isnothing(ortho)
-            @warn("No orthography configured for $reduced")
+    =#
+    nothing
+end
+
+"""Create a list of `CitableNode`s from a list of `OrthographicToken`s 
+and a node URN.
+
+$(SIGNATURES)
+"""
+function nodesfortokens(tkns, urn::CtsUrn)
+    citablenodes = []
+    n1 = 0 # Int value before 1
+    n2 = 96 # Char value before 'a'
+    for tkn in tkns
+        if tkn.tokencategory == Orthography.LexicalToken()
+            n1 = n1 + 1
+            n2 = 96
+            u = CtsUrn(string(urn.urn, ".", n1))
+            push!(citablenodes, CitableNode(u, tkn.text))
+            
         else
-            txt = normednode(reduced, repo)
-		    push!(tknlist, ortho.tokenizer(txt))
+            n2 = n2 + 1
+            u = CtsUrn(string(urn.urn, ".", n1, Char(n2)))
+            push!(citablenodes, CitableNode(u, tkn.text))
+           
         end
     end
-    tknlist
+    citablenodes
+end
+
+"""Compose an edition of normalized tokens matching `urn`.
+
+$(SIGNATURES)
+"""
+function normedtokens(repo::EditingRepository, urn::CtsUrn)
+    textconfig = citation_df(repo)  
+    ortho = orthographyforurn(textconfig, urn)
+    if isnothing(ortho)
+        @warn("No orthography configured for $stdversion")
+        nothing
+
+    else
+        normalized = repo |> EditorsRepo.normedpassages
+        psgs = textpassages(normalized, urn)
+
+        tknlist = []
+        
+        for psg in psgs
+            # Set version to original!
+            #nopsg = droppassage(psg.urn)
+            txt = normednodetext(repo, psg.urn)
+            @debug("Normalized text to $txt")
+            push!(tknlist, ortho.tokenizer(txt))
+            nodesfortokens(tknlist, psg.urn)
+        end
+        
+        tknlist
+        #psgs
+    end
 end
 
 
