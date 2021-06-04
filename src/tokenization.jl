@@ -106,7 +106,7 @@ function normedtokens(repo::EditingRepository, urn::CtsUrn)
     textconfig = citation_df(repo)  
     ortho = orthographyforurn(textconfig, urn)
     if isnothing(ortho)
-        @warn("No orthography configured for $stdversion")
+        @warn("No orthography configured for $urn")
         nothing
 
     else
