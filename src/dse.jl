@@ -58,3 +58,26 @@ function images(repo::EditingRepository)
 	df = dse_df(repo)
 	df.image
 end
+
+"""Find URN for a single node from DSE record, which could
+include a range with subrefs within a single node.
+$(SIGNATURES)
+"""
+function baseurn(urn::CtsUrn)
+	trimmed = CitableText.dropsubref(urn)
+	if CitableText.isrange(trimmed)
+		psg = CitableText.rangebegin(trimmed)
+		CitableText.addpassage(urn,psg)
+	else
+		urn
+	end
+end
+
+
+"""Find DSE records for surface currently selected in popup menu.
+$(SIGNATURES)
+"""
+function surfaceDse(surfurn, repo)
+    alldse = dse_df(editorsrepo())
+	filter(row -> row.surface == surfurn, alldse)
+end

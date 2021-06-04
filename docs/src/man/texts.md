@@ -9,9 +9,19 @@ xmlfiles_df
 
 ## Reading text contents
 
+Exported functions:
 
 ```@docs
 textforurn
 diplomaticnodes
 normalizednodes
+diplnodetext
+normednodetext
+```
+
+Internal functions:
+
+```@docs
+EditorsRepo.isref
+EditorsRepo.nodetext
 ```
