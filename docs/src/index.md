@@ -12,9 +12,7 @@ reporoot = docsroot * "/data/splitdocs/"
 ```
 
 
-
-
-The goal of the EditorsRepo.jl package is to bridge the gap between a local file system of editing work in progress, and more general structures such as "a corpus of citable texts" (`CitableText.Corpus`) or "a record associating texts, image and physical surface" (from the `Dse` package).
+The goal of the EditorsRepo.jl package is to bridge the gap between a local file system of editing work in progress, and more general structures such as "a corpus of citable texts" (`CitableTextCorpus`) or "a record associating texts, image and physical surface" (from the `Dse` package).
 
 
 
@@ -34,9 +32,9 @@ Collect a corpus of normalized texts from the repository.
 
 
 ```@example sample1
-using CitableText
+using CitableText, CitableCorpus
 urn = CtsUrn("urn:cts:greekLit:tlg5026.e3.hmt:10.124r_1")
-normalizednodes(repo, urn) |> CitableCorpus
+normalizednodes(repo, urn) |> CitableTextCorpus
 ```
 
 ## More information
