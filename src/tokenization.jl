@@ -18,6 +18,10 @@ end
 and a node URN.
 
 $(SIGNATURES)
+
+Node URNs are extended with an additional level of citation for the individual
+token.  This citation tier is made up of sequential numbers for lexical tokens,
+and token number + a character for other kinds of tokens (`1a`, `1b`, etc.).
 """
 function nodesfortokens(tkns, urn::CtsUrn)
     citablenodes = []
