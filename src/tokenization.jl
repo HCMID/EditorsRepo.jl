@@ -4,7 +4,29 @@ Optionally, filter by a URN.
 
 $(SIGNATURES)
 """
-function normtokens(repo; urn)
+function normtokens(repo; urn = nothing)
+    textconfig = citation_df(repo)  
+
+    psgs = []
+    if isnothing(urn)
+        psgs = repo |> EditorsRepo.normedpassages
+    else
+        normalizedpassages = repo |> EditorsRepo.normedpassages
+        psgs = textpassages(normalizedpassages, urn)
+        
+    end  
+    tknlist = []
+    for psg in psgs
+        reduced = baseurn(psg.urn)
+        ortho = orthographyforurn(textconfig, reduced)
+        if isnothing(ortho)
+            @warn("No orthography configured for $reduced")
+        else
+            txt = normednode(reduced, repo)
+		    push!(tknlist, ortho.tokenizer(txt))
+        end
+    end
+    tknlist
 end
 
 
@@ -31,19 +53,27 @@ function normednodetext(repo, urn)
     nodetext(normalizedpassages, urn)
 end
 
+"""Select from a list passages those URN matching a given URN,
+and omit "ref" passages conventionally used for non-text content.
+
+$(SIGNATURES)
+"""
+function textpassages(psgs, urn)
+    generalized = CitableText.dropversion(urn)
+    filtered = filter(cn -> urncontains(generalized, CitableText.dropversion(cn.urn)), psgs)
+    dropreff = filter(cn -> ! isref(cn.urn), filtered)
+    dropreff 
+end
+
 """Collect text from a list of passages for a text passage identified by URN.
 The URN should either match a citable node, or be a containing node
 for one or more citable nodes.  Ranges URNs are not supported.
 """    
 function nodetext(psgs, urn)
-    generalized = dropversion(urn)
-    filtered = filter(cn -> urncontains(generalized, dropversion(cn.urn)), psgs)
-    dropreff = filter(cn -> ! isref(cn.urn), filtered)
-    
-	if length(dropreff) > 0
-        content = collect(map(n -> n.text, dropreff))
+    psgs = textpassages(psgs, urn)
+	if length(psgs) > 0
+        content = collect(map(n -> n.text, psgs))
         join(content, "\n")
-		#filtered[1].text
 	else 
 		""
     end

@@ -17,6 +17,7 @@ diplomaticnodes
 normalizednodes
 diplnodetext
 normednodetext
+textpassages
 ```
 
 Internal functions:

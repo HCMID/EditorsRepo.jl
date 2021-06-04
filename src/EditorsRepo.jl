@@ -19,14 +19,17 @@ export surfaces, passages, images, surfaceDse
 
 export textcatalog, textcatalog_df, texturns
 export xmlfiles, xmlfiles_df
-export citation_df, filename, o2converter, 
-    diplomaticbuilder, normalizedbuilder, orthography
-export textsourceforurn, ohco2forurn, orthographyforurn, diplomaticforurn, normalizerforurn
-export diplomaticnodes, normalizednodes
-export diplnodetext, normednodetext
 export citationmatches, citationonly, catalogonly
 export filesmatch, filesonly, citedonly
 export missingcitation
+
+export citation_df, filename, o2converter, 
+    diplomaticbuilder, normalizedbuilder, orthography
+export textsourceforurn, ohco2forurn, orthographyforurn, diplomaticforurn, normalizerforurn
+
+export diplomaticnodes, normalizednodes
+export diplnodetext, normednodetext, textpassages
+
 
 include("repository.jl")
 include("textcatalog.jl")
@@ -36,5 +39,6 @@ include("citationconfig.jl")
 include("textconfig.jl")
 include("textreading.jl")
 include("validateconfig.jl")
+include("tokenization.jl")
 
 end # module
