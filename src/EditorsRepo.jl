@@ -29,7 +29,7 @@ export textsourceforurn, ohco2forurn, orthographyforurn, diplomaticforurn, norma
 
 export diplomaticnodes, normalizednodes
 export diplnodetext, normednodetext, textpassages
-
+export normtokens
 
 include("repository.jl")
 include("textcatalog.jl")
