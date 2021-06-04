@@ -44,6 +44,60 @@ function nodesfortokens(tkns, urn::CtsUrn)
     citablenodes
 end
 
+
+"""Create a list of `CitableNode`s for all lexical tokens in a list of `OrthographicToken`s 
+for a given URN.
+
+$(SIGNATURES)
+
+Node URNs are extended with an additional level of citation for the individual
+token.  This citation tier is made up of sequential numbers for lexical tokens,
+and token number + a character for other kinds of tokens (`1a`, `1b`, etc.).
+"""
+function lexnodesfortokens(tkns, urn::CtsUrn)
+    citablenodes = []
+    n = 0
+    for tkn in tkns
+        if tkn.tokencategory == Orthography.LexicalToken()
+            n = n + 1
+            u = CtsUrn(string(urn.urn, ".", n))
+            push!(citablenodes, CitableNode(u, tkn.text))
+            
+        else
+            # Omit
+        end
+    end
+    citablenodes
+end
+
+
+"""Compose an edition of lexical tokens matching `urn`.
+
+$(SIGNATURES)
+"""
+function lextokens(repo, urn)
+    textconfig = citation_df(repo)  
+    ortho = orthographyforurn(textconfig, urn)
+    if isnothing(ortho)
+        @warn("No orthography configured for $stdversion")
+        nothing
+
+    else
+        normalized = repo |> EditorsRepo.normedpassages
+        psgs = textpassages(normalized, urn)
+        tknlist = []
+        for psg in psgs
+            # Set version to original!
+            #nopsg = droppassage(psg.urn)
+            txt = normednodetext(repo, psg.urn)
+            @debug("Normalized text to $txt")
+            cns = lexnodesfortokens(ortho.tokenizer(txt), psg.urn)
+            push!(tknlist, cns)
+        end
+        tknlist |> Iterators.flatten |> collect
+    end
+end
+
 """Compose an edition of normalized tokens matching `urn`.
 
 $(SIGNATURES)
@@ -58,22 +112,21 @@ function normedtokens(repo::EditingRepository, urn::CtsUrn)
     else
         normalized = repo |> EditorsRepo.normedpassages
         psgs = textpassages(normalized, urn)
-
         tknlist = []
-        
         for psg in psgs
             # Set version to original!
             #nopsg = droppassage(psg.urn)
             txt = normednodetext(repo, psg.urn)
             @debug("Normalized text to $txt")
-            push!(tknlist, ortho.tokenizer(txt))
-            nodesfortokens(tknlist, psg.urn)
+            cns = nodesfortokens(ortho.tokenizer(txt), psg.urn)
+            push!(tknlist, cns)
         end
-        
-        tknlist
-        #psgs
+        tknlist |> Iterators.flatten |> collect
     end
 end
+
+
+
 
 
 """Collect diplomatic text for a single text passage identified by URN.

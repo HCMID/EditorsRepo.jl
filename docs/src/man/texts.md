@@ -18,6 +18,7 @@ diplnodetext
 normednodetext
 textpassages
 normedtokens
+lextokens
 ```
 
 Internal functions:
@@ -26,4 +27,5 @@ Internal functions:
 EditorsRepo.isref
 EditorsRepo.nodetext
 EditorsRepo.nodesfortokens
+EditorsRepo.lexnodesfortokens
 ```
