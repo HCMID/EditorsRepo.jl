@@ -16,5 +16,5 @@
     alltkns = normedtokens(repo, droppassage(urn))
     @test length(alltkns) == 37
     lexicaltkns = lextokens(repo, droppassage(urn))
-    @test length(lexicaltkns) == 25
+    @test length(lexicaltkns) == 24
 end
