@@ -2,26 +2,26 @@ import CitableTeiReaders.poeticLineReader
 
 
 @testset "Test finding citation entries with missing values" begin
-    repo = EditingRepository("data/lycian", "editing", "dse", "config")
+    repo = EditingRepository("data/lycian/editing", "data/lycian/dse", "data/lycian/config")
     markupschemes = citation_df(repo)
     @test isa(markupschemes, DataFrame)
     allgood = missingcitation(repo)
     @test isempty(allgood)
 
 
-    badrepo = EditingRepository("data/badconfig", "editions", "dse", "config")
+    badrepo = EditingRepository("data/badconfig/editions", "data/badconfig/dse", "data/badconfig/config")
     failures = missingcitation(badrepo)
     expectedfailures = 4
     @test length(failures) == expectedfailures
 end
 
 @testset "Test reading configuration of citation schemes" begin
-    repo = EditingRepository("data/lycian", "editing", "dse", "config")
+    repo = EditingRepository("data/lycian/editing", "data/lycian/dse", "data/lycian/config")
     markupschemes = citation_df(repo)
     @test isa(markupschemes, DataFrame)
 
 
-    badrepo = EditingRepository("data/badconfig", "editions", "dse", "config")
+    badrepo = EditingRepository("data/badconfig/editions", "data/badconfig/dse", "data/badconfig/config")
     badcite = citation_df(badrepo)
     @test isa(badcite, DataFrame)
     @test nrow(badcite) == 0
@@ -31,7 +31,7 @@ end
 
 
 @testset "Lookup filename for URN" begin
-    repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
+    repo = repository("data/mixedrepo"; editions = "editing")#, "editing", "dse", "config")
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
 
     df = citation_df(repo)
@@ -42,7 +42,7 @@ end
 
 
 @testset "Lookup ohco2 converter for URN" begin
-    repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
+    repo = repository("data/mixedrepo"; editions = "editing") #, "editing", "dse", "config")
     urn = CtsUrn("urn:cts:trmilli:tl.25.v1:")
     
     df = citation_df(repo)
@@ -56,7 +56,7 @@ end
 
 
 @testset "Lookup diplomatic edition builder for URN" begin
-    repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
+    repo = repository("data/mixedrepo"; editions = "editing")
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
     
     df = citation_df(repo)
@@ -70,7 +70,7 @@ end
 
 
 @testset "Lookup normalized edition builder for URN" begin
-    repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
+    repo = repository("data/mixedrepo"; editions = "editing") #, "editing", "dse", "config")
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
 
     df = citation_df(repo)    
@@ -84,7 +84,7 @@ end
 
 
 @testset "Lookup orthography for URN" begin
-    repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
+    repo = repository("data/mixedrepo"; editions = "editing") #, "editing", "dse", "config")
     urn = CtsUrn("urn:cts:trmilli:tl.3.v1:")
 
     df = citation_df(repo)    
@@ -97,7 +97,7 @@ end
 end
 
 @testset "Lookup orthography for document edited in multiple files" begin
-    repo = EditingRepository("data/splitdocs", "editions", "dse", "config")
+    repo = repository("data/splitdocs") #, "editions", "dse", "config")
     urn = CtsUrn("urn:cts:greekLit:tlg5026.e3.hmt:8.2")
     @test orthography(repo,urn) == "literaryGreek()"
 end

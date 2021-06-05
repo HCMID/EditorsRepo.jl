@@ -3,7 +3,7 @@ $(SIGNATURES)
 List `.cex` files in DSE directory.
 """
 function dsefiles(repository::EditingRepository)
-    fullpath = readdir(repository.root * "/" * repository.dse)
+    fullpath = readdir(repository.dse)
     filenames = filter(f -> endswith(f, "cex"), fullpath)        
 	filenames
 end
@@ -24,7 +24,7 @@ Merge all DSE data into a single dataframe.
 """
 function dse_df(repository::EditingRepository)
     alldse = dsefiles(repository)
-    dirpath = repository.root * "/" * repository.dse * "/"
+    dirpath = repository.dse * "/"
 	fullnames = map(f ->  dirpath * f, alldse)
     dfs = map(f -> EditorsRepo.readdse(f), fullnames)
     vcat(dfs...)

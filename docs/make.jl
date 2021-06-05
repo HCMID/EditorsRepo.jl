@@ -14,8 +14,13 @@ makedocs(
     sitename = "EditorsRepo",
     pages = [
         "Home" => "index.md",
-        "Guide" => [
-            "guide/guide.md"
+        "Walk through: validating work in progress" => [
+            "guide/repository.md",
+            "guide/cataloging.md",
+            "guide/surfaces.md",
+            "guide/dsecompleteness.md",
+            "guide/dseaccuracy.md",
+            "guide/orthography.md"
         ],
         "API documentation" => [
             "man/index.md",
