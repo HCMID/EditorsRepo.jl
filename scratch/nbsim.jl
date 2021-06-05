@@ -2,6 +2,8 @@
 using EditorsRepo
 using CitableText
 using CitableObject
+using ManuscriptOrthography
+using Orthography
 
 treporoot = pwd() * "/docs/data/burney86"
 trepo = repository(treporoot; dse = "indextables")
@@ -31,5 +33,14 @@ sdse = surfaceDse(trepo, surface)
 row = sdse[1, :]
 diplnodetext(trepo, row.passage)
 
+## ORTHOGRAPHY
 
-diplomaticpassages = trepo |> EditorsRepo.diplpassages
+textconfig = citation_df(trepo)
+
+tidy = EditorsRepo.baseurn(row.passage)
+
+# Get the orthography
+ortho = orthographyforurn(textconfig, tidy)
+chunks = normednodetext(trepo, row.passage) |> split
+
+validstring(ortho, chunks[1])

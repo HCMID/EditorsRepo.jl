@@ -22,5 +22,11 @@ surfdse = surfaceDse(townley, surface)
 
 For each row in the DSE DataFrame, the notebook uses the `CitableImage.jl` module to embed an image of the selected region.
 
-To create a diplomatic text of the passage:
+To collect the diplomatic text for a passage, use the `diplnodetext` function.
 
+
+```@example dse
+using CitableText
+psg = CtsUrn("urn:cts:greekLit:tlg0012.tlg001.burney86:8.title")
+diplnodetext(townley, psg)
+```
