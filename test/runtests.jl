@@ -1,4 +1,5 @@
 using CitableText, CitableCorpus
+using CitableObject
 using CitableTeiReaders
 using EditorsRepo
 using Orthography, EditionBuilders
