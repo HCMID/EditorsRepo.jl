@@ -23,8 +23,8 @@ end
 @testset "Test finding DSE records for a physical surface" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
     surf = Cite2Urn("urn:cite2:trmilli:inscriptions.v1:TL3")
-    dses = surfaceDse(repo, surf)
-    @test length(dses) == 4
+    dse_df = surfaceDse(repo, surf)
+    @test nrow(dse_df) == 4
 end
 
 @testset "Test finding list of passages in DSE records" begin
