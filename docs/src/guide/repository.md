@@ -35,7 +35,9 @@ repo = repository(reporoot)
 The `repository` function can also optionally take names for any of the three, relative to the parent.
 
 ```@example sample1
-using EditorsRepo
-
 townley = repository(burney86root; dse = "indextables")
 ```
+
+## The data in these examples
+
+The datasets used in this walkthrough are in the EditorsRepo.jl github repository at [https://github.com/HCMID/EditorsRepo.jl/tree/main/docs/data/](https://github.com/HCMID/EditorsRepo.jl/tree/main/docs/data/).
