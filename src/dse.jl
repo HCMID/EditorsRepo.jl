@@ -77,7 +77,7 @@ end
 """Find DSE records for surface currently selected in popup menu.
 $(SIGNATURES)
 """
-function surfaceDse(surfurn, repo)
-    alldse = dse_df(editorsrepo())
+function surfaceDse(repo, surfurn)
+    alldse = dse_df(repo)
 	filter(row -> row.surface == surfurn, alldse)
 end
