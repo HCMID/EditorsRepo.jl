@@ -17,7 +17,15 @@ end
     @test length(surfs) == 3
 end
 
+#repo = EditingRepository("test/data/mixedrepo", "editing", "dse", "config")
+#Cite2Urn("urn:cite2:trmilli:inscriptions.v1:TL3")
 
+@testset "Test finding DSE records for a physical surface" begin
+    repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
+    surf = Cite2Urn("urn:cite2:trmilli:inscriptions.v1:TL3")
+    dse_df = surfaceDse(repo, surf)
+    @test nrow(dse_df) == 4
+end
 
 @testset "Test finding list of passages in DSE records" begin
     repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")
