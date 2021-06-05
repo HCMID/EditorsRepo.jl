@@ -1,5 +1,21 @@
-# User's guide
+# Find it
 
-EditorsRepo.jl lets you work with files of editing work in progress in a local file system using more abstract structures such as "a corpus of citable texts" (`CitableText.Corpus`) or "a record associating texts, image and physical surface" (from the `CitablePhysicalText` module).
+```@setup sample1
+docsroot = pwd() |> dirname |> dirname
+reporoot = docsroot * "/data/splitdocs/"
+burney86root = docsroot * "/data/burney86/"
+editionsdir = reporoot * "editions"
+dsedir = reporoot * "dse"
+configdir = reporoot * "config"
+```
 
-One important application built with EditorsRepo.jl is the Pluto notebook providing interactive validation and verification of work in progress.  The "User's guide" section of this documentation illustrates most of the functionality of EditorsRepo.jl by walking you through how the MID validator notebook uses the module.
+
+
+```@example sample1
+curr = pwd()
+```
+
+
+```@example sample1
+r = reporoot
+```
