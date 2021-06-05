@@ -7,8 +7,20 @@ using EditorsRepo
 townley = repository(burney86root; dse = "indextables")
 ```
 
-Get a DataFrame of DSE records
+To verify the accuracy of DSE indexing, the validator notebook juxtaposes, for each indexed passage, the indexed region of the image with a diplomatic text of the passage.
+
+
+We'll get a DataFrame of DSE records for the surface, as we did in constructing a view for completeness.
 
 ```@example dse
+using CitableObject
+surface = Cite2Urn("urn:cite2:hmt:burney86pages.v1:73r")
+
 surfdse = surfaceDse(townley, surface)
 ```
+
+
+For each row in the DSE DataFrame, the notebook uses the `CitableImage.jl` module to embed an image of the selected region.
+
+To create a diplomatic text of the passage:
+

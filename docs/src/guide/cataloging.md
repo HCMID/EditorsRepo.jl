@@ -1,4 +1,4 @@
-# Cataloging
+# Cataloging: completeness and accuracy
 
 
 ```@setup cataloging
