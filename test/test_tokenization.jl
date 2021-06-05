@@ -1,6 +1,6 @@
 
 @testset "Test text tokenization functions" begin
-    repo = EditingRepository("data/mixedrepo", "editing", "dse", "config")    
+    repo = repository("data/mixedrepo"; editions =  "editing")
     urn = CtsUrn("urn:cts:trmilli:tl.25.v1:2")
     expectedtext = "towetE : xssbezE : krop"
     normtext = normednodetext(repo, urn)

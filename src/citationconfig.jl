@@ -3,7 +3,7 @@
 $(SIGNATURES)
 """
 function citation(repo::EditingRepository)
-	arr = CSV.File(repo.root * "/" * repo.configs * "/citation.cex", skipto=2, delim="|", 
+	arr = CSV.File(repo.configs * "/citation.cex", skipto=2, delim="|", 
 	quotechar='&', escapechar='&') |> Array
 end
 
@@ -12,7 +12,7 @@ end
 $(SIGNATURES)
 """
 function citation_df(repo::EditingRepository)
-	arr = CSV.File(repo.root * "/" * repo.configs * "/citation.cex", skipto=2, delim="|", 
+	arr = CSV.File(repo.configs * "/citation.cex", skipto=2, delim="|", 
 	quotechar='&', escapechar='&') |> Array
 	urns = map(row -> CtsUrn(row[1]), arr)
 	files = map(row -> row[2], arr)
@@ -32,7 +32,7 @@ $(SIGNATURES)
 List entries with `missing` values in citation configuration.
 """
 function missingcitation(repo::EditingRepository)
-	arr = CSV.File(repo.root * "/" * repo.configs * "/citation.cex", skipto=2, delim="|", 
+	arr = CSV.File(repo.configs * "/citation.cex", skipto=2, delim="|", 
 	quotechar='&', escapechar='&') |> Array
 	urns = map(row -> CtsUrn(row[1]), arr)
 	files = map(row -> row[2], arr)

@@ -18,7 +18,7 @@ function textsourceforurn(repo::EditingRepository, urn::CtsUrn)
 	else 
 		doctext = []
 		for i in 1:nrow(rows)
-			f = repo.root * "/" * repo.editions * "/" *	rows[i,:file]
+			f = repo.editions * "/" *	rows[i,:file]
 			contents = open(f) do file
 				read(file, String)
 			end
@@ -51,7 +51,7 @@ function diplomaticnodes(repo, urn)
             nodes = []
             for i in 1:nrow(rows)
                 # Read text contents and construct a corpus if everyting is OK
-                f = repo.root * "/" * repo.editions * "/" *	rows[i,:file]
+                f = repo.editions * "/" *	rows[i,:file]
                 srctext = open(f) do file
                     read(file, String)
                 end
@@ -87,7 +87,7 @@ function normalizednodes(repo, urn)
 		#doctext = []
 		for i in 1:nrow(rows)
             # Read text contents and construct a corpus if everyting is OK
-			f = repo.root * "/" * repo.editions * "/" *	rows[i,:file]
+			f = repo.editions * "/" *	rows[i,:file]
 			srctext = open(f) do file
 				read(file, String)
 			end

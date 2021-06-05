@@ -1,5 +1,6 @@
 module EditorsRepo
 
+using Base: nothing_sentinel
 using Test, Documenter, DocStringExtensions
 
 using CitableObject
@@ -12,7 +13,7 @@ using Orthography
 using Lycian, PolytonicGreek, AtticGreek, ManuscriptOrthography
 
 
-export EditingRepository
+export EditingRepository, repository
 
 export dsefiles, dse_df
 export surfaces, passages, images, surfaceDse

@@ -10,7 +10,7 @@ $(SIGNATURES)
 
 """
 function textcatalog(repo::EditingRepository, catalogname::AbstractString, delimiter::AbstractString="|")
-    filename = join([repo.root, repo.configs, catalogname], "/")
+    filename = join([repo.configs, catalogname], "/")
     if !isfile(filename)
         throw(ArgumentError("No text catalog file $(filename) exists."))
     end
@@ -42,7 +42,7 @@ $(SIGNATURES)
 - `repo` The editorial repository.
 """
 function textcatalog_df(repo::EditingRepository)
-	allcataloged = fromfile(CatalogedText, repo.root * "/" * repo.configs * "/catalog.cex")
+	allcataloged = fromfile(CatalogedText, repo.configs * "/catalog.cex")
 	filter(row -> row.online, allcataloged)
 end
 
