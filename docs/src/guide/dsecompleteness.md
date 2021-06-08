@@ -20,7 +20,7 @@ Note this.
 
 !!! note
 
-    The validator notebook then uses the `CitableImage` library to construct URLs overlaying regions indexed on this page to the HMT image citation tool.  They look like <http://www.homermultitext.org/ict2/?urn=urn:cite2:citebl:burney86imgs.v1:burney_ms_86_f073r@0.1703,0.3014,0.3983,0.03259&>.  Look at the
+    The validator notebook then uses the `CitableImage` library to construct URLs overlaying regions indexed on this page to the HMT image citation tool.  They look like <http://www.homermultitext.org/ict2/?urn=urn:cite2:citebl:burney86imgs.v1:burney_ms_86_f073r@0.1703,0.3014,0.3983,0.03259&>.  See the [documentation for the CitableImage.jl module](https://cite-architecture.github.io/CitableImage.jl/stable/).
 
 
 

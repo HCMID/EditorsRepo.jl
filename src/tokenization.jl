@@ -167,6 +167,8 @@ end
 """Collect text from a list of passages for a text passage identified by URN.
 The URN should either match a citable node, or be a containing node
 for one or more citable nodes.  Ranges URNs are not supported.
+
+$(SIGNATURES)    
 """    
 function nodetext(psgs, urn)
     psgs = textpassages(psgs, urn)
