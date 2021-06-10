@@ -42,6 +42,6 @@ The validator notebook then uses the Orthography.jl module's `validstring` funct
 
 
 ```@example ortho
-using Orthography, ManuscriptGreek
+using Orthography, ManuscriptOrthography
 validstring(ortho, chunks[1])
 ```
