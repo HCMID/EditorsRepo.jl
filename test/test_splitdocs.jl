@@ -29,3 +29,12 @@ end
     normalizedpassages = repo |> EditorsRepo.normedpassages
     @test length(normalizedpassages) == 6
 end
+
+@testset "Get archival source for part of split document" begin
+    urn10 =  CtsUrn("urn:cts:greekLit:tlg5026.e3.hmt:10")
+    repo = repository("data/splitdocs")
+    # XML source should be valid.
+    src = textsourceforurn(repo, urn10)
+    @test length(src) < 1200
+   
+end
