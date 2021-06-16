@@ -79,7 +79,7 @@ function lextokens(repo, urn)
     textconfig = citation_df(repo)  
     ortho = orthographyforurn(textconfig, urn)
     if isnothing(ortho)
-        @warn("No orthography configured for $stdversion")
+        @warn("No orthography configured for $urn")
         nothing
 
     else
