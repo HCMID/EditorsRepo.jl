@@ -1,7 +1,7 @@
 name = "EditorsRepo"
 uuid = "3fa2051c-bcb6-4d65-8a68-41ff86d56437"
 authors = ["nsmith "]
-version = "0.11.5"
+version = "0.11.6"
 
 [deps]
 AtticGreek = "330c8319-f7ed-461a-8c52-cee5da4c0892"
