@@ -86,9 +86,10 @@ function lextokens(repo, urn)
         normalized = repo |> EditorsRepo.normedpassages
         psgs = textpassages(normalized, urn)
         tknlist = []
+        i = 0
         for psg in psgs
-            # Set version to original!
-            #nopsg = droppassage(psg.urn)
+            i = i + 1
+            @info("tokenizing $(psg.urn.urn) $i / $(length(psgs)) passages ")
             txt = normednodetext(repo, psg.urn)
             @debug("Normalized text to $txt")
             cns = lexnodesfortokens(ortho.tokenizer(txt), psg.urn)

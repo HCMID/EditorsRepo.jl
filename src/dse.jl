@@ -8,9 +8,23 @@ function dsefiles(repository::EditingRepository)
 	filenames
 end
 
-"Read a single DSE file into a DataFrame"
+"""Read a single DSE file into a DataFrame.
+The file should have a three line cite relation header that looks
+like
+
+```
+#!citerelationset
+urn|urn:cite2:trmilli:dse.v1:tl25
+label|Collection of DSE records for TL25
+```
+
+followed by one header line, then data lines.
+
+$(SIGNATURES)
+
+"""
 function readdse(f)
-	arr = CSV.File(f, skipto=2, delim="|") |> Array
+	arr = CSV.File(f, header=4, delim="|") |> Array
 	# text, image, surface
 	passages = map(row -> CtsUrn(row[1]), arr)
 	images = map(row -> Cite2Urn(row[2]), arr)
