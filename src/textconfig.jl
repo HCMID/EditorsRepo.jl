@@ -4,7 +4,7 @@ Eval the string expression for the OHCO2 converter configured for a URN.
 $(SIGNATURES)	
 """
 function ohco2forurn(textconfig, urn)
-	row = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
+	row = filter(r -> CitableText.urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(row) == 0
 		nothing
 	else
@@ -23,7 +23,7 @@ $(SIGNATURES)
 """
 function orthographyforurn(textconfig, urn)
 	
-	row = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
+	row = filter(r -> CitableText.urncontains(droppassage(urn), r[:urn]), textconfig)
 	@debug("URN $urn yields row $row")
 	if nrow(row) == 0
 		nothing
@@ -53,7 +53,7 @@ $(SIGNATURES)
 - `urn` text to retrieve
 """
 function diplomaticforurn(textconfig, urn)
-	row = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
+	row = filter(r -> CitableText.urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(row) == 0
 		nothing
 	else
@@ -69,7 +69,7 @@ end
 
 """
 function normalizerforurn(textconfig, urn)
-	row = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
+	row = filter(r -> CitableText.urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(row) == 0
 		nothing
 	else 
