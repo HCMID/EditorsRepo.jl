@@ -62,7 +62,7 @@ Lookup file name in a repository for a text identified by URN.
 """
 function filename(repo::EditingRepository, u)
 	df = citation_df(repo)
-	filtered = filter(r -> urncontains(r[:urn], u), df )
+	filtered = filter(r -> CitableText.urncontains(r[:urn], u), df )
 	if nrow(filtered) == 0
 		nothing
 	else
@@ -75,7 +75,7 @@ $(SIGNATURES)
 Lookup file name in a DataFame for a text identified by URN.
 """
 function filename(df, u)
-	filtered = filter(r -> urncontains(r[:urn], u), df )
+	filtered = filter(r -> CitableText.urncontains(r[:urn], u), df )
 	if nrow(filtered) == 0
 		nothing
 	else
@@ -178,7 +178,7 @@ $(SIGNATURES)
 function orthography(repo::EditingRepository, u)
 	df = citation_df(repo)
 	#filtered = filter(r -> r[:urn] == u, df )
-	filtered = filter(r -> urncontains(droppassage(u), r[:urn]), df )
+	filtered = filter(r -> CitableText.urncontains(droppassage(u), r[:urn]), df )
 	if nrow(filtered) == 0
 		nothing
 	else

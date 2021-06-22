@@ -12,7 +12,7 @@ therefore not be well-formed XML.
 """
 function textsourceforurn(repo::EditingRepository, urn::CtsUrn)
 	textconfig = citation_df(repo)
-	rows = filter(r -> urncontains(urn, r[:urn]), textconfig)
+	rows = filter(r -> CitableText.urncontains(urn, r[:urn]), textconfig)
 	if nrow(rows) == 0
 		nothing
 	else 
@@ -36,7 +36,7 @@ $(SIGNATURES)
 """
 function diplomaticnodes(repo, urn)
 	textconfig = citation_df(repo)
-    rows = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
+    rows = filter(r -> CitableText.urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(rows) == 0
 		nothing
 
@@ -75,7 +75,7 @@ $(SIGNATURES)
 function normalizednodes(repo, urn)
 
     textconfig = citation_df(repo)
-    rows = filter(r -> urncontains(droppassage(urn), r[:urn]), textconfig)
+    rows = filter(r -> CitableText.urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(rows) == 0
 		nothing
 

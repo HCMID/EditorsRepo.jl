@@ -160,7 +160,7 @@ $(SIGNATURES)
 """
 function textpassages(psgs, urn)
     generalized = CitableText.dropversion(urn)
-    filtered = filter(cn -> urncontains(generalized, CitableText.dropversion(cn.urn)), psgs)
+    filtered = filter(cn -> CitableText.urncontains(generalized, CitableText.dropversion(cn.urn)), psgs)
     dropreff = filter(cn -> ! isref(cn.urn), filtered)
     dropreff 
 end
