@@ -1,5 +1,33 @@
 
+""" 
+Create a citable corpus of all archival text in a repo.
 
+$(SIGNATURES)
+"""
+function archivalcorpus(r::EditingRepository)
+    citesdf = citation_df(r)
+    urns = citesdf[:, :urn]
+
+    corpora = []
+    for u in urns
+        # 1. Read the source text (here, XML)
+        src = textsourceforurn(r, u)
+        if isnothing(src)
+            # skip it
+        else
+            # 2. get the EditionBuilder for the urn
+            reader = ohco2forurn(citesdf, u)
+			if isnothing(reader)
+				msg = "Unable to apply text reader to $u : check configuration"
+				@warn msg
+			else
+            	# 3. create citable corpus of the archival version
+            	push!(corpora, reader(src, u))
+			end
+        end
+    end
+    CitableCorpus.composite_array(corpora)
+end
 
 """
 Read the entire text contents of the online file identified by `urn`."

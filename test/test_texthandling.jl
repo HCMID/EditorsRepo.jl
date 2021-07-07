@@ -17,6 +17,12 @@ end
     badurn = CtsUrn("urn:cts:latinLit:FAKETEXT:")
     fakereader = ohco2forurn(citation, badurn)
     @test fakereader === nothing
+
+
+    lycurn = CtsUrn("urn:cts:trmilli:tl.25.v1:")
+    lycrepo =   EditingRepository("data/lycian/editing", "data/lycian/dse", "data/lycian/config")
+    lyccites =  citation_df(lycrepo)
+   
 end
 
 

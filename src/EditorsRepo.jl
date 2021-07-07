@@ -18,6 +18,7 @@ export EditingRepository, repository
 export dsefiles, dse_df
 export surfaces, passages, images, surfaceDse
 
+export archivalcorpus
 export textcatalog, textcatalog_df, texturns
 export xmlfiles, xmlfiles_df
 export citationmatches, citationonly, catalogonly
