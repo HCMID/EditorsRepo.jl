@@ -4,6 +4,7 @@ Eval the string expression for the OHCO2 converter configured for a URN.
 $(SIGNATURES)	
 """
 function ohco2forurn(textconfig, urn)
+	#@warn "Find $urn in $textconfig"
 	row = filter(r -> CitableText.urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(row) == 0
 		nothing
@@ -11,6 +12,7 @@ function ohco2forurn(textconfig, urn)
 		try
 			eval(Meta.parse(row[1,:o2converter]))
 		catch e
+			@warn "Could not apply $(row[1,:o2converter]) (configured for $urn)"
 			nothing
 		end
 	end
