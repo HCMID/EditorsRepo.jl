@@ -42,7 +42,7 @@ $(SIGNATURES)
 - `repo` The editorial repository.
 """
 function textcatalog_df(repo::EditingRepository)
-	allcataloged = fromfile(CatalogedText, repo.configs * "/catalog.cex")
+	allcataloged = df_fromfile(repo.configs * "/catalog.cex")
 	filter(row -> row.online, allcataloged)
 end
 
