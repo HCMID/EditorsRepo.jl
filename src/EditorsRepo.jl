@@ -3,6 +3,7 @@ module EditorsRepo
 using Base: nothing_sentinel
 using Test, Documenter, DocStringExtensions
 
+using CitableBase
 using CitableObject
 using CSV, DataFrames
 

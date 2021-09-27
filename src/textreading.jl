@@ -26,7 +26,7 @@ function archivalcorpus(r::EditingRepository)
 			end
         end
     end
-    CitableCorpus.composite_array(corpora)
+    CitableCorpus.combine(corpora)
 end
 
 """
@@ -84,7 +84,7 @@ function diplomaticnodes(repo, urn)
                     read(file, String)
                 end
                 corpus = reader(srctext, urn)
-                diplnodes = map(cn -> editednode(diplbuilder, cn), corpus.corpus)
+                diplnodes = map(cn -> editednode(diplbuilder, cn), corpus.passages)
                 push!(nodes, diplnodes)
             end
             nodes |> Iterators.flatten |> collect
@@ -120,7 +120,7 @@ function normalizednodes(repo, urn)
 				read(file, String)
 			end
 			corpus = reader(srctext, urn)
-            normednodes = map(cn -> editednode(normbuilder, cn), corpus.corpus)
+            normednodes = map(cn -> editednode(normbuilder, cn), corpus.passages)
             push!(nodes, normednodes)
 		end
         nodes |> Iterators.flatten |> collect
