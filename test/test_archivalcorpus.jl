@@ -2,5 +2,5 @@
     lyctestrepo  = EditingRepository("data/lycian/editing", "data/lycian/dse", "data/lycian/config")
     citablearchive = archivalcorpus(lyctestrepo)
     expectedlength = 7
-    @test length(citablearchive.corpus) == expectedlength
+    @test length(citablearchive.passages) == expectedlength
 end

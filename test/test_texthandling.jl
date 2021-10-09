@@ -65,13 +65,13 @@ end
 
 
 
-@testset "Test building `CitableNode`s for diplomatic edition for a given URN" begin
+@testset "Test building `CitablePassage`s for diplomatic edition for a given URN" begin
     repo = repository("data/mixedrepo"; editions = "editing")
     urn = CtsUrn("urn:cts:latinLit:phi0881.phi003.bern88:")
-    nodes = diplomaticnodes(repo, urn)
-    @test isa(nodes, Array{CitableNode})
-    @test length(nodes) == 19
-    @test nodes[1].urn.urn == "urn:cts:latinLit:phi0881.phi003.rawtext:256"
+    psgs = diplomatic_passages(repo, urn)
+    @test isa(psgs, Array{CitablePassage})
+    @test length(psgs) == 19
+    @test psgs[1].urn.urn == "urn:cts:latinLit:phi0881.phi003.rawtext:256"
 end
 
 
@@ -85,12 +85,12 @@ end
 
 
 
-@testset "Test building `CitableNode`s for a normalized edition for a given URN" begin
+@testset "Test building `CitablePassage`s for a normalized edition for a given URN" begin
     repo = repository("data/mixedrepo"; editions = "editing")
     urn = CtsUrn("urn:cts:latinLit:phi0881.phi003.bern88:")
-    nodes = normalizednodes(repo, urn)
-    @test isa(nodes, Array{CitableNode})
-    @test length(nodes) == 19
-    @test nodes[1].urn.urn == "urn:cts:latinLit:phi0881.phi003.rawtext:256"
+    psgs = normalized_passages(repo, urn)
+    @test isa(psgs, Array{CitablePassage})
+    @test length(psgs) == 19
+    @test psgs[1].urn.urn == "urn:cts:latinLit:phi0881.phi003.rawtext:256"
 end
 

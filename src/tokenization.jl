@@ -2,7 +2,7 @@
 
 $(SIGNATURES)
 """
-function normedtokens(repo)
+function normalized_tokens(repo)
     textconfig = citation_df(repo)  
     ## REVERSE THIS:  go from URNs in textconfig to filter texts
     # for particular orthography
@@ -14,17 +14,17 @@ function normedtokens(repo)
     nothing
 end
 
-"""Create a list of `CitableNode`s from a list of `OrthographicToken`s 
-and a node URN.
+"""Create a list of `CitablePassage`s from a list of `OrthographicToken`s 
+and a passage URN.
 
 $(SIGNATURES)
 
-Node URNs are extended with an additional level of citation for the individual
+Passage URNs are extended with an additional level of citation for the individual
 token.  This citation tier is made up of sequential numbers for lexical tokens,
 and token number + a character for other kinds of tokens (`1a`, `1b`, etc.).
 """
-function nodesfortokens(tkns, urn::CtsUrn)
-    citablenodes = []
+function passages_for_tokens(tkns, urn::CtsUrn)
+    CitablePassages = []
     n1 = 0 # Int value before 1
     n2 = 96 # Char value before 'a'
     for tkn in tkns
@@ -32,42 +32,42 @@ function nodesfortokens(tkns, urn::CtsUrn)
             n1 = n1 + 1
             n2 = 96
             u = CtsUrn(string(urn.urn, ".", n1))
-            push!(citablenodes, CitableNode(u, tkn.text))
+            push!(CitablePassages, CitablePassage(u, tkn.text))
             
         else
             n2 = n2 + 1
             u = CtsUrn(string(urn.urn, ".", n1, Char(n2)))
-            push!(citablenodes, CitableNode(u, tkn.text))
+            push!(CitablePassages, CitablePassage(u, tkn.text))
            
         end
     end
-    citablenodes
+    CitablePassages
 end
 
 
-"""Create a list of `CitableNode`s for all lexical tokens in a list of `OrthographicToken`s 
+"""Create a list of `CitablePassage`s for all lexical tokens in a list of `OrthographicToken`s 
 for a given URN.
 
 $(SIGNATURES)
 
-Node URNs are extended with an additional level of citation for the individual
+Passages URNs are extended with an additional level of citation for the individual
 token.  This citation tier is made up of sequential numbers for lexical tokens,
 and token number + a character for other kinds of tokens (`1a`, `1b`, etc.).
 """
-function lexnodesfortokens(tkns, urn::CtsUrn)
-    citablenodes = []
+function lexpassages_for_tokens(tkns, urn::CtsUrn)
+    CitablePassages = []
     n = 0
     for tkn in tkns
         if tkn.tokencategory == Orthography.LexicalToken()
             n = n + 1
             u = CtsUrn(string(urn.urn, ".", n))
-            push!(citablenodes, CitableNode(u, tkn.text))
+            push!(CitablePassages, CitablePassage(u, tkn.text))
             
         else
             # Omit
         end
     end
-    citablenodes
+    CitablePassages
 end
 
 
@@ -90,9 +90,9 @@ function lextokens(repo, urn)
         for psg in psgs
             i = i + 1
             @info("tokenizing $(psg.urn.urn) $i / $(length(psgs)) passages ")
-            txt = normednodetext(repo, psg.urn)
+            txt = normalized_passagetext(repo, psg.urn)
             @debug("Normalized text to $txt")
-            cns = lexnodesfortokens(ortho.tokenizer(txt), psg.urn)
+            cns = lexpassages_for_tokens(ortho.tokenizer(txt), psg.urn)
             push!(tknlist, cns)
         end
         tknlist |> Iterators.flatten |> collect
@@ -103,7 +103,7 @@ end
 
 $(SIGNATURES)
 """
-function normedtokens(repo::EditingRepository, urn::CtsUrn)
+function normalized_tokens(repo::EditingRepository, urn::CtsUrn)
     textconfig = citation_df(repo)  
     ortho = orthographyforurn(textconfig, urn)
     if isnothing(ortho)
@@ -117,9 +117,9 @@ function normedtokens(repo::EditingRepository, urn::CtsUrn)
         for psg in psgs
             # Set version to original!
             #nopsg = droppassage(psg.urn)
-            txt = normednodetext(repo, psg.urn)
+            txt = normalized_passagetext(repo, psg.urn)
             @debug("Normalized text to $txt")
-            cns = nodesfortokens(ortho.tokenizer(txt), psg.urn)
+            cns = passages_for_tokens(ortho.tokenizer(txt), psg.urn)
             push!(tknlist, cns)
         end
         tknlist |> Iterators.flatten |> collect
@@ -131,26 +131,26 @@ end
 
 
 """Collect diplomatic text for a single text passage identified by URN.
-The URN should either match a citable node, or be a containing node
-for one or more citable nodes.  Ranges URNs are not supported.
+The URN should either match a citable passage, or be a containing passage
+for one or more citable passage.  Ranges URNs are not supported.
 
 $(SIGNATURES)
 """
-function diplnodetext(repo, urn)
+function diplomatic_passagetext(repo, urn)
 	diplomaticpassages = repo |> EditorsRepo.diplpassages
-    nodetext(diplomaticpassages, urn)
+    passage_text(diplomaticpassages, urn)
 end
 
 
 """Collect diplomatic text for a text passage identified by URN.
-The URN should either match a citable node, or be a containing node
-for one or more citable nodes.  Ranges URNs are not supported.
+The URN should either match a citable passage, or be a containing passage
+for one or more citable passages.  Ranges URNs are not supported.
 
 $(SIGNATURES)
 """
-function normednodetext(repo, urn)
+function normalized_passagetext(repo, urn)
 	normalizedpassages = repo |> EditorsRepo.normedpassages
-    nodetext(normalizedpassages, urn)
+    passage_text(normalizedpassages, urn)
 end
 
 """Select from a list passages those URN matching a given URN,
@@ -166,12 +166,12 @@ function textpassages(psgs, urn)
 end
 
 """Collect text from a list of passages for a text passage identified by URN.
-The URN should either match a citable node, or be a containing node
-for one or more citable nodes.  Ranges URNs are not supported.
+The URN should either match a citable passage, or be a containing passage
+for one or more citable passages.  Ranges URNs are not supported.
 
 $(SIGNATURES)    
 """    
-function nodetext(psgs, urn)
+function passage_text(psgs, urn)
     psgs = textpassages(psgs, urn)
 	if length(psgs) > 0
         content = collect(map(n -> n.text, psgs))

@@ -26,7 +26,7 @@ function archivalcorpus(r::EditingRepository)
 			end
         end
     end
-    CitableCorpus.composite_array(corpora)
+    CitableCorpus.combine(corpora)
 end
 
 """
@@ -58,11 +58,11 @@ end
 
 
 """
-Compose an array of `CitableNode`s for a diplomatic reading of a text identified by CtsUrn."
+Compose an array of `CitablePassage`s for a diplomatic reading of a text identified by CtsUrn."
 
 $(SIGNATURES)
 """
-function diplomaticnodes(repo, urn)
+function diplomatic_passages(repo, urn)
 	textconfig = citation_df(repo)
     rows = filter(r -> CitableText.urncontains(droppassage(urn), r[:urn]), textconfig)
 	if nrow(rows) == 0
@@ -76,7 +76,7 @@ function diplomaticnodes(repo, urn)
         if isnothing(reader) || isnothing(diplbuilder)
             nothing
         else 
-            nodes = []
+            passages = []
             for i in 1:nrow(rows)
                 # Read text contents and construct a corpus if everyting is OK
                 f = repo.editions * "/" *	rows[i,:file]
@@ -84,10 +84,10 @@ function diplomaticnodes(repo, urn)
                     read(file, String)
                 end
                 corpus = reader(srctext, urn)
-                diplnodes = map(cn -> editednode(diplbuilder, cn), corpus.corpus)
-                push!(nodes, diplnodes)
+                diplomatic_passages = map(cn -> edited_passage(diplbuilder, cn), corpus.passages)
+                push!(passages, diplomatic_passages)
             end
-            nodes |> Iterators.flatten |> collect
+            passages |> Iterators.flatten |> collect
         end
 	end
 end
@@ -96,11 +96,11 @@ end
 
 
 """
-Compose an array of `CitableNode`s for a normalized reading of a text identified by CtsUrn.
+Compose an array of `CitablePassage`s for a normalized reading of a text identified by CtsUrn.
 
 $(SIGNATURES)	
 """
-function normalizednodes(repo, urn)
+function normalized_passages(repo, urn)
 
     textconfig = citation_df(repo)
     rows = filter(r -> CitableText.urncontains(droppassage(urn), r[:urn]), textconfig)
@@ -108,7 +108,7 @@ function normalizednodes(repo, urn)
 		nothing
 
 	else 
-        nodes = []
+        passages = []
         # Instantiate configured converter and edition builder:
         reader = ohco2forurn(textconfig, urn)
 	    normbuilder = normalizerforurn(textconfig, urn)
@@ -120,10 +120,10 @@ function normalizednodes(repo, urn)
 				read(file, String)
 			end
 			corpus = reader(srctext, urn)
-            normednodes = map(cn -> editednode(normbuilder, cn), corpus.corpus)
-            push!(nodes, normednodes)
+            normalized_passages = map(cn -> edited_passage(normbuilder, cn), corpus.passages)
+            push!(passages, normalized_passages)
 		end
-        nodes |> Iterators.flatten |> collect
+        passages |> Iterators.flatten |> collect
 	end
 end
 
@@ -137,7 +137,7 @@ Uses the repository's configuration info to determine how to edit each cataloged
 function diplpassages(editorsrepo::EditingRepository)
     urnlist = texturns(editorsrepo)
 	try 
-		diplomaticarrays = map(u -> diplomaticnodes(editorsrepo, u), urnlist)
+		diplomaticarrays = map(u -> diplomatic_passages(editorsrepo, u), urnlist)
 		singlearray = reduce(vcat, diplomaticarrays)
 		filter(psg -> psg !== nothing, singlearray)
 	catch e
@@ -157,7 +157,7 @@ Uses the repository's configuration info to determine how to edit each cataloged
 function normedpassages(editorsrepo)
     urnlist = texturns(editorsrepo)
 	try 
-		normedarrays = map(u -> normalizednodes(editorsrepo, u), urnlist)
+		normedarrays = map(u -> normalized_passages(editorsrepo, u), urnlist)
 		singlearray = reduce(vcat, normedarrays)
 		filter(psg -> psg !== nothing, singlearray)
 	catch e

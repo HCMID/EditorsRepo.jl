@@ -36,6 +36,6 @@ Collect a corpus of normalized texts from the repository.
 ```@example sample1
 using CitableText, CitableCorpus
 urn = CtsUrn("urn:cts:greekLit:tlg5026.e3.hmt:10.124r_1")
-normalizednodes(repo, urn) |> CitableTextCorpus
+normalized_passages(repo, urn) |> CitableTextCorpus
 ```
 

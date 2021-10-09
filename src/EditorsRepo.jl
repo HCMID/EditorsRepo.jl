@@ -3,6 +3,7 @@ module EditorsRepo
 using Base: nothing_sentinel
 using Test, Documenter, DocStringExtensions
 
+using CitableBase
 using CitableObject
 using CSV, DataFrames
 
@@ -29,9 +30,9 @@ export citation_df, filename, o2converter,
     diplomaticbuilder, normalizedbuilder, orthography
 export textsourceforurn, ohco2forurn, orthographyforurn, diplomaticforurn, normalizerforurn
 
-export diplomaticnodes, normalizednodes
-export diplnodetext, normednodetext, textpassages
-export normedtokens, lextokens
+export diplomatic_passages, normalized_passages
+export diplomatic_passagetext, normalized_passagetext, textpassages
+export normalized_tokens, lextokens
 
 include("repository.jl")
 include("textcatalog.jl")

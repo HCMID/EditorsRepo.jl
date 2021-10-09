@@ -34,7 +34,7 @@ We'll validate the orthography by white-spaced chunks to make it easy to display
 
 
 ```@example ortho
-chunks = normednodetext(townley, tidy) |> split
+chunks = normalized_passagetext(townley, tidy) |> split
 ```
 
 The validator notebook then uses the Orthography.jl module's `validstring` function to determine how to display the chunk.

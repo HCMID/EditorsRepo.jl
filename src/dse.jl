@@ -73,8 +73,8 @@ function images(repo::EditingRepository)
 	df.image
 end
 
-"""Find URN for a single node from DSE record, which could
-include a range with subrefs within a single node.
+"""Find URN for a single passage from DSE record, which could
+include a range with subrefs within a single passage.
 $(SIGNATURES)
 """
 function baseurn(urn::CtsUrn)
