@@ -14,7 +14,7 @@ function textcatalog(repo::EditingRepository, catalogname::AbstractString, delim
     if !isfile(filename)
         throw(ArgumentError("No text catalog file $(filename) exists."))
     end
-    rawdata = CSV.File(filename, skipto=2, delim=delimiter)  |> Array
+    rawdata = CSV.File(filename, skipto=3, delim=delimiter)  |> Array
    
 end
 
@@ -42,7 +42,7 @@ $(SIGNATURES)
 - `repo` The editorial repository.
 """
 function textcatalog_df(repo::EditingRepository)
-	allcataloged = df_fromfile(repo.configs * "/catalog.cex")
+	allcataloged = catalogdf_fromfile(repo.configs * "/catalog.cex")
 	filter(row -> row.online, allcataloged)
 end
 
