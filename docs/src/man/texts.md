@@ -17,7 +17,7 @@ normalized_passages
 diplomatic_passagetext
 normalized_passagetext
 textpassages
-normedtokens
+normalized_tokens
 lextokens
 ```
 
@@ -25,7 +25,7 @@ Internal functions:
 
 ```@docs
 EditorsRepo.isref
-EditorsRepo.nodetext
-EditorsRepo.nodesfortokens
-EditorsRepo.lexnodesfortokens
+EditorsRepo.passage_text
+EditorsRepo.passages_for_tokens
+EditorsRepo.lexpassages_for_tokens
 ```
