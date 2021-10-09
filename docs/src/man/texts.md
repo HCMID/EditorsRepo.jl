@@ -12,10 +12,10 @@ xmlfiles_df
 Exported functions:
 
 ```@docs
-diplomaticnodes
-normalizednodes
-diplnodetext
-normednodetext
+diplomatic_passages
+normalized_passages
+diplomatic_passagetext
+normalized_passagetext
 textpassages
 normedtokens
 lextokens
