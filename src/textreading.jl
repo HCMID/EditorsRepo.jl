@@ -58,7 +58,7 @@ end
 
 
 """
-Compose an array of `CitableNode`s for a diplomatic reading of a text identified by CtsUrn."
+Compose an array of `CitablePassage`s for a diplomatic reading of a text identified by CtsUrn."
 
 $(SIGNATURES)
 """
@@ -96,7 +96,7 @@ end
 
 
 """
-Compose an array of `CitableNode`s for a normalized reading of a text identified by CtsUrn.
+Compose an array of `CitablePassage`s for a normalized reading of a text identified by CtsUrn.
 
 $(SIGNATURES)	
 """

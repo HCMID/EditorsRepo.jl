@@ -1,17 +1,32 @@
 
 "True if catalog and textconfig have same set of URNs."
 function citationmatches(catalogedtexts, textconfig)
-    catalog = catalogedtexts[:, :urn]
-	citationconfig = textconfig[:,:urn]
-	isempty(setdiff(catalog, citationconfig)) && isempty(setdiff(citationconfig, catalog))
+	if isempty(catalogedtexts) || isempty(textconfig)
+		false
+	else
+		catalog = catalogedtexts[:, :urn]
+		citationconfig = textconfig[:,:urn]
+		tf = []
+		for txt in catalog
+			push!(tf, txt in citationconfig)
+		end
+		tftotal = unique(tf)
+		length(catalog) == length(citationconfig) && length(tftotal) == 1 && tftotal[1]
+	end
 end
 
 "List texts in citation config but missing from catalog."
 function citationonly(catalogedtexts, textconfig)
-	catalog = catalogedtexts[:,:urn]
-	citationconfig = textconfig[:,:urn]
-	diffs = setdiff(citationconfig, catalog)
-	intersect(diffs, citationconfig)
+	if isempty(textconfig)
+		[]
+	elseif isempty(catalogedtexts)
+		textconfig[:, :urn]
+	else
+		catalog = catalogedtexts[:,:urn]
+		citationconfig = textconfig[:,:urn]
+		diffs = setdiff(citationconfig, catalog)
+		intersect(diffs, citationconfig)
+	end
 end
 
 "List texts in catalog but missing from citation config."

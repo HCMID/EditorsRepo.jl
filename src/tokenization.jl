@@ -14,7 +14,7 @@ function normedtokens(repo)
     nothing
 end
 
-"""Create a list of `CitableNode`s from a list of `OrthographicToken`s 
+"""Create a list of `CitablePassage`s from a list of `OrthographicToken`s 
 and a node URN.
 
 $(SIGNATURES)
@@ -24,7 +24,7 @@ token.  This citation tier is made up of sequential numbers for lexical tokens,
 and token number + a character for other kinds of tokens (`1a`, `1b`, etc.).
 """
 function nodesfortokens(tkns, urn::CtsUrn)
-    citablenodes = []
+    CitablePassages = []
     n1 = 0 # Int value before 1
     n2 = 96 # Char value before 'a'
     for tkn in tkns
@@ -32,20 +32,20 @@ function nodesfortokens(tkns, urn::CtsUrn)
             n1 = n1 + 1
             n2 = 96
             u = CtsUrn(string(urn.urn, ".", n1))
-            push!(citablenodes, CitableNode(u, tkn.text))
+            push!(CitablePassages, CitablePassage(u, tkn.text))
             
         else
             n2 = n2 + 1
             u = CtsUrn(string(urn.urn, ".", n1, Char(n2)))
-            push!(citablenodes, CitableNode(u, tkn.text))
+            push!(CitablePassages, CitablePassage(u, tkn.text))
            
         end
     end
-    citablenodes
+    CitablePassages
 end
 
 
-"""Create a list of `CitableNode`s for all lexical tokens in a list of `OrthographicToken`s 
+"""Create a list of `CitablePassage`s for all lexical tokens in a list of `OrthographicToken`s 
 for a given URN.
 
 $(SIGNATURES)
@@ -55,19 +55,19 @@ token.  This citation tier is made up of sequential numbers for lexical tokens,
 and token number + a character for other kinds of tokens (`1a`, `1b`, etc.).
 """
 function lexnodesfortokens(tkns, urn::CtsUrn)
-    citablenodes = []
+    CitablePassages = []
     n = 0
     for tkn in tkns
         if tkn.tokencategory == Orthography.LexicalToken()
             n = n + 1
             u = CtsUrn(string(urn.urn, ".", n))
-            push!(citablenodes, CitableNode(u, tkn.text))
+            push!(CitablePassages, CitablePassage(u, tkn.text))
             
         else
             # Omit
         end
     end
-    citablenodes
+    CitablePassages
 end
 
 
