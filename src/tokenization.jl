@@ -92,7 +92,7 @@ function lextokens(repo, urn)
             @info("tokenizing $(psg.urn.urn) $i / $(length(psgs)) passages ")
             txt = normalized_passagetext(repo, psg.urn)
             @debug("Normalized text to $txt")
-            cns = lexpassages_for_tokens(ortho.tokenizer(txt), psg.urn)
+            cns = lexpassages_for_tokens(tokenize(txt, ortho), psg.urn)
             push!(tknlist, cns)
         end
         tknlist |> Iterators.flatten |> collect
@@ -119,7 +119,7 @@ function normalized_tokens(repo::EditingRepository, urn::CtsUrn)
             #nopsg = droppassage(psg.urn)
             txt = normalized_passagetext(repo, psg.urn)
             @debug("Normalized text to $txt")
-            cns = passages_for_tokens(ortho.tokenizer(txt), psg.urn)
+            cns = passages_for_tokens(tokenize(txt, ortho), psg.urn)
             push!(tknlist, cns)
         end
         tknlist |> Iterators.flatten |> collect
