@@ -40,3 +40,8 @@ end
     imgs = images(repo)
     @test length(imgs) == 38
 end
+
+@testset "Test trimming URNs" begin
+    urn = CtsUrn("urn:cts:hcmid:aratus.latinus.v1:aquila@Aquilam-aquila@inpor")
+    @test EditorsRepo.baseurn(urn) == CtsUrn("urn:cts:hcmid:aratus.latinus.v1:aquila")
+end

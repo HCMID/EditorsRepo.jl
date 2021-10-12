@@ -80,7 +80,7 @@ $(SIGNATURES)
 function baseurn(urn::CtsUrn)
 	trimmed = CitableText.dropsubref(urn)
 	if CitableText.isrange(trimmed)
-		psg = CitableText.rangebegin(trimmed)
+		psg = CitableText.range_begin(trimmed)
 		CitableText.addpassage(urn,psg)
 	else
 		urn
