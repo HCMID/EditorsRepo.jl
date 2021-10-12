@@ -1,3 +1,7 @@
+
+![build](https://github.com/HCMID/EditorsRepo.jl/actions/workflows/Documentation.yml/badge.svg)
+
+
 # EditorsRepo.jl
 
 A Julia module for working with an editorial repository organized following HCMID conventions.
