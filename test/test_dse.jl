@@ -43,5 +43,5 @@ end
 
 @testset "Test trimming URNs" begin
     urn = CtsUrn("urn:cts:hcmid:aratus.latinus.v1:aquila@Aquilam-aquila@inpor")
-    @test EditorsRepo.baseurn(urn) == "urn:cts:hcmid:aratus.latinus.v1:aquila"
+    @test EditorsRepo.baseurn(urn) == CtsUrn("urn:cts:hcmid:aratus.latinus.v1:aquila")
 end
