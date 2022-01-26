@@ -30,9 +30,9 @@ function filename(repo::EditingRepository, txturn::CtsUrn)
     cites = citationconfig(repo)
     matching = filter(r -> urncontains(txturn, r.urn), cites)
     if isempty(matching)
-        ArgumentError("No citation configuration found for $(txturn)")
+        throw(ArgumentError("No citation configuration found for $(txturn)"))
     elseif length(matching) > 1
-        ArgumentError("Multiple matches for $(txturn)")
+        throw(ArgumentError("Multiple matches for $(txturn)"))
     else
         matching[1].file
     end
@@ -46,10 +46,10 @@ Lookup ocho2converter for a text identified by URN.
 function o2converter(repo::EditingRepository, txturn::CtsUrn)
     cites = citationconfig(repo)
     matching = filter(r -> urncontains(txturn, r.urn), cites)
-    if isempty(matching)
-        ArgumentError("No citation configuration found for $(txturn)")
+    if length(matching) < 1
+        throw(ArgumentError("No citation configuration found for $(txturn)"))
     elseif length(matching) > 1
-        ArgumentError("Multiple matches for $(txturn)")
+        throw(ArgumentError("Multiple matches for $(txturn)"))
     else
         matching[1].converter
     end
