@@ -28,7 +28,7 @@ Lookup file name in a repository for a text identified by URN.
 """
 function filename(repo::EditingRepository, txturn::CtsUrn)
     cites = citationconfig(repo)
-    matching = filter(r -> urncontains(txturn, r.urn), cites)
+    matching = filter(r -> urncontains(droppassage(txturn), r.urn), cites)
     if isempty(matching)
         throw(ArgumentError("No citation configuration found for $(txturn)"))
     elseif length(matching) > 1
@@ -61,7 +61,7 @@ Lookup diplomaticbuilder for a text identified by URN.
 """
 function diplomaticbuilder(repo::EditingRepository, txturn::CtsUrn)
     cites = citationconfig(repo)
-    matching = filter(r -> urncontains(txturn, r.urn), cites)
+    matching = filter(r -> urncontains(droppassage(txturn), r.urn), cites)
     if length(matching) < 1
         throw(ArgumentError("No citation configuration found for $(txturn)"))
     elseif length(matching) > 1

@@ -64,10 +64,12 @@ include("textreading.jl")
 include("xmlfiles.jl")
 include("dse.jl")
 
+include("tokenization.jl")
+
 #=
 include("textconfig.jl")
 
 include("validateconfig.jl")
-include("tokenization.jl")
+
 =#
 end # module
