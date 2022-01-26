@@ -1,6 +1,6 @@
 @testset "Test reading text catalog" begin
     mixeddir = joinpath("data", "mixedrepo")
-    mixedrepo = repository(mixeddir)
+    mixedrepo = repository(mixeddir, editions = "editing")
     cat =  textcatalog(mixedrepo)
 
     @test cat isa TextCatalogCollection
