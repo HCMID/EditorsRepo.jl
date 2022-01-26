@@ -9,14 +9,23 @@ using CSV, TypedTables
 
 using CitableText, CitableCorpus
 using CitableTeiReaders, EditionBuilders
+
+
 # All recognized orthographies:
 using Orthography
 using Lycian, PolytonicGreek, AtticGreek, ManuscriptOrthography
 
-
+# Repository organization
 export EditingRepository, repository
-export citationconfig, filename, o2converter,
+export configdir, dsedir, editionsdir
+
+# Citation configuration
+export citationconfig, missingcitation
+export filename, o2converter,
     diplomaticbuilder, normalizedbuilder, orthography
+
+# Text catalog    
+export textcatalog,  texturns
 
 #=
 export dsefiles, dse_df
@@ -38,7 +47,8 @@ export normalized_tokens, lextokens
 
 include("repository.jl")
 include("citationconfig.jl")
-#=include("textcatalog.jl")
+include("textcatalog.jl")
+#=
 include("dse.jl")
 include("xmlarchive.jl")
 

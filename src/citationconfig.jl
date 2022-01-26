@@ -2,9 +2,9 @@
 
 $(SIGNATURES)
 """
-function citationconfig(repo::EditingRepository)
+function citationconfig(repo::EditingRepository; filename = "citation.cex", delimiter = "|")
 	citecex = joinpath(repo.configs, "citation.cex")
-	inferred = CSV.File(citecex, skipto=2, delim="|", 
+	inferred = CSV.File(citecex, skipto=2, delim=delimiter, 
 	quotechar='&', escapechar='&') |> Table
 
 
@@ -101,4 +101,15 @@ function orthography(repo::EditingRepository, txturn::CtsUrn)
     else
         matching[1].orthography
     end
+end
+
+
+function missingcitation(repo::EditingRepository)
+    cites = citationconfig(repo)
+    naughtylist = []
+    for c in cites
+        # for each property in list:
+        # if ismissing, push! to naughtylist
+    end
+    naughtylist
 end
