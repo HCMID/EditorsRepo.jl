@@ -54,3 +54,51 @@ function o2converter(repo::EditingRepository, txturn::CtsUrn)
         matching[1].converter
     end
 end
+
+"""
+$(SIGNATURES)
+Lookup diplomaticbuilder for a text identified by URN.
+"""
+function diplomaticbuilder(repo::EditingRepository, txturn::CtsUrn)
+    cites = citationconfig(repo)
+    matching = filter(r -> urncontains(txturn, r.urn), cites)
+    if length(matching) < 1
+        throw(ArgumentError("No citation configuration found for $(txturn)"))
+    elseif length(matching) > 1
+        throw(ArgumentError("Multiple matches for $(txturn)"))
+    else
+        matching[1].diplomatic
+    end
+end
+
+"""
+$(SIGNATURES)
+Lookup normalizedbuilder for a text identified by URN.
+"""
+function normalizedbuilder(repo::EditingRepository, txturn::CtsUrn)
+    cites = citationconfig(repo)
+    matching = filter(r -> urncontains(txturn, r.urn), cites)
+    if length(matching) < 1
+        throw(ArgumentError("No citation configuration found for $(txturn)"))
+    elseif length(matching) > 1
+        throw(ArgumentError("Multiple matches for $(txturn)"))
+    else
+        matching[1].normalized
+    end
+end
+
+"""
+$(SIGNATURES)
+Lookup orthography for a text identified by URN.
+"""
+function orthography(repo::EditingRepository, txturn::CtsUrn)
+    cites = citationconfig(repo)
+    matching = filter(r -> urncontains(txturn, r.urn), cites)
+    if length(matching) < 1
+        throw(ArgumentError("No citation configuration found for $(txturn)"))
+    elseif length(matching) > 1
+        throw(ArgumentError("Multiple matches for $(txturn)"))
+    else
+        matching[1].orthography
+    end
+end

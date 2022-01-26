@@ -15,7 +15,8 @@ using Lycian, PolytonicGreek, AtticGreek, ManuscriptOrthography
 
 
 export EditingRepository, repository
-export citationconfig, filename, o2converter
+export citationconfig, filename, o2converter,
+    diplomaticbuilder, normalizedbuilder, orthography
 
 #=
 export dsefiles, dse_df
@@ -28,8 +29,6 @@ export citationmatches, citationonly, catalogonly
 export filesmatch, filesonly, citedonly
 export missingcitation
 
-export citation_df, filename, o2converter, 
-    diplomaticbuilder, normalizedbuilder, orthography
 export textsourceforurn, ohco2forurn, orthographyforurn, diplomaticforurn, normalizerforurn
 
 export diplomatic_passages, normalized_passages

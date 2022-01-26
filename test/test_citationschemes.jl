@@ -5,28 +5,16 @@
     @test cites isa Table
     @test length(cites) == 3
     @test typeof(cites[1].urn) == CtsUrn
-end
 
-@testset "Lookup ohco2 converter for URN" begin
-    path = joinpath("data", "mixedrepo")
-    repo = repository(path; editions = "editing")
-    txturn = CtsUrn("urn:cts:trmilli:tl.25.v1:")
-    expected = "simpleAbReader"
-    o2converter(repo, txturn) == expected
+    txturn = CtsUrn("urn:cts:trmilli:tl.25.v1:")    
+    @test o2converter(repo, txturn) == "simpleAbReader"
+    @test filename(repo, txturn) == "tl25.xml"
+    @test orthography(repo, txturn) == "simpleAscii()"
+    @test normalizedbuilder(repo, txturn) == "LiteralTextBuilder(\"Literal text builder\",\"rawtext\")"
+    @test diplomaticbuilder(repo, txturn) == "LiteralTextBuilder(\"Literal text builder\",\"rawtext\")"
     #
     missingurn = CtsUrn("urn:cts:trmilli:tl.MISSING:")
     @test_throws ArgumentError o2converter(repo, missingurn)
-end
-
-@testset "Lookup filename for URN" begin
-    path = joinpath("data", "mixedrepo")
-    repo = repository(path; editions = "editing")
-    txturn = CtsUrn("urn:cts:trmilli:tl.25.v1:")
-    #filename
-    expected = "tl25.xml"
-    @test filename(repo, txturn) == expected
-
-    missingurn = CtsUrn("urn:cts:trmilli:tl.MISSING:")
     @test_throws ArgumentError filename(repo, missingurn)
-
+    @test_throws ArgumentError orthography(repo, missingurn)
 end
