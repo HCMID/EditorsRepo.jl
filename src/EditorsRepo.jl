@@ -10,6 +10,10 @@ using CSV, TypedTables
 using CitableText, CitableCorpus
 using CitableTeiReaders, EditionBuilders
 
+using CitablePhysicalText
+import CitablePhysicalText: surfaces
+import CitablePhysicalText: images
+import CitablePhysicalText: passages
 
 # All recognized orthographies:
 using Orthography
@@ -35,9 +39,11 @@ export diplomatic_passages, normalized_passages
 
 
 
+
+export dsetriples
+export surfaces, passages, images
 #=
-export dsefiles
-export surfaces, passages, images, surfaceDse
+export surfaces,  surfaceDse
 
 
 export textcatalog, textcatalog_df, texturns
@@ -56,10 +62,9 @@ include("textcatalog.jl")
 include("textreading.jl")
 
 include("xmlfiles.jl")
-#=
 include("dse.jl")
 
-
+#=
 include("textconfig.jl")
 
 include("validateconfig.jl")
