@@ -25,4 +25,8 @@ end
     #filename
     expected = "tl25.xml"
     @test filename(repo, txturn) == expected
+
+    missingurn = CtsUrn("urn:cts:trmilli:tl.MISSING:")
+    @test_throws ArgumentError filename(repo, missingurn)
+
 end
