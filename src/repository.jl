@@ -2,9 +2,9 @@
 
 # Members
 
-- `editions` Full path to directory with source files for textual editions.
-- `dse`  Full path to directory with delimited text files recording text, image and surface relations.
-- `configs` Full path to directory with `catalog.cex` and `citation.cex` files.
+- `editions` Path to directory with source files for textual editions.
+- `dse`  Path to directory with delimited text files recording text, image and surface relations.
+- `configs` Path to directory with `catalog.cex` and `citation.cex` files.
 """
 struct EditingRepository
     editions::AbstractString
