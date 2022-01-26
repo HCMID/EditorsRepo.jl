@@ -29,32 +29,6 @@ function archivalcorpus(r::EditingRepository)
     CitableCorpus.combine(corpora)
 end
 
-"""
-Read the entire text contents of the online file identified by `urn`."
-
-$(SIGNATURES)
-
-This function simply concatenates the text content of all source documents
-matching `urn`.  Note that if multiple XML documents match `urn`, the result will
-therefore not be well-formed XML.
-"""
-function textsourceforurn(repo::EditingRepository, urn::CtsUrn)
-	textconfig = citation_df(repo)
-	rows = filter(r -> CitableText.urncontains(urn, r[:urn]), textconfig)
-	if nrow(rows) == 0
-		nothing
-	else 
-		doctext = []
-		for i in 1:nrow(rows)
-			f = repo.editions * "/" *	rows[i,:file]
-			contents = open(f) do file
-				read(file, String)
-			end
-			push!(doctext, contents)
-		end
-		join(doctext,"\n")
-	end
-end
 
 
 """

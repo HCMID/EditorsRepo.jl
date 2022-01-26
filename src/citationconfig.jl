@@ -51,7 +51,7 @@ function o2converter(repo::EditingRepository, txturn::CtsUrn)
     elseif length(matching) > 1
         throw(ArgumentError("Multiple matches for $(txturn)"))
     else
-        matching[1].converter
+        matching[1].converter |> Meta.parse |> eval
     end
 end
 
@@ -67,7 +67,7 @@ function diplomaticbuilder(repo::EditingRepository, txturn::CtsUrn)
     elseif length(matching) > 1
         throw(ArgumentError("Multiple matches for $(txturn)"))
     else
-        matching[1].diplomatic
+        matching[1].diplomatic |> Meta.parse |> eval
     end
 end
 
@@ -83,7 +83,7 @@ function normalizedbuilder(repo::EditingRepository, txturn::CtsUrn)
     elseif length(matching) > 1
         throw(ArgumentError("Multiple matches for $(txturn)"))
     else
-        matching[1].normalized
+        matching[1].normalized |> Meta.parse |> eval
     end
 end
 
@@ -99,11 +99,11 @@ function orthography(repo::EditingRepository, txturn::CtsUrn)
     elseif length(matching) > 1
         throw(ArgumentError("Multiple matches for $(txturn)"))
     else
-        matching[1].orthography
+        matching[1].orthography |> Meta.parse |> eval
     end
 end
 
-
+# TBD
 function missingcitation(repo::EditingRepository)
     cites = citationconfig(repo)
     naughtylist = []
