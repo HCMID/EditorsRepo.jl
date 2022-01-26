@@ -15,7 +15,8 @@ using Lycian, PolytonicGreek, AtticGreek, ManuscriptOrthography
 
 
 export EditingRepository, repository
-export citationconfig
+export citationconfig, filename, o2converter
+
 #=
 export dsefiles, dse_df
 export surfaces, passages, images, surfaceDse

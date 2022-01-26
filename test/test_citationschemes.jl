@@ -3,12 +3,13 @@
     repo = repository(path; editions = "editing")
     cites = citationconfig(repo)
     @test cites isa Table
-    @test length(cites) == 1
-    @test types(cites[1].urn) == CtsUrn
+    @test length(cites) == 3
+    @test typeof(cites[1].urn) == CtsUrn
 end
 
 @testset "Lookup ohco2 converter for URN" begin
-    repo = repository("data/mixedrepo"; editions = "editing") #, "editing", "dse", "config")
+    path = joinpath("data", "mixedrepo")
+    repo = repository(path; editions = "editing")
     txturn = CtsUrn("urn:cts:trmilli:tl.25.v1:")
     expected = "simpleAbReader"
     #
@@ -21,5 +22,10 @@ end
 
 
 @testset "Lookup filename for URN" begin
+    path = joinpath("data", "mixedrepo")
+    repo = repository(path; editions = "editing")
+    txturn = CtsUrn("urn:cts:trmilli:tl.25.v1:")
     #filename
+    expected = "tl25.xml"
+    @test filename(repo, txturn) == expected
 end
