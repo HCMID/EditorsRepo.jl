@@ -1,6 +1,6 @@
 module EditorsRepo
 
-using Base: nothing_sentinel
+#using Base: nothing_sentinel
 using Test, Documenter, DocStringExtensions
 
 using CitableBase

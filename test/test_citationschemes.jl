@@ -12,14 +12,11 @@ end
     repo = repository(path; editions = "editing")
     txturn = CtsUrn("urn:cts:trmilli:tl.25.v1:")
     expected = "simpleAbReader"
+    o2converter(repo, txturn) == expected
     #
-    # o2converter
-
-
     missingurn = CtsUrn("urn:cts:trmilli:tl.MISSING:")
-    #
+    @test_throws ArgumentError o2converter(repo, missingurn)
 end
-
 
 @testset "Lookup filename for URN" begin
     path = joinpath("data", "mixedrepo")
