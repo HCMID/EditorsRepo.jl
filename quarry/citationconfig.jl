@@ -1,31 +1,3 @@
-"""Read citation configuration into an Array.
-
-$(SIGNATURES)
-"""
-function citation(repo::EditingRepository)
-	arr = CSV.File(repo.configs * "/citation.cex", skipto=2, delim="|", 
-	quotechar='&', escapechar='&') |> Array
-end
-
-"""Read citation configuration into a DataFrame.
-
-$(SIGNATURES)
-"""
-function citation_df(repo::EditingRepository)
-	arr = CSV.File(repo.configs * "/citation.cex", skipto=2, delim="|", 
-	quotechar='&', escapechar='&') |> Array
-	urns = map(row -> CtsUrn(row[1]), arr)
-	files = map(row -> row[2], arr)
-	ohco2s = map(row -> row[3], arr)
-	dipls = map(row -> row[4], arr)
-	norms = map(row -> row[5], arr)
-	orthos = map(row -> row[6], arr)
-
-	df = DataFrame(urn = urns, file = files, 
-	o2converter = ohco2s, diplomatic = dipls,
-	normalized = norms, orthography = orthos)
-	dropmissing(df)
-end
 
 """
 $(SIGNATURES)
