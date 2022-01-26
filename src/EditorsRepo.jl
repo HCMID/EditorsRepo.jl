@@ -5,7 +5,7 @@ using Test, Documenter, DocStringExtensions
 
 using CitableBase
 using CitableObject
-using CSV, DataFrames
+using CSV, TypedTables
 
 using CitableText, CitableCorpus
 using CitableTeiReaders, EditionBuilders
@@ -16,6 +16,7 @@ using Lycian, PolytonicGreek, AtticGreek, ManuscriptOrthography
 
 export EditingRepository, repository
 
+#=
 export dsefiles, dse_df
 export surfaces, passages, images, surfaceDse
 
@@ -33,9 +34,10 @@ export textsourceforurn, ohco2forurn, orthographyforurn, diplomaticforurn, norma
 export diplomatic_passages, normalized_passages
 export diplomatic_passagetext, normalized_passagetext, textpassages
 export normalized_tokens, lextokens
+=#
 
 include("repository.jl")
-include("textcatalog.jl")
+#=include("textcatalog.jl")
 include("dse.jl")
 include("xmlarchive.jl")
 include("citationconfig.jl")
@@ -43,5 +45,5 @@ include("textconfig.jl")
 include("textreading.jl")
 include("validateconfig.jl")
 include("tokenization.jl")
-
+=#
 end # module
