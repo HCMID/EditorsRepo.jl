@@ -27,20 +27,25 @@ export filename, o2converter,
 # Text catalog    
 export textcatalog,  texturns
 
+# Text contents
+export xmlfiles
+export archivalcorpus
+export textsourceforurn
+export diplomatic_passages, normalized_passages
+
+
+
 #=
-export dsefiles, dse_df
+export dsefiles
 export surfaces, passages, images, surfaceDse
 
-export archivalcorpus
+
 export textcatalog, textcatalog_df, texturns
-export xmlfiles, xmlfiles_df
+
 export citationmatches, citationonly, catalogonly
 export filesmatch, filesonly, citedonly
 export missingcitation
 
-export textsourceforurn, ohco2forurn, orthographyforurn, diplomaticforurn, normalizerforurn
-
-export diplomatic_passages, normalized_passages
 export diplomatic_passagetext, normalized_passagetext, textpassages
 export normalized_tokens, lextokens
 =#
@@ -48,12 +53,15 @@ export normalized_tokens, lextokens
 include("repository.jl")
 include("citationconfig.jl")
 include("textcatalog.jl")
+include("textreading.jl")
+
+include("xmlfiles.jl")
 #=
 include("dse.jl")
-include("xmlarchive.jl")
+
 
 include("textconfig.jl")
-include("textreading.jl")
+
 include("validateconfig.jl")
 include("tokenization.jl")
 =#

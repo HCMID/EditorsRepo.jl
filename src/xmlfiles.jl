@@ -7,12 +7,3 @@ function xmlfiles(repository::EditingRepository)
     filenames = filter(f -> endswith(f, "xml"), fullpath)        
 	filenames
 end
-
-
-#=
-function archivaledition(repo::EditingRepository, u::CtsUrn)
-     settings = citation_df(repo::EditingRepository)
-     ohco2 = o2converter(settings, u)
-
-end
-=#
