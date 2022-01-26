@@ -19,7 +19,6 @@ end
 $(SIGNATURES)    
 """
 function textsourceforurn(repo::EditingRepository, u::CtsUrn)
-
     fname = joinpath(editionsdir(repo), filename(repo, u))
     # concat contents of files matching u
     read(fname, String)
@@ -31,7 +30,12 @@ Compose an array of `CitablePassage`s for a diplomatic reading of a text identif
 
 $(SIGNATURES)
 """
-function diplomatic_passages(repo, urn)
+function diplomatic_passages(r::EditingRepository, u::CtsUrn)
+    fname = joinpath(editionsdir(r), filename(r, u))
+    c = readcitable(fname, u, o2converter(r, u), FileReader)
+    #o2converter(mixedrepo, u1)
+    diplbuilder = diplomaticbuilder(r, u)
+    map(cn -> edited_passage(diplbuilder, cn), c.passages)
 end
 
 """
@@ -39,5 +43,9 @@ Compose an array of `CitablePassage`s for a normalized reading of a text identif
 
 $(SIGNATURES)	
 """
-function normalized_passages(repo, urn)
+function normalized_passages(r::EditingRepository, u::CtsUrn)
+    fname = joinpath(editionsdir(r), filename(r, u))
+    c = readcitable(fname, u, o2converter(r, u), FileReader)
+    normbuilder = normalizedbuilder(r, u)
+    map(cn -> edited_passage(normbuilder, cn), c.passages)
 end
