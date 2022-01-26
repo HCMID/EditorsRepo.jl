@@ -9,7 +9,7 @@
     txturn = CtsUrn("urn:cts:trmilli:tl.25.v1:")    
     @test o2converter(repo, txturn) == "simpleAbReader"
     @test filename(repo, txturn) == "tl25.xml"
-    @test orthography(repo, txturn) == "simpleAscii()"
+    @test orthography(repo, txturn) == "lycianAscii()"
     @test normalizedbuilder(repo, txturn) == "LiteralTextBuilder(\"Literal text builder\",\"rawtext\")"
     @test diplomaticbuilder(repo, txturn) == "LiteralTextBuilder(\"Literal text builder\",\"rawtext\")"
     #
