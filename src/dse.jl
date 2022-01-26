@@ -33,3 +33,14 @@ function images(repo::EditingRepository)
     # why is unique broken on Cite2Urns when `isequal` works correctly?
     map(u -> string(u), urnvals) |> unique .|> Cite2Urn
 end
+
+
+"""
+$(SIGNATURES)
+Compute list of unique surfaces in DSE records.
+"""
+function passages(repo::EditingRepository)
+    urnvals = map(trip -> trip.passage, dsetriples(repo))
+    # why is unique broken on Cite2Urns when `isequal` works correctly?
+    map(u -> string(u), urnvals) |> unique .|> CtsUrn
+end
