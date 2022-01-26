@@ -15,7 +15,7 @@ using Lycian, PolytonicGreek, AtticGreek, ManuscriptOrthography
 
 
 export EditingRepository, repository
-
+export citationconfig
 #=
 export dsefiles, dse_df
 export surfaces, passages, images, surfaceDse
@@ -37,10 +37,11 @@ export normalized_tokens, lextokens
 =#
 
 include("repository.jl")
+include("citationconfig.jl")
 #=include("textcatalog.jl")
 include("dse.jl")
 include("xmlarchive.jl")
-include("citationconfig.jl")
+
 include("textconfig.jl")
 include("textreading.jl")
 include("validateconfig.jl")
