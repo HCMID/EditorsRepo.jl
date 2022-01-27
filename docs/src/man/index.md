@@ -38,7 +38,7 @@ normalizedcorpus
 Classified tokenization:
 
 ```@docs
-tokens
+tokencorpus
 ```
 
 DSE records:
