@@ -17,7 +17,8 @@ import CitablePhysicalText: passages
 
 # All recognized orthographies:
 using Orthography
-using Lycian, PolytonicGreek, AtticGreek, ManuscriptOrthography
+using Lycian, PolytonicGreek, ManuscriptOrthography
+# AtticGreek
 
 # Repository organization
 export EditingRepository, repository

@@ -5,7 +5,7 @@ using CitableTeiReaders
 using EditorsRepo
 using Orthography, EditionBuilders
 using TypedTables
-using PolytonicGreek
+using PolytonicGreek, Lycian
 using Test
 
 include("test_repository.jl")
