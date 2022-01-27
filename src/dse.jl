@@ -44,3 +44,27 @@ function passages(repo::EditingRepository)
     # why is unique broken on Cite2Urns when `isequal` works correctly?
     map(u -> string(u), urnvals) |> unique .|> CtsUrn
 end
+
+"""
+$(SIGNATURES)
+Compute list of passages in DSE records for a given surface.
+"""
+function passagesforsurface(r::EditingRepository, u::Cite2Urn)
+    triples = filter(tr -> urncontains(u, tr.surface), dsetriples(r))
+    map(tr -> tr.passage, triples)
+end
+
+
+"""
+$(SIGNATURES)
+Compute list of images in DSE records for a given passage.
+"""
+function imagesforpassage(r::EditingRepository, u::CtsUrn)
+    triples = filter(tr -> urncontains(u, tr.passage), dsetriples(r))
+    if isempty(triples)
+        @warn("No DSE records found for $(u)")
+    elseif length(triples) > 1
+        @warn("$(length(triples)) DSE records found for $(u)")
+    end
+    map(tr -> tr.image, triples)
+end

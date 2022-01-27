@@ -45,6 +45,8 @@ DSE records:
 
 ```@docs
 dsetriples
+passagesforsurface
+imagesforpassage
 ```
 
 HTML utilities:
