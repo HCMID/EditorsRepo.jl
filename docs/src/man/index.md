@@ -47,6 +47,11 @@ DSE records:
 dsetriples
 ```
 
+HTML utilities:
+
+```@docs
+htmltoken
+```
 
 ## Internal functions
 

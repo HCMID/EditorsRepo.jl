@@ -10,7 +10,8 @@ function tokens(r::EditingRepository)
               bldr = normalizedbuilder(r, u)
 
               fname = joinpath(editionsdir(r), filename(r, u))
-              normalized = readcitable(fname, u, o2converter(r, u), FileReader)
+              archival = readcitable(fname, u, o2converter(r, u), FileReader)
+              normalized = map(cn -> edited_passage(bldr, cn), archival.passages)
               for t in map(cn -> cn.text, normalized)
                      push!(tokenlist, tokenize(t, ortho))
               end

@@ -41,6 +41,10 @@ export tokens
 export dsetriples
 export surfaces, passages, images
 
+# HTML utilities
+export htmltoken
+
+
 #=
 # Validation:
 export citationmatches, citationonly, catalogonly
@@ -60,8 +64,10 @@ include("dse.jl")
 
 include("tokenization.jl")
 
+include("htmlutils.jl")
+
 #=
-include("textconfig.jl")
+
 
 include("validateconfig.jl")
 
