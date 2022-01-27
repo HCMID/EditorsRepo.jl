@@ -35,7 +35,7 @@ export textcatalog,  texturns
 export archivalcorpus
 export diplomaticcorpus
 export normalizedcorpus
-
+export tokens
 
 # DSE records
 export dsetriples

@@ -45,8 +45,8 @@ function normalizedcorpus(r::EditingRepository)
         fname = joinpath(editionsdir(r), filename(r, u))
         c = readcitable(fname, u, o2converter(r, u), FileReader)
         bldr = normalizedbuilder(r, u)
-        diplpsgs = map(cn -> edited_passage(bldr, cn), c.passages)
-        push!(psgs, diplpsgs)
+        normedpsgs = map(cn -> edited_passage(bldr, cn), c.passages)
+        push!(psgs, normedpsgs)
     end
     psgs |> Iterators.flatten |> collect |> CitableTextCorpus
 end

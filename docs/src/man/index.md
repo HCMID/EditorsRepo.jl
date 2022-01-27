@@ -35,6 +35,11 @@ diplomaticcorpus
 normalizedcorpus
 ```
 
+Classified tokenization:
+
+```@docs
+tokens
+```
 
 DSE records:
 
