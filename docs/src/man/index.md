@@ -46,6 +46,7 @@ DSE records:
 ```@docs
 dsetriples
 passagesforsurface
+diplomaticnodesforsurface
 imagesforpassage
 ```
 

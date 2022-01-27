@@ -40,7 +40,7 @@ export tokencorpus, tokenanalysis
 # DSE records
 export dsetriples
 export surfaces, passages, images
-export passagesforsurface, imagesforpassage
+export passagesforsurface, imagesforpassage, diplomaticnodesforsurface
 
 # HTML utilities
 export htmltoken

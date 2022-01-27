@@ -54,6 +54,20 @@ function passagesforsurface(r::EditingRepository, u::Cite2Urn)
     map(tr -> tr.passage, triples)
 end
 
+"""
+$(SIGNATURES)
+Compute list of passages in DSE records for a given surface.
+"""
+function diplomaticnodesforsurface(r::EditingRepository, u::Cite2Urn)
+    corpus = diplomaticcorpus(r)
+    rslts = []
+    for psgurn in passagesforsurface(r, u)
+        @warn("Compare $(psgurn) ")
+        citables = filter(n -> urncontains(psgurn, urn(n)), corpus.passages)
+        push!(rslts, citables)
+    end
+    rslts
+end
 
 """
 $(SIGNATURES)
