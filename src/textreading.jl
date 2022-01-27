@@ -16,73 +16,42 @@ function archivalcorpus(r::EditingRepository)
     map(c -> c.passages, corpora) |> vcat |> Iterators.flatten |> collect |> CitableTextCorpus 
 end
 
-#=
-"""Read source for text identified by `u`.
-
-$(SIGNATURES)    
-"""
-function textsourceforurn(repo::EditingRepository, u::CtsUrn)
-    fname = joinpath(editionsdir(repo), filename(repo, u))
-    # concat contents of files matching u
-    read(fname, String)
-end
-=#
-
-"""
-Compose an array of `CitablePassage`s for a diplomatic reading of a text identified by CtsUrn."
+""" 
+Create diplomatic editions of all texts in a repo.
 
 $(SIGNATURES)
 """
-function diplomatic_passages(r::EditingRepository, u::CtsUrn)
-    corpus = archivalcorpus(r, u)
-    #stripped = dropversion(u)
-    #fname = joinpath(editionsdir(r), filename(r, stripped))
-    #@debug("Get diplomatic for $(stripped)")
-    c = readcitable(fname, stripped, o2converter(r, droppassage(u)), FileReader)
-    #o2converter(mixedrepo, u1)
-    diplbuilder = diplomaticbuilder(r, droppassage(u))
-    map(cn -> edited_passage(diplbuilder, cn), c.passages)
+function diplomaticcorpus(r::EditingRepository)
+    psgs = []
+    for u in texturns(r)
+        fname = joinpath(editionsdir(r), filename(r, u))
+        c = readcitable(fname, u, o2converter(r, u), FileReader)
+        diplbuilder = diplomaticbuilder(r, u)
+        diplpsgs = map(cn -> edited_passage(diplbuilder, cn), c.passages)
+        push!(psgs, diplpsgs)
+    end
+    psgs |> Iterators.flatten |> collect |> CitableTextCorpus
 end
 
-#=
-"""Collect diplomatic text for a single text passage identified by URN.
-The URN should either match a citable passage, or be a containing passage
-for one or more citable passage.  Ranges URNs are not supported.
+
+""" 
+Create normalized editions of all texts in a repo.
 
 $(SIGNATURES)
 """
-function diplomatic_passagetext(r::EditingRepository, u::CtsUrn)
-	diplpassages = diplomatic_passages(r, u)
-    passage_text(diplpassages, u)
-end
-=#
-
-
-"""
-Compose an array of `CitablePassage`s for a normalized reading of a text identified by CtsUrn.
-
-$(SIGNATURES)	
-"""
-function normalized_passages(r::EditingRepository, u::CtsUrn)
-    stripped = droppassage(u)
-    fname = joinpath(editionsdir(r), filename(r, stripped))
-    c = readcitable(fname, stripped, o2converter(r, stripped), FileReader)
-    normbuilder = normalizedbuilder(r, stripped)
-    map(cn -> edited_passage(normbuilder, cn), c.passages)
+function normalizedcorpus(r::EditingRepository)
+    psgs = []
+    for u in texturns(r)
+        fname = joinpath(editionsdir(r), filename(r, u))
+        c = readcitable(fname, u, o2converter(r, u), FileReader)
+        bldr = normalizedbuilder(r, u)
+        diplpsgs = map(cn -> edited_passage(bldr, cn), c.passages)
+        push!(psgs, diplpsgs)
+    end
+    psgs |> Iterators.flatten |> collect |> CitableTextCorpus
 end
 
-#=
-"""Collect diplomatic text for a single text passage identified by URN.
-The URN should either match a citable passage, or be a containing passage
-for one or more citable passage.  Ranges URNs are not supported.
 
-$(SIGNATURES)
-"""
-function normalized_passagetext(r::EditingRepository, u::CtsUrn)
-	normpassages = normalized_passages(r, u)
-    passage_text(normpassages, u)
-end
-=#
 
 """Select from a list passages those URN matching a given URN,
 and omit "ref" passages conventionally used for non-text content.
@@ -94,26 +63,6 @@ function textpassages(c::CitableTextCorpus, u::CtsUrn)
     filtered = filter(cn -> urncontains(generalized, cn.urn), c.passages)
     filter(cn -> ! isref(cn.urn), filtered) |> CitableTextCorpus 
 end
-
-
-#=
-"""Collect text from a list of passages for a text passage identified by URN.
-The URN should either match a citable passage, or be a containing passage
-for one or more citable passages.  Ranges URNs are not supported.
-
-$(SIGNATURES)    
-"""    
-function passage_text(psgs::Vector{CitablePassage}, u::CtsUrn)
-    psgs = textpassages(psgs, u)
-	if length(psgs) > 0
-        content = collect(map(n -> n.text, psgs))
-        join(content, "\n")
-	else 
-		""
-    end
-end
-=#
-
 
 
 

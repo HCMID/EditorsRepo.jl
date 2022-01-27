@@ -24,7 +24,7 @@ export EditingRepository, repository
 export configdir, dsedir, editionsdir
 
 # Citation configuration
-export citationconfig, missingcitation
+export citationconfig #, missingcitation
 export filename, o2converter,
     diplomaticbuilder, normalizedbuilder, orthography
 
@@ -32,26 +32,21 @@ export filename, o2converter,
 export textcatalog,  texturns
 
 # Text contents
-export xmlfiles
 export archivalcorpus
-export diplomatic_passages, normalized_passages
+export diplomaticcorpus
+export normalizedcorpus
 
 
-
-
+# DSE records
 export dsetriples
 export surfaces, passages, images
+
 #=
-export surfaces,  surfaceDse
-
-
-export textcatalog, textcatalog_df, texturns
-
+# Validation:
 export citationmatches, citationonly, catalogonly
 export filesmatch, filesonly, citedonly
 export missingcitation
 
-export diplomatic_passagetext, normalized_passagetext, textpassages
 export normalized_tokens, lextokens
 =#
 
