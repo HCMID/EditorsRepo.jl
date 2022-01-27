@@ -34,7 +34,6 @@ export textcatalog,  texturns
 # Text contents
 export xmlfiles
 export archivalcorpus
-export textsourceforurn
 export diplomatic_passages, normalized_passages
 
 
