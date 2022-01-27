@@ -4,20 +4,24 @@ $(SIGNATURES)
 """
 function tokencorpus(r::EditingRepository)
        corpora = []
+
+       normed = normalizedcorpus(r)
        for u in texturns(r)
               tokenlist = []
-              ortho = orthography(r, u)
-              bldr = normalizedbuilder(r, u)
+              #ortho = orthography(r, u)
+              #bldr = normalizedbuilder(r, u)
 
-              fname = joinpath(editionsdir(r), filename(r, u))
-              archival = readcitable(fname, u, o2converter(r, u), FileReader)
-              normalized = map(cn -> edited_passage(bldr, cn), archival.passages)
+              #fname = joinpath(editionsdir(r), filename(r, u))
+              #archival = readcitable(fname, u, o2converter(r, u), FileReader)
+              #normalized = map(cn -> edited_passage(bldr, cn), archival.passages)
               #for t in map(cn -> cn.text, normalized)
+              #=
               for cn in normalized
-                     tokensinpassage = tokenize(cn.text, ortho)
+                     tokensinpassage = tokenize(cn.text, ortho) #, exemplar = "tokens")
                      tokenpassages = passages_for_tokens(tokensinpassage, cn.urn)
                      push!(tokenlist, tokenpassages)
               end
+              =#
               flattokens = tokenlist |> Iterators.flatten |> collect
               push!(corpora, flattokens)
        end
