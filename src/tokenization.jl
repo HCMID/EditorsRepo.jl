@@ -26,9 +26,6 @@ function tokencorpus(r::EditingRepository)
        CitableTextCorpus(rslt)
 end
 
-
-
-
 """Create a list of `CitablePassage`s from a list of `OrthographicToken`s 
 and a passage URN.
 
@@ -57,4 +54,17 @@ function passages_for_tokens(tkns::Vector{OrthographicToken}, urn::CtsUrn)
         end
     end
     CitablePassages
+end
+
+
+"""For a single token citable as a `CitablePassage`, find its
+token class and determine if it is orthographically valid.
+$(SIGNATURES)
+Returns a tuple of a token type and a boolean value.
+"""
+function tokenanalysis(r::EditingRepository, cn::CitablePassage)
+    queryurn = dropversion(cn.urn) |> droppassage
+    ortho = orthography(r, queryurn)
+    ttype = tokenize(cn.text, ortho)[1].tokencategory
+    (ttype, validstring(cn.text, ortho))
 end
