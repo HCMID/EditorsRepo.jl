@@ -13,6 +13,7 @@ import EditionBuilders: normalizedbuilder
 import EditionBuilders: diplomaticbuilder
 
 using CitableObject
+using CitableImage
 
 using CitablePhysicalText
 import CitablePhysicalText: surfaces
@@ -45,10 +46,12 @@ export tokencorpus, tokenanalysis
 # DSE records
 export dsetriples
 export surfaces, passages, images
+export surfacevizpairs
 export passagesforsurface, imagesforpassage, diplomaticnodesforsurface
 
 # HTML utilities
 export htmltoken
+export indexingaccuracy
 
 
 #=
@@ -62,6 +65,7 @@ export normalized_tokens, lextokens
 
 include("repository.jl")
 include("citationconfig.jl")
+include("imageconfig.jl")
 include("textcatalog.jl")
 include("textreading.jl")
 

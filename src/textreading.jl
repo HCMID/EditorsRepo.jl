@@ -52,8 +52,8 @@ end
 
 
 
-"""Select from a list passages those URN matching a given URN,
-and omit "ref" passages conventionally used for non-text content.
+"""Select from a corpus those matching a given URN,
+omitting `ref` passages conventionally used for non-textual metadata.
 
 $(SIGNATURES)
 """

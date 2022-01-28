@@ -15,3 +15,20 @@ function htmltoken(r::EditingRepository, tkn::CitablePassage)
         analysis[1] == PUNCTUATION ? tkn.text : " " * tkn.text
     end
 end
+
+"""Compose HTML for verification of DSE indexing of a given surface.
+$(SIGNATURES)
+Juxtapose diplomatic edition of text with displayed image.
+"""
+function indexingaccuracy(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT)
+    vizprs = surfacevizpairs(r, surf)
+    corpus = diplomaticcorpus(r)
+    @warn(ict)
+    @warn(iiif)
+
+end
+
+
+
+
+# linky = linkedMarkdownImage(ict, img, service; ht=500, caption="Proclus")

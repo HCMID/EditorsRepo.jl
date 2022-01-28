@@ -82,3 +82,12 @@ function imagesforpassage(r::EditingRepository, u::CtsUrn)
     end
     map(tr -> tr.image, triples)
 end
+
+
+"""Find pairs of text passage and image for a surface.
+$(SIGNATURES)
+"""
+function surfacevizpairs(r::EditingRepository, surf::Cite2Urn)
+    triples = filter(tr -> urncontains(surf, tr.surface), dsetriples(r))
+    map(tr -> (tr.passage, tr.image), triples)
+end
