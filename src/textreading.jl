@@ -27,7 +27,9 @@ function diplomaticcorpus(r::EditingRepository)
     for u in texturns(r)
         diplbuilder = diplomaticbuilder(r, u)
         archivecorpus = filter(p -> urncontains(u, p.urn),  archive.passages) |> CitableTextCorpus
-        push!(corpora, edited(diplbuilder, archivecorpus))
+
+        versionid = workparts(u)[3]
+        push!(corpora, edited(diplbuilder, archivecorpus, edition = versionid, exemplar = "diplomatic"))
    
     end
     map(c -> c.passages, corpora) |> Iterators.flatten |> collect |> CitableTextCorpus
@@ -45,7 +47,8 @@ function normalizedcorpus(r::EditingRepository)
     for u in texturns(r)
         builder = normalizedbuilder(r, u)
         archivecorpus = filter(p -> urncontains(u, p.urn),  archive.passages) |> CitableTextCorpus
-        push!(corpora, edited(builder, archivecorpus))
+        versionid = workparts(u)[3]
+        push!(corpora, edited(builder, archivecorpus, edition = versionid, exemplar = "normalized"))
     end
     corpora |> Iterators.flatten |> collect |> CitableTextCorpus
 end
@@ -62,8 +65,6 @@ function textpassages(c::CitableTextCorpus, u::CtsUrn)
     filtered = filter(cn -> urncontains(generalized, cn.urn), c.passages)
     filter(cn -> ! isref(cn.urn), filtered) |> CitableTextCorpus 
 end
-
-
 
 """True if last component of CTS URN passage is "ref".
 MID convention is to exclude elements, like notes on HMT scholia,  

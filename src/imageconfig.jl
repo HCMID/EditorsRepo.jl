@@ -14,8 +14,3 @@ DEFAULT_ICT = "https://www.homermultitext.org/ict2/?"
 DEFAULT_IIIF = EditorsRepo.default_iiif()
 
 
-
-
-#= Example of invocation:
-linky = linkedMarkdownImage(ict, img, service; ht=500, caption="Proclus")
-=#
