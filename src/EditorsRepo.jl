@@ -2,23 +2,22 @@ module EditorsRepo
 
 #using Base: nothing_sentinel
 using Test, Documenter, DocStringExtensions
+using CSV, TypedTables
 
 using CitableBase
-using CitableObject
-using CSV, TypedTables
 
 using CitableText, CitableCorpus
 using CitableTeiReaders
+using EditionBuilders
+import EditionBuilders: normalizedbuilder
+import EditionBuilders: diplomaticbuilder
+
+using CitableObject
 
 using CitablePhysicalText
 import CitablePhysicalText: surfaces
 import CitablePhysicalText: images
 import CitablePhysicalText: passages
-
-import EditionBuilders
-using EditionBuilders: normalizedbuilder
-using EditionBuilders: diplomaticbuilder
-
 
 # All recognized orthographies:
 using Orthography
