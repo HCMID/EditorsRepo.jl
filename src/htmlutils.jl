@@ -58,35 +58,3 @@ function indexingcompleteness(r::EditingRepository, surf::Cite2Urn; iiif = Edito
     imgmd = markdownImage(dropsubref(images[1]), iiif; ht = height)
     string("[", imgmd, "](", ictlink, ")")
 end
-
-#=
-function completenessView(urn, repo)
-     
-	# Group images with ROI into a dictionary keyed by image
-	# WITHOUT RoI.
-	grouped = Dict()
-	for row in eachrow(surfaceDse(repo, urn))
-		trimmed = CitableObject.dropsubref(row.image)
-		if haskey(grouped, trimmed)
-			push!(grouped[trimmed], row.image)
-		else
-			grouped[trimmed] = [row.image]
-		end
-	end
-
-	mdstrings = []
-	for k in keys(grouped)
-		thumb = markdownImage(k, iiifsvc(), thumbht)
-		params = map(img -> "urn=" * img.urn * "&", grouped[k]) 
-		lnk = ict() * join(params,"") 
-		push!(mdstrings, "[$(thumb)]($(lnk))")
-		
-	end
-	join(mdstrings, " ")
-
-end
-
-
-http://www.homermultitext.org/ict2/?urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2689,0.1740,0.3689,0.01957&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2699,0.1940,0.3674,0.01969&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2696,0.2165,0.3718,0.01896&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2705,0.2367,0.2901,0.01798&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2714,0.2539,0.3276,0.02177&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2751,0.2729,0.3268,0.01969&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2733,0.2904,0.3552,0.01969&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2766,0.3119,0.3474,0.01871&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2789,0.3319,0.3580,0.01932&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2795,0.5843,0.3273,0.01798&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2492,0.5083,0.3841,0.04636&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2630,0.5479,0.3916,0.01541&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2740,0.5679,0.3532,0.01394&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2849,0.6019,0.3374,0.02043&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2769,0.6189,0.3185,0.01835&urn=urn:cite2:citeecod:bern88imgs.v1:bern88_004v@0.2802,0.6403,0.3224,0.01614&
-
-=#
