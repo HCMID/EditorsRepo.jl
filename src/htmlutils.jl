@@ -64,11 +64,14 @@ $(SIGNATURES)
 """
 function orthographicvalidity_html(r::EditingRepository, surf::Cite2Urn)
     tkns = analyzedtokens(r)
+    catalog = textcatalog(r)
+
     psgs = passageurnsforsurface(r, surf)
     results = []
     for psg in psgs
         ref_urn = droppassage(psg) |> dropexemplar
         ortho = orthography(r, ref_urn)
+        catentry =  filter(e -> urncontains(ref_urn, e.urn), catalog.entries)[1]
 
         psgurn = dropsubref(psg)
         if CitableText.isrange(psgurn)
@@ -76,13 +79,14 @@ function orthographicvalidity_html(r::EditingRepository, surf::Cite2Urn)
             psgurn = addpassage(psgurn, ref1)
         end
     
-        psgstring = ["<b>", passagecomponent(psgurn) , "</b>: "]
+        
+        psgstring = [textgroup(catentry), ", <i>", work(catentry), "</i> (", version(catentry), "), ", "<b>", passagecomponent(psgurn) , "</b>: "]
         matchingpairs = filter(pr -> urncontains(psgurn, pr[1].urn),  tkns)
         for pr in matchingpairs
             ok = validstring(pr[1].text, ortho)
             push!(psgstring, htmltoken(pr[1], pr[2], ok))
         end
-        push!(results, join(psgstring))
+        push!(results, "<p>" * join(psgstring) * "</p>")
     end
     join(results, "\n\n")
 end
