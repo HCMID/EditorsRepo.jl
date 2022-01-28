@@ -52,6 +52,7 @@ export passagesforsurface, imagesforpassage, diplomaticnodesforsurface
 # HTML utilities
 export htmltoken
 export indexingaccuracy
+export indexingcompleteness
 
 
 #=
