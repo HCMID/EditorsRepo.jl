@@ -8,17 +8,23 @@ using CitableObject
 using CSV, TypedTables
 
 using CitableText, CitableCorpus
-using CitableTeiReaders, EditionBuilders
+using CitableTeiReaders
 
 using CitablePhysicalText
 import CitablePhysicalText: surfaces
 import CitablePhysicalText: images
 import CitablePhysicalText: passages
 
+import EditionBuilders
+using EditionBuilders: normalizedbuilder
+using EditionBuilders: diplomaticbuilder
+
+
 # All recognized orthographies:
 using Orthography
-using Lycian, PolytonicGreek, ManuscriptOrthography
-# AtticGreek
+using Lycian
+using PolytonicGreek, ManuscriptOrthography
+using AtticGreek
 
 # Repository organization
 export EditingRepository, repository
@@ -26,8 +32,7 @@ export configdir, dsedir, editionsdir
 
 # Citation configuration
 export citationconfig #, missingcitation
-export filename, o2converter,
-    diplomaticbuilder, normalizedbuilder, orthography
+export filename, o2converter, orthography
 
 # Text catalog    
 export textcatalog,  texturns
