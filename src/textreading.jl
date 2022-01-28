@@ -22,15 +22,15 @@ Create diplomatic editions of all texts in a repo.
 $(SIGNATURES)
 """
 function diplomaticcorpus(r::EditingRepository)
-    psgs = []
+    corpora = CitableTextCorpus[]
+    archive = archivalcorpus(r) 
     for u in texturns(r)
-        fname = joinpath(editionsdir(r), filename(r, u))
-        c = readcitable(fname, u, o2converter(r, u), FileReader)
         diplbuilder = diplomaticbuilder(r, u)
-        diplpsgs = map(cn -> edited_passage(diplbuilder, cn), c.passages)
-        push!(psgs, diplpsgs)
+        archivecorpus = filter(p -> urncontains(u, p.urn),  archive.passages) |> CitableTextCorpus
+        push!(corpora, edited(diplbuilder, archivecorpus))
+   
     end
-    psgs |> Iterators.flatten |> collect |> CitableTextCorpus
+    map(c -> c.passages, corpora) |> Iterators.flatten |> collect |> CitableTextCorpus
 end
 
 
@@ -40,15 +40,14 @@ Create normalized editions of all texts in a repo.
 $(SIGNATURES)
 """
 function normalizedcorpus(r::EditingRepository)
-    psgs = []
+    corpora = CitableTextCorpus[]
+    archive = archivalcorpus(r) 
     for u in texturns(r)
-        fname = joinpath(editionsdir(r), filename(r, u))
-        c = readcitable(fname, u, o2converter(r, u), FileReader)
-        bldr = normalizedbuilder(r, u)
-        normedpsgs = map(cn -> edited_passage(bldr, cn), c.passages)
-        push!(psgs, normedpsgs)
+        builder = normalizedbuilder(r, u)
+        archivecorpus = filter(p -> urncontains(u, p.urn),  archive.passages) |> CitableTextCorpus
+        push!(corpora, edited(builder, archivecorpus))
     end
-    psgs |> Iterators.flatten |> collect |> CitableTextCorpus
+    corpora |> Iterators.flatten |> collect |> CitableTextCorpus
 end
 
 

@@ -13,7 +13,7 @@ function tokencorpus(r::EditingRepository)
 
               #fname = joinpath(editionsdir(r), filename(r, u))
               #archival = readcitable(fname, u, o2converter(r, u), FileReader)
-              #normalized = map(cn -> edited_passage(bldr, cn), archival.passages)
+              #normalized = map(cn -> edited(bldr, cn), archival.passages)
               #for t in map(cn -> cn.text, normalized)
               #=
               for cn in normalized
