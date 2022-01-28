@@ -1,16 +1,26 @@
 
-@testset "Test constructing repository instance" begin
+@testset "Test constructing repository directly from relative references" begin
+    relativedirs = EditingRepository("data/lycian/editing/", "data/lycian/dse/", "data/lycian/config/")
+    @test  isa(relativedirs, EditingRepository)
 
-    #repo = repository("data/lycian"; editions = "editing")#, "dse", "config")
-    #@test  isa(repo, EditingRepository)
-
-    trailers = EditingRepository("data/lycian/editing/", "data/lycian/dse/", "data/lycian/config/")
-    @test  isa(trailers, EditingRepository)
-    @test trailers.editions == "data/lycian/editing/"
+    @test editionsdir(relativedirs) == "data/lycian/editing/"
+    @test configdir(relativedirs) == "data/lycian/config/"
+    @test dsedir(relativedirs) == "data/lycian/dse/"
 
     # Directories must exist:
     @test_throws ArgumentError("DSE directory data/lycian/MISSING does not exist.") EditingRepository("data/lycian/editing/", "data/lycian/MISSING", "data/lycian/config")
-    #@test_throws ArgumentError("Editing directory data/lycian/MISSING does not exist.") EditingRepository("data/lycian/", "MISSING", "dse", "config")
-    #@test_throws ArgumentError("Configuration directory data/lycian/MISSING does not exist.") EditingRepository("data/lycian/", "editing", "dse", "MISSING")
+   
+end
 
+
+
+@testset "Test constructing repository with repository function" begin
+    lycdir = joinpath("data", "lycian")
+    lycrepo = repository(lycdir, editions = "editing")
+    
+    @test  isa(lycrepo, EditingRepository)
+
+    @test editionsdir(lycrepo) == "data/lycian/editing"
+    @test configdir(lycrepo) == "data/lycian/config"
+    @test dsedir(lycrepo) == "data/lycian/dse"
 end

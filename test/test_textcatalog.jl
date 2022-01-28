@@ -1,13 +1,11 @@
+@testset "Test reading text catalog" begin
+    mixeddir = joinpath("data", "mixedrepo")
+    mixedrepo = repository(mixeddir, editions = "editing")
+    cat =  textcatalog(mixedrepo)
 
-@testset "Test finding xml files" begin
-    lyctestrepo  = EditingRepository("data/lycian/editing", "data/lycian/dse", "data/lycian/config")
-    catalog = textcatalog(lyctestrepo, "catalog.cex")
-    @test length(catalog) ==  1
-end
+    @test cat isa TextCatalogCollection
 
-
-@testset "Test creating DF of cataloged files" begin
-    lyctestrepo  = EditingRepository("data/lycian/editing", "data/lycian/dse", "data/lycian/config")
-    catalogdf = textcatalog_df(lyctestrepo)
-    @test nrow(catalogdf) == 1
+    onlineurns = texturns(mixedrepo)
+    @test length(onlineurns) == 3
+    # Test different signatures for optional params
 end

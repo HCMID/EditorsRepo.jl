@@ -1,47 +1,85 @@
 module EditorsRepo
 
-using Base: nothing_sentinel
+#using Base: nothing_sentinel
 using Test, Documenter, DocStringExtensions
+using CSV, TypedTables
 
 using CitableBase
-using CitableObject
-using CSV, DataFrames
 
 using CitableText, CitableCorpus
-using CitableTeiReaders, EditionBuilders
+using CitableTeiReaders
+using EditionBuilders
+import EditionBuilders: normalizedbuilder
+import EditionBuilders: diplomaticbuilder
+
+using CitableObject
+using CitableImage
+
+using CitablePhysicalText
+import CitablePhysicalText: surfaces
+import CitablePhysicalText: images
+import CitablePhysicalText: passages
+
 # All recognized orthographies:
 using Orthography
-using Lycian, PolytonicGreek, AtticGreek, ManuscriptOrthography
+using Lycian
+using PolytonicGreek, ManuscriptOrthography
+using AtticGreek
 
-
+# Repository organization
 export EditingRepository, repository
+export configdir, dsedir, editionsdir
 
-export dsefiles, dse_df
-export surfaces, passages, images, surfaceDse
+# Citation configuration
+export citationconfig #, missingcitation
+export filename, o2converter, orthography
 
+# Text catalog    
+export textcatalog,  texturns
+
+# Text contents
 export archivalcorpus
-export textcatalog, textcatalog_df, texturns
-export xmlfiles, xmlfiles_df
+export diplomaticcorpus
+export normalizedcorpus
+export analyzedtokens
+
+# DSE records
+export dsetriples
+export surfaces, passages, images
+export surfacevizpairs
+export passageurnsforsurface, imagesforpassage
+export diplomaticforsurface, normalizedforsurface, tokensforsurface
+
+# HTML utilities
+export htmltoken
+export indexingaccuracy_html
+export indexingcompleteness_html
+export orthographicvalidity_html
+
+
+#=
+# Validation:
 export citationmatches, citationonly, catalogonly
 export filesmatch, filesonly, citedonly
 export missingcitation
-
-export citation_df, filename, o2converter, 
-    diplomaticbuilder, normalizedbuilder, orthography
-export textsourceforurn, ohco2forurn, orthographyforurn, diplomaticforurn, normalizerforurn
-
-export diplomatic_passages, normalized_passages
-export diplomatic_passagetext, normalized_passagetext, textpassages
-export normalized_tokens, lextokens
+=#
 
 include("repository.jl")
-include("textcatalog.jl")
-include("dse.jl")
-include("xmlarchive.jl")
 include("citationconfig.jl")
-include("textconfig.jl")
+include("imageconfig.jl")
+include("textcatalog.jl")
+
 include("textreading.jl")
-include("validateconfig.jl")
+include("xmlfiles.jl")
+
+include("dse.jl")
+
 include("tokenization.jl")
+
+include("htmlutils.jl")
+
+#=
+include("validateconfig.jl")
+=#
 
 end # module

@@ -1,17 +1,18 @@
-"""Compose an edition of normalized tokens for allt exts in repository.
 
+"""Compute a list of `OrthographicToken`s based on the normalized edition of all texts in the repository.  The result is a list of tuples pairing a citable text passage for the token and its type.
 $(SIGNATURES)
 """
-function normalized_tokens(repo)
-    textconfig = citation_df(repo)  
-    ## REVERSE THIS:  go from URNs in textconfig to filter texts
-    # for particular orthography
-#=  psgs = repo |> EditorsRepo.normedpassages
+function analyzedtokens(r::EditingRepository) :: Vector{Tuple{CitablePassage, TokenCategory}}
+    normed = normalizedcorpus(r)
+    tkntuples = []
+    for u in texturns(r)
+        ortho = orthography(r, u)
+        corpus = filter(psg -> urncontains(u, psg.urn),  normed.passages) |> CitableTextCorpus
 
-        normalizedpassages = repo |> EditorsRepo.normedpassages
-        psgs = textpassages(normalizedpassages, urn)
-    =#
-    nothing
+
+        push!(tkntuples,  tokenize(corpus, ortho, edition = workparts(u)[3], exemplar = "token"))
+    end
+    tkntuples |> Iterators.flatten |> collect
 end
 
 """Create a list of `CitablePassage`s from a list of `OrthographicToken`s 
@@ -23,7 +24,7 @@ Passage URNs are extended with an additional level of citation for the individua
 token.  This citation tier is made up of sequential numbers for lexical tokens,
 and token number + a character for other kinds of tokens (`1a`, `1b`, etc.).
 """
-function passages_for_tokens(tkns, urn::CtsUrn)
+function passages_for_tokens(tkns::Vector{OrthographicToken}, urn::CtsUrn)
     CitablePassages = []
     n1 = 0 # Int value before 1
     n2 = 96 # Char value before 'a'
@@ -45,150 +46,14 @@ function passages_for_tokens(tkns, urn::CtsUrn)
 end
 
 
-"""Create a list of `CitablePassage`s for all lexical tokens in a list of `OrthographicToken`s 
-for a given URN.
-
+"""For a single token citable as a `CitablePassage`, find its
+token class and determine if it is orthographically valid.
 $(SIGNATURES)
-
-Passages URNs are extended with an additional level of citation for the individual
-token.  This citation tier is made up of sequential numbers for lexical tokens,
-and token number + a character for other kinds of tokens (`1a`, `1b`, etc.).
+Returns a tuple of a token type and a boolean value.
 """
-function lexpassages_for_tokens(tkns, urn::CtsUrn)
-    CitablePassages = []
-    n = 0
-    for tkn in tkns
-        if tkn.tokencategory == Orthography.LexicalToken()
-            n = n + 1
-            u = CtsUrn(string(urn.urn, ".", n))
-            push!(CitablePassages, CitablePassage(u, tkn.text))
-            
-        else
-            # Omit
-        end
-    end
-    CitablePassages
-end
-
-
-"""Compose an edition of lexical tokens matching `urn`.
-
-$(SIGNATURES)
-"""
-function lextokens(repo, urn)
-    textconfig = citation_df(repo)  
-    ortho = orthographyforurn(textconfig, urn)
-    if isnothing(ortho)
-        @warn("No orthography configured for $urn")
-        nothing
-
-    else
-        normalized = repo |> EditorsRepo.normedpassages
-        psgs = textpassages(normalized, urn)
-        tknlist = []
-        i = 0
-        for psg in psgs
-            i = i + 1
-            @info("tokenizing $(psg.urn.urn) $i / $(length(psgs)) passages ")
-            txt = normalized_passagetext(repo, psg.urn)
-            @debug("Normalized text to $txt")
-            cns = lexpassages_for_tokens(tokenize(txt, ortho), psg.urn)
-            push!(tknlist, cns)
-        end
-        tknlist |> Iterators.flatten |> collect
-    end
-end
-
-"""Compose an edition of normalized tokens matching `urn`.
-
-$(SIGNATURES)
-"""
-function normalized_tokens(repo::EditingRepository, urn::CtsUrn)
-    textconfig = citation_df(repo)  
-    ortho = orthographyforurn(textconfig, urn)
-    if isnothing(ortho)
-        @warn("No orthography configured for $urn")
-        nothing
-
-    else
-        normalized = repo |> EditorsRepo.normedpassages
-        psgs = textpassages(normalized, urn)
-        tknlist = []
-        for psg in psgs
-            # Set version to original!
-            #nopsg = droppassage(psg.urn)
-            txt = normalized_passagetext(repo, psg.urn)
-            @debug("Normalized text to $txt")
-            cns = passages_for_tokens(tokenize(txt, ortho), psg.urn)
-            push!(tknlist, cns)
-        end
-        tknlist |> Iterators.flatten |> collect
-    end
-end
-
-
-
-
-
-"""Collect diplomatic text for a single text passage identified by URN.
-The URN should either match a citable passage, or be a containing passage
-for one or more citable passage.  Ranges URNs are not supported.
-
-$(SIGNATURES)
-"""
-function diplomatic_passagetext(repo, urn)
-	diplomaticpassages = repo |> EditorsRepo.diplpassages
-    passage_text(diplomaticpassages, urn)
-end
-
-
-"""Collect diplomatic text for a text passage identified by URN.
-The URN should either match a citable passage, or be a containing passage
-for one or more citable passages.  Ranges URNs are not supported.
-
-$(SIGNATURES)
-"""
-function normalized_passagetext(repo, urn)
-	normalizedpassages = repo |> EditorsRepo.normedpassages
-    passage_text(normalizedpassages, urn)
-end
-
-"""Select from a list passages those URN matching a given URN,
-and omit "ref" passages conventionally used for non-text content.
-
-$(SIGNATURES)
-"""
-function textpassages(psgs, urn)
-    generalized = CitableText.dropversion(urn)
-    filtered = filter(cn -> CitableText.urncontains(generalized, CitableText.dropversion(cn.urn)), psgs)
-    dropreff = filter(cn -> ! isref(cn.urn), filtered)
-    dropreff 
-end
-
-"""Collect text from a list of passages for a text passage identified by URN.
-The URN should either match a citable passage, or be a containing passage
-for one or more citable passages.  Ranges URNs are not supported.
-
-$(SIGNATURES)    
-"""    
-function passage_text(psgs, urn)
-    psgs = textpassages(psgs, urn)
-	if length(psgs) > 0
-        content = collect(map(n -> n.text, psgs))
-        join(content, "\n")
-	else 
-		""
-    end
-end
-
-
-
-"""True if last component of CTS URN passage is "ref".
-MID convention is to exclude elements, like notes on HMT scholia,  
-with this identifier.
-
-$(SIGNATURES)
-"""
-function isref(urn::CtsUrn)::Bool
-    passageparts(urn)[end] == "ref"
+function analyzedtokens(r::EditingRepository, cn::CitablePassage)
+    queryurn = dropversion(cn.urn) |> droppassage
+    ortho = orthography(r, queryurn)
+    ttype = tokenize(cn.text, ortho)[1].tokencategory
+    (ttype, validstring(cn.text, ortho))
 end

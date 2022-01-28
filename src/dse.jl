@@ -2,96 +2,119 @@
 $(SIGNATURES)
 List `.cex` files in DSE directory.
 """
-function dsefiles(repository::EditingRepository)
-    fullpath = readdir(repository.dse)
-    filenames = filter(f -> endswith(f, "cex"), fullpath)        
-	filenames
+function dsetriples(repo::EditingRepository)
+    dsecollections = []
+    fullpath = dsedir(repo) |> readdir
+    fnames = filter(f -> endswith(f, "cex"), fullpath)        
+    for filename in map(f -> joinpath(dsedir(repo), f) , fnames)
+        push!(dsecollections, fromcex(filename, DSECollection, FileReader))
+    end
+    map(c -> c.data, dsecollections)  |> Iterators.flatten |> collect
 end
 
-"""Read a single DSE file into a DataFrame.
-The file should have a three line cite relation header that looks
-like
-
-```
-#!citerelationset
-urn|urn:cite2:trmilli:dse.v1:tl25
-label|Collection of DSE records for TL25
-```
-
-followed by one header line, then data lines.
-
-$(SIGNATURES)
-
-"""
-function readdse(f)
-	arr = CSV.File(f, header=4, delim="|") |> Array
-	# text, image, surface
-	passages = map(row -> CtsUrn(row[1]), arr)
-	images = map(row -> Cite2Urn(row[2]), arr)
-	surfaces = map(row -> Cite2Urn(row[3]), arr)
-	DataFrame(passage = passages, image = images, surface = surfaces)
-end
-
-"""
-$(SIGNATURES)
-Merge all DSE data into a single dataframe.
-"""
-function dse_df(repository::EditingRepository)
-    alldse = dsefiles(repository)
-    dirpath = repository.dse * "/"
-	fullnames = map(f ->  dirpath * f, alldse)
-    dfs = map(f -> EditorsRepo.readdse(f), fullnames)
-    vcat(dfs...)
-end
 
 """
 $(SIGNATURES)
 Compute list of unique surfaces in DSE records.
 """
 function surfaces(repo::EditingRepository)
-	df = dse_df(repo)
-	unique(df.surface)
+    urnvals = map(trip -> trip.surface, dsetriples(repo))
+    # why is unique broken on Cite2Urns when `isequal` works correctly?
+    map(u -> string(u), urnvals) |> unique .|> Cite2Urn
 end
 
 
 """
 $(SIGNATURES)
-Compute list of passages in DSE records.
-"""
-function passages(repo::EditingRepository)
-	df = dse_df(repo)
-	df.passage
-end
-
-
-"""
-$(SIGNATURES)
-Compute list of passages in DSE records.
+Compute list of unique images in DSE records.
 """
 function images(repo::EditingRepository)
-	df = dse_df(repo)
-	df.image
-end
-
-"""Find URN for a single passage from DSE record, which could
-include a range with subrefs within a single passage.
-$(SIGNATURES)
-"""
-function baseurn(urn::CtsUrn)
-	trimmed = CitableText.dropsubref(urn)
-	if CitableText.isrange(trimmed)
-		psg = CitableText.range_begin(trimmed)
-		CitableText.addpassage(urn,psg)
-	else
-		urn
-	end
+    urnvals = map(trip -> trip.image, dsetriples(repo)) .|> dropsubref
+    # why is unique broken on Cite2Urns when `isequal` works correctly?
+    map(u -> string(u), urnvals) |> unique .|> Cite2Urn
 end
 
 
-"""Find DSE records for surface currently selected in popup menu.
+"""
+$(SIGNATURES)
+Compute list of unique surfaces in DSE records.
+"""
+function passages(repo::EditingRepository)
+    urnvals = map(trip -> trip.passage, dsetriples(repo))
+    # why is unique broken on Cite2Urns when `isequal` works correctly?
+    map(u -> string(u), urnvals) |> unique .|> CtsUrn
+end
+
+"""
+$(SIGNATURES)
+Compute list of passages in DSE records for a given surface.
+"""
+function passageurnsforsurface(r::EditingRepository, u::Cite2Urn)
+    triples = filter(tr -> urncontains(u, tr.surface), dsetriples(r))
+    map(tr -> tr.passage, triples)
+end
+
+"""
+$(SIGNATURES)
+Assemble citable passages in diplomatic edition for a given surface.
+"""
+function diplomaticforsurface(r::EditingRepository, u::Cite2Urn)
+    corpus = diplomaticcorpus(r)
+    rslts = []
+    for psgurn in passageurnsforsurface(r, u)
+        @debug("Compare $(psgurn) ")
+        citables = filter(n -> urncontains(psgurn, urn(n)), corpus.passages)
+        push!(rslts, citables)
+    end
+    rslts |> Iterators.flatten |> collect
+end
+
+
+"""
+$(SIGNATURES)
+Assemble citable passages in normalized edition for a given surface.
+"""
+function normalizedforsurface(r::EditingRepository, u::Cite2Urn)
+    corpus = normalizedcorpus(r)
+    rslts = []
+    for psgurn in passageurnsforsurface(r, u)
+        @debug("Compare $(psgurn) ")
+        citables = filter(n -> urncontains(psgurn, urn(n)), corpus.passages)
+        push!(rslts, citables)
+    end
+    rslts |> Iterators.flatten |> collect
+end
+
+function tokensforsurface(r::EditingRepository, u::Cite2Urn)
+    corpus = tokencorpus(r)
+    rslts = []
+    for psgurn in passageurnsforsurface(r, u)
+        @debug("Compare $(psgurn) ")
+        citables = filter(n -> urncontains(psgurn, urn(n)), corpus.passages)
+        push!(rslts, citables)
+    end
+    rslts |> Iterators.flatten |> collect
+end
+
+"""
+$(SIGNATURES)
+Compute list of images in DSE records for a given passage.
+"""
+function imagesforpassage(r::EditingRepository, u::CtsUrn)
+    triples = filter(tr -> urncontains(u, tr.passage), dsetriples(r))
+    if isempty(triples)
+        @warn("No DSE records found for $(u)")
+    elseif length(triples) > 1
+        @warn("$(length(triples)) DSE records found for $(u)")
+    end
+    map(tr -> tr.image, triples)
+end
+
+
+"""Find pairs of text passage and image for a surface.
 $(SIGNATURES)
 """
-function surfaceDse(repo, surfurn)
-    alldse = dse_df(repo)
-	filter(row -> row.surface == surfurn, alldse)
+function surfacevizpairs(r::EditingRepository, surf::Cite2Urn)
+    triples = filter(tr -> urncontains(surf, tr.surface), dsetriples(r))
+    map(tr -> (tr.passage, tr.image), triples)
 end

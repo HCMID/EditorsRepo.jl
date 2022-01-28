@@ -1,201 +1,115 @@
-"""Read citation configuration into an Array.
+"""Read citation configuration into a Table.
 
 $(SIGNATURES)
 """
-function citation(repo::EditingRepository)
-	arr = CSV.File(repo.configs * "/citation.cex", skipto=2, delim="|", 
-	quotechar='&', escapechar='&') |> Array
-end
+function citationconfig(repo::EditingRepository; filename = "citation.cex", delimiter = "|")
+	citecex = joinpath(repo.configs, "citation.cex")
+	inferred = CSV.File(citecex, skipto=2, delim=delimiter, 
+	quotechar='&', escapechar='&') |> Table
 
-"""Read citation configuration into a DataFrame.
 
-$(SIGNATURES)
-"""
-function citation_df(repo::EditingRepository)
-	arr = CSV.File(repo.configs * "/citation.cex", skipto=2, delim="|", 
-	quotechar='&', escapechar='&') |> Array
-	urns = map(row -> CtsUrn(row[1]), arr)
-	files = map(row -> row[2], arr)
-	ohco2s = map(row -> row[3], arr)
-	dipls = map(row -> row[4], arr)
-	norms = map(row -> row[5], arr)
-	orthos = map(row -> row[6], arr)
-
-	df = DataFrame(urn = urns, file = files, 
-	o2converter = ohco2s, diplomatic = dipls,
-	normalized = norms, orthography = orthos)
-	dropmissing(df)
-end
-
-"""
-$(SIGNATURES)
-List entries with `missing` values in citation configuration.
-"""
-function missingcitation(repo::EditingRepository)
-	arr = CSV.File(repo.configs * "/citation.cex", skipto=2, delim="|", 
-	quotechar='&', escapechar='&') |> Array
-	urns = map(row -> CtsUrn(row[1]), arr)
-	files = map(row -> row[2], arr)
-	ohco2s = map(row -> row[3], arr)
-	dipls = map(row -> row[4], arr)
-	norms = map(row -> row[5], arr)
-	orthos = map(row -> row[6], arr)
-
-	df = DataFrame(urn = urns, file = files, 
-	o2converter = ohco2s, diplomatic = dipls,
-	normalized = norms, orthography = orthos)
-	missinglist = []
-	nrows, ncols = size(df)
-	for row in 1:nrows
-		for col in 1:ncols
-		  if ismissing(df[row,col])
-			push!(missinglist, "$(df[row,:urn].urn) is missing entry for $(names(df)[col]).")
-		  end
-		end
-  	end
-  	missinglist
+    coldata = []
+    for col in columnnames(inferred)
+        if col == :urn 
+            idrow = map(row -> CtsUrn(row.urn), inferred)
+            push!(coldata, idrow)
+        else
+            row = map(getproperty(col), inferred)
+            push!(coldata, row)
+        end
+   end
+   NamedTuple{columnnames(inferred)}(coldata) |> Table 
+    
 end
 
 """
 $(SIGNATURES)
 Lookup file name in a repository for a text identified by URN.
 """
-function filename(repo::EditingRepository, u)
-	df = citation_df(repo)
-	filtered = filter(r -> CitableText.urncontains(r[:urn], u), df )
-	if nrow(filtered) == 0
-		nothing
-	else
-		filtered[1,:file]
-	end
-end
-
-"""
-$(SIGNATURES)
-Lookup file name in a DataFame for a text identified by URN.
-"""
-function filename(df, u)
-	filtered = filter(r -> CitableText.urncontains(r[:urn], u), df )
-	if nrow(filtered) == 0
-		nothing
-	else
-		filtered[1,:file]
-	end
-end
-
-
-
-"""
-$(SIGNATURES)
-Lookup ohco2 converter in a repository for a text identified by URN.
-"""
-function o2converter(repo::EditingRepository, u)
-	df = citation_df(repo)
-	filtered = filter(r -> r[:urn] == u, df )
-	if nrow(filtered) == 0
-		nothing
-	else
-		filtered[1,:o2converter]
-	end
-end
-
-"""
-$(SIGNATURES)
-Lookup ohco2 converter in a DataFrame for a text identified by URN.
-"""
-function o2converter(df, u)
-	filtered = filter(r -> r[:urn] == u, df )
-	if nrow(filtered) == 0
-		nothing
-	else
-		filtered[1,:o2converter]
-	end
+function filename(repo::EditingRepository, txturn::CtsUrn)
+    cites = citationconfig(repo)
+    matching = filter(r -> urncontains(droppassage(txturn), r.urn), cites)
+    if isempty(matching)
+        throw(ArgumentError("No citation configuration found for $(txturn)"))
+    elseif length(matching) > 1
+        throw(ArgumentError("Multiple matches for $(txturn)"))
+    else
+        matching[1].file
+    end
 end
 
 
 """
 $(SIGNATURES)
-Lookup in a repository the builder for diplomatic edition for a text identified by URN.
+Lookup ocho2converter for a text identified by URN.
 """
-function diplomaticbuilder(repo::EditingRepository, u)
-	df = citation_df(repo)
-	filtered = filter(r -> r[:urn] == u, df )
-	if nrow(filtered) == 0
-		nothing
-	else
-		filtered[1,:diplomatic]
-	end
+function o2converter(repo::EditingRepository, txturn::CtsUrn)
+    cites = citationconfig(repo)
+    matching = filter(r -> urncontains(txturn, r.urn), cites)
+    if length(matching) < 1
+        throw(ArgumentError("No citation configuration found for $(txturn)"))
+    elseif length(matching) > 1
+        throw(ArgumentError("Multiple matches for $(txturn)"))
+    else
+        matching[1].converter |> Meta.parse |> eval
+    end
 end
 
 """
 $(SIGNATURES)
-Lookup in a DataFrame the builder for diplomatic edition for a text identified by URN.
+Lookup diplomaticbuilder for a text identified by URN.
 """
-function diplomaticbuilder(df, u)
-	filtered = filter(r -> r[:urn] == u, df )
-	if nrow(filtered) == 0
-		nothing
-	else
-		filtered[1,:diplomatic]
-	end
-end
-
-
-"""
-$(SIGNATURES)
-Lookup in a repository the builder for diplomatic edition for a text identified by URN.
-"""
-function normalizedbuilder(repo::EditingRepository, u)
-	df = citation_df(repo)
-	filtered = filter(r -> r[:urn] == u, df )
-	if nrow(filtered) == 0
-		nothing
-	else
-		filtered[1,:normalized]
-	end
-end
-
-"""Lookup in a DataFrame the builder for diplomatic edition for a text identified by URN.
-
-$(SIGNATURES)
-
-"""
-function normalizedbuilder(df, u)
-	filtered = filter(r -> r[:urn] == u, df )
-	if nrow(filtered) == 0
-		nothing
-	else
-		filtered[1,:normalized]
-	end
-end
-
-
-"""Lookup in a repository the orthographic system for a text identified by URN.
-
-$(SIGNATURES)
-
-"""
-function orthography(repo::EditingRepository, u)
-	df = citation_df(repo)
-	#filtered = filter(r -> r[:urn] == u, df )
-	filtered = filter(r -> CitableText.urncontains(droppassage(u), r[:urn]), df )
-	if nrow(filtered) == 0
-		nothing
-	else
-		filtered[1,:orthography]
-	end
+function diplomaticbuilder(repo::EditingRepository, txturn::CtsUrn)
+    cites = citationconfig(repo)
+    matching = filter(r -> urncontains(droppassage(txturn), r.urn), cites)
+    if length(matching) < 1
+        throw(ArgumentError("No citation configuration found for $(txturn)"))
+    elseif length(matching) > 1
+        throw(ArgumentError("Multiple matches for $(txturn)"))
+    else
+        matching[1].diplomatic |> Meta.parse |> eval
+    end
 end
 
 """
 $(SIGNATURES)
-Lookup in a DataFrame the orthographic system for a text identified by URN.
+Lookup normalizedbuilder for a text identified by URN.
 """
-function orthography(df, u)
-	filtered = filter(r -> r[:urn] == u, df )
-	if nrow(filtered) == 0
-		nothing
-	else
-		filtered[1,:orthography]
-	end
+function normalizedbuilder(repo::EditingRepository, txturn::CtsUrn)
+    cites = citationconfig(repo)
+    matching = filter(r -> urncontains(txturn, r.urn), cites)
+    if length(matching) < 1
+        throw(ArgumentError("No citation configuration found for $(txturn)"))
+    elseif length(matching) > 1
+        throw(ArgumentError("Multiple matches for $(txturn)"))
+    else
+        matching[1].normalized |> Meta.parse |> eval
+    end
 end
 
+"""
+$(SIGNATURES)
+Lookup orthography for a text identified by URN.
+"""
+function orthography(repo::EditingRepository, txturn::CtsUrn)
+    cites = citationconfig(repo)
+    matching = filter(r -> urncontains(txturn, r.urn), cites)
+    if length(matching) < 1
+        throw(ArgumentError("No citation configuration found for $(txturn)"))
+    elseif length(matching) > 1
+        throw(ArgumentError("Multiple matches for $(txturn)"))
+    else
+        matching[1].orthography |> Meta.parse |> eval
+    end
+end
+
+# TBD
+function missingcitation(repo::EditingRepository)
+    cites = citationconfig(repo)
+    naughtylist = []
+    for c in cites
+        # for each property in list:
+        # if ismissing, push! to naughtylist
+    end
+    naughtylist
+end
