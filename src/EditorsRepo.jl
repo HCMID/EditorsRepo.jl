@@ -41,18 +41,20 @@ export textcatalog,  texturns
 export archivalcorpus
 export diplomaticcorpus
 export normalizedcorpus
-export tokencorpus, tokenanalysis
+export analyzedtokens
 
 # DSE records
 export dsetriples
 export surfaces, passages, images
 export surfacevizpairs
-export passagesforsurface, imagesforpassage, diplomaticnodesforsurface
+export passageurnsforsurface, imagesforpassage
+export diplomaticforsurface, normalizedforsurface, tokensforsurface
 
 # HTML utilities
 export htmltoken
-export indexingaccuracy
-export indexingcompleteness
+export indexingaccuracy_html
+export indexingcompleteness_html
+export orthographicvalidity_html
 
 
 #=
@@ -60,17 +62,16 @@ export indexingcompleteness
 export citationmatches, citationonly, catalogonly
 export filesmatch, filesonly, citedonly
 export missingcitation
-
-export normalized_tokens, lextokens
 =#
 
 include("repository.jl")
 include("citationconfig.jl")
 include("imageconfig.jl")
 include("textcatalog.jl")
-include("textreading.jl")
 
+include("textreading.jl")
 include("xmlfiles.jl")
+
 include("dse.jl")
 
 include("tokenization.jl")
@@ -78,9 +79,7 @@ include("tokenization.jl")
 include("htmlutils.jl")
 
 #=
-
-
 include("validateconfig.jl")
-
 =#
+
 end # module

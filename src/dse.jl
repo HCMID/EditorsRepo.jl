@@ -49,24 +49,51 @@ end
 $(SIGNATURES)
 Compute list of passages in DSE records for a given surface.
 """
-function passagesforsurface(r::EditingRepository, u::Cite2Urn)
+function passageurnsforsurface(r::EditingRepository, u::Cite2Urn)
     triples = filter(tr -> urncontains(u, tr.surface), dsetriples(r))
     map(tr -> tr.passage, triples)
 end
 
 """
 $(SIGNATURES)
-Compute list of passages in DSE records for a given surface.
+Assemble citable passages in diplomatic edition for a given surface.
 """
-function diplomaticnodesforsurface(r::EditingRepository, u::Cite2Urn)
+function diplomaticforsurface(r::EditingRepository, u::Cite2Urn)
     corpus = diplomaticcorpus(r)
     rslts = []
-    for psgurn in passagesforsurface(r, u)
-        @warn("Compare $(psgurn) ")
+    for psgurn in passageurnsforsurface(r, u)
+        @debug("Compare $(psgurn) ")
         citables = filter(n -> urncontains(psgurn, urn(n)), corpus.passages)
         push!(rslts, citables)
     end
-    rslts
+    rslts |> Iterators.flatten |> collect
+end
+
+
+"""
+$(SIGNATURES)
+Assemble citable passages in normalized edition for a given surface.
+"""
+function normalizedforsurface(r::EditingRepository, u::Cite2Urn)
+    corpus = normalizedcorpus(r)
+    rslts = []
+    for psgurn in passageurnsforsurface(r, u)
+        @debug("Compare $(psgurn) ")
+        citables = filter(n -> urncontains(psgurn, urn(n)), corpus.passages)
+        push!(rslts, citables)
+    end
+    rslts |> Iterators.flatten |> collect
+end
+
+function tokensforsurface(r::EditingRepository, u::Cite2Urn)
+    corpus = tokencorpus(r)
+    rslts = []
+    for psgurn in passageurnsforsurface(r, u)
+        @debug("Compare $(psgurn) ")
+        citables = filter(n -> urncontains(psgurn, urn(n)), corpus.passages)
+        push!(rslts, citables)
+    end
+    rslts |> Iterators.flatten |> collect
 end
 
 """

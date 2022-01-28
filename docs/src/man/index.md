@@ -45,8 +45,8 @@ DSE records:
 
 ```@docs
 dsetriples
-passagesforsurface
-diplomaticnodesforsurface
+passageurnsforsurface
+diplomaticforsurface
 imagesforpassage
 ```
 
@@ -63,5 +63,5 @@ EditorsRepo.xmlfiles
 EditorsRepo.textpassages
 EditorsRepo.isref
 EditorsRepo.passages_for_tokens
-EditorsRepo.tokenanalysis
+EditorsRepo.analyzedtokens
 ```

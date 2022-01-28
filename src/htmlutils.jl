@@ -7,12 +7,11 @@ $(SIGNATURES)
 Adds appropriate whitespace to non-punctuation tokens,
 and wraps orthographically failed tokens in `span` element.
 """
-function htmltoken(r::EditingRepository, tkn::CitablePassage)
-    analysis = tokenanalysis(r, tkn)
-    if ! analysis[2]
-        " <span class=\"\">" * tkn.text * "</span>"
+function htmltoken(psg::CitablePassage, tokentype, ok::Bool)
+    if ! ok
+        " <span class=\"invalidtoken\">" * psg.text * "</span>"
     else
-        analysis[1] == PUNCTUATION ? tkn.text : " " * tkn.text
+        tokentype == PUNCTUATION ? psg.text : " " * psg.text
     end
 end
 
@@ -20,7 +19,7 @@ end
 $(SIGNATURES)
 Juxtapose diplomatic edition of text with displayed image.
 """
-function indexingaccuracy(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, height = 500)
+function indexingaccuracy_html(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, height = 500)
     vizprs = surfacevizpairs(r, surf)
     corpus = diplomaticcorpus(r)
     textlines = []
@@ -47,14 +46,43 @@ function indexingaccuracy(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRe
     
 end
 
-"""Compose HTML for verifciation of completeness of DSE indexing of a given surface.
+"""Compose HTML for verification of completeness of DSE indexing of a given surface.
 $(SIGNATURES)
 """
-function indexingcompleteness(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, height = 150)
+function indexingcompleteness_html(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, height = 150)
     triples = dsetriples(r)
     surfacetriples = filter(row -> urncontains(surf, row.surface), triples)
     images = map(tr -> tr.image, surfacetriples)
     ictlink = ict * "urn=" * join(images, "&urn=")
     imgmd = markdownImage(dropsubref(images[1]), iiif; ht = height)
     string("[", imgmd, "](", ictlink, ")")
+end
+
+
+"""Compose HTML for verification of orthographic validity.
+$(SIGNATURES)
+"""
+function orthographicvalidity_html(r::EditingRepository, surf::Cite2Urn)
+    tkns = analyzedtokens(r)
+    psgs = passageurnsforsurface(r, surf)
+    results = []
+    for psg in psgs
+        ref_urn = droppassage(psg) |> dropexemplar
+        ortho = orthography(r, ref_urn)
+
+        psgurn = dropsubref(psg)
+        if CitableText.isrange(psgurn)
+            ref1 = range_begin(psgurn)
+            psgurn = addpassage(psgurn, ref1)
+        end
+    
+        psgstring = ["<b>", passagecomponent(psgurn) , "</b>: "]
+        matchingpairs = filter(pr -> urncontains(psgurn, pr[1].urn),  tkns)
+        for pr in matchingpairs
+            ok = validstring(pr[1].text, ortho)
+            push!(psgstring, htmltoken(pr[1], pr[2], ok))
+        end
+        push!(results, join(psgstring))
+    end
+    join(results, "\n\n")
 end

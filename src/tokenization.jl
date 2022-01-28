@@ -1,33 +1,18 @@
 
-"""Compute a list of `OrthographicToken`s based on the normalized edition of all texts in the repository.
+"""Compute a list of `OrthographicToken`s based on the normalized edition of all texts in the repository.  The result is a list of tuples pairing a citable text passage for the token and its type.
 $(SIGNATURES)
 """
-function tokencorpus(r::EditingRepository)
-       corpora = []
+function analyzedtokens(r::EditingRepository) :: Vector{Tuple{CitablePassage, TokenCategory}}
+    normed = normalizedcorpus(r)
+    tkntuples = []
+    for u in texturns(r)
+        ortho = orthography(r, u)
+        corpus = filter(psg -> urncontains(u, psg.urn),  normed.passages) |> CitableTextCorpus
 
-       normed = normalizedcorpus(r)
-       for u in texturns(r)
-              tokenlist = []
-              #ortho = orthography(r, u)
-              #bldr = normalizedbuilder(r, u)
 
-              #fname = joinpath(editionsdir(r), filename(r, u))
-              #archival = readcitable(fname, u, o2converter(r, u), FileReader)
-              #normalized = map(cn -> edited(bldr, cn), archival.passages)
-              #for t in map(cn -> cn.text, normalized)
-              #=
-              for cn in normalized
-                     tokensinpassage = tokenize(cn.text, ortho) #, exemplar = "tokens")
-                     tokenpassages = passages_for_tokens(tokensinpassage, cn.urn)
-                     push!(tokenlist, tokenpassages)
-              end
-              =#
-              flattokens = tokenlist |> Iterators.flatten |> collect
-              push!(corpora, flattokens)
-       end
-       rslt = CitablePassage[]
-       rslt = corpora |> Iterators.flatten |> collect
-       CitableTextCorpus(rslt)
+        push!(tkntuples,  tokenize(corpus, ortho, edition = workparts(u)[3], exemplar = "token"))
+    end
+    tkntuples |> Iterators.flatten |> collect
 end
 
 """Create a list of `CitablePassage`s from a list of `OrthographicToken`s 
@@ -66,7 +51,7 @@ token class and determine if it is orthographically valid.
 $(SIGNATURES)
 Returns a tuple of a token type and a boolean value.
 """
-function tokenanalysis(r::EditingRepository, cn::CitablePassage)
+function analyzedtokens(r::EditingRepository, cn::CitablePassage)
     queryurn = dropversion(cn.urn) |> droppassage
     ortho = orthography(r, queryurn)
     ttype = tokenize(cn.text, ortho)[1].tokencategory
