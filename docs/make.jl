@@ -18,6 +18,7 @@ makedocs(
     sitename = "EditorsRepo",
     pages = [
         "Home" => "index.md",
+        "A fuller walkthrough" => "walkthrough.md",
         
         "API documentation" => [
             "man/index.md"

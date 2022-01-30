@@ -31,10 +31,8 @@ function filename(repo::EditingRepository, txturn::CtsUrn)
     matching = filter(r -> urncontains(droppassage(txturn), r.urn), cites)
     if isempty(matching)
         throw(ArgumentError("No citation configuration found for $(txturn)"))
-    elseif length(matching) > 1
-        throw(ArgumentError("Multiple matches for $(txturn)"))
     else
-        matching[1].file
+        matching
     end
 end
 
