@@ -24,17 +24,30 @@ end
 
 """
 $(SIGNATURES)
-Lookup file name in a repository for a text identified by URN.
+Lookup file names in a repository for a text identified by URN.
 """
-function filename(repo::EditingRepository, txturn::CtsUrn)
+function filescontaining(repo::EditingRepository, txturn::CtsUrn)
     cites = citationconfig(repo)
-    matching = filter(r -> urncontains(droppassage(txturn), r.urn), cites)
+ 
+    matching = filter(r -> urncontains(r.urn, txturn), cites)
     if isempty(matching)
-        throw(ArgumentError("No citation configuration found for $(txturn)"))
-    elseif length(matching) > 1
-        throw(ArgumentError("Multiple matches for $(txturn)"))
+        @warn("No citation configuration found for $(txturn)")
+        String[]
     else
-        matching[1].file
+        map(row -> row.file, matching)
+    end
+end
+
+
+function fileswithin(repo::EditingRepository, txturn::CtsUrn)
+    cites = citationconfig(repo)
+ 
+    matching = filter(r -> urncontains(txturn, r.urn), cites)
+    if isempty(matching)
+        @warn("No citation configuration found for $(txturn)")
+        String[]
+    else
+        map(row -> row.file, matching)
     end
 end
 
@@ -49,10 +62,9 @@ function o2converter(repo::EditingRepository, txturn::CtsUrn)
     if length(matching) < 1
         throw(ArgumentError("No citation configuration found for $(txturn)"))
     elseif length(matching) > 1
-        throw(ArgumentError("Multiple matches for $(txturn)"))
-    else
-        matching[1].converter |> Meta.parse |> eval
+        @warn("Multiple configuration entries for $(txturn).  Returning first ohco2 converter.")
     end
+    matching[1].converter |> Meta.parse |> eval
 end
 
 """
@@ -65,10 +77,9 @@ function diplomaticbuilder(repo::EditingRepository, txturn::CtsUrn)
     if length(matching) < 1
         throw(ArgumentError("No citation configuration found for $(txturn)"))
     elseif length(matching) > 1
-        throw(ArgumentError("Multiple matches for $(txturn)"))
-    else
-        matching[1].diplomatic |> Meta.parse |> eval
+        @warn("Multiple configuration entries for $(txturn).  Returning first diplomatic edition builder.")
     end
+    matching[1].diplomatic |> Meta.parse |> eval
 end
 
 """
@@ -81,10 +92,9 @@ function normalizedbuilder(repo::EditingRepository, txturn::CtsUrn)
     if length(matching) < 1
         throw(ArgumentError("No citation configuration found for $(txturn)"))
     elseif length(matching) > 1
-        throw(ArgumentError("Multiple matches for $(txturn)"))
-    else
-        matching[1].normalized |> Meta.parse |> eval
+        @warn("Multiple configuration entries for $(txturn).  Returning first normalized edition builder.")
     end
+    matching[1].normalized |> Meta.parse |> eval
 end
 
 """
@@ -97,10 +107,9 @@ function orthography(repo::EditingRepository, txturn::CtsUrn)
     if length(matching) < 1
         throw(ArgumentError("No citation configuration found for $(txturn)"))
     elseif length(matching) > 1
-        throw(ArgumentError("Multiple matches for $(txturn)"))
-    else
-        matching[1].orthography |> Meta.parse |> eval
+        @warn("Multiple configuration entries for $(txturn).  Returning first orthography.")
     end
+    matching[1].orthography |> Meta.parse |> eval
 end
 
 # TBD
