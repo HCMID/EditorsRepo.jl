@@ -29,6 +29,14 @@ repository(path, editions = "editing")
 
 ## Text editions and configuration
 
+### Files
+
+The *catalog* file (default name: `catalog.cex`) is a CITE text catalog.  Its entries represent logical units.
+
+The *citation* file (default name: `citation.cex`) is a delimited text file with entries representing physical files.  It is possible to have a single logical text edited in multiple physical files.
+
+### Functions
+
 Internally, `EditorsRepo` uses these functions to read the configuration of your text documents:
 
 - `fileswithin`.  List all files that are contained by a given URN.
