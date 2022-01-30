@@ -31,8 +31,9 @@ export EditingRepository, repository
 export configdir, dsedir, editionsdir
 
 # Citation configuration
-export citationconfig #, missingcitation
-export filename, o2converter, orthography
+export citationconfig
+export filescontaining, fileswithin 
+export o2converter, orthography
 
 # Text catalog    
 export textcatalog,  texturns

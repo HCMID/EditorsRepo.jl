@@ -6,12 +6,15 @@ $(SIGNATURES)
 function archivalcorpus(r::EditingRepository)
     corpora = CitableTextCorpus[]
     for u in texturns(r)
-        fname = joinpath(editionsdir(r), filename(r, u))
-        c = readcitable(fname, u, o2converter(r, u), FileReader)
-        c.passages
-        # Run through textpassages selector
-        revised = textpassages(c, u)
-        push!(corpora, revised)
+        namelist = []
+        for fname in fileswithin(r, u)
+            fullpath = joinpath(editionsdir(r), fname)
+            c = readcitable(fullpath, u, o2converter(r, u), FileReader)
+            c.passages
+            # Run through textpassages selector
+            revised = textpassages(c, u)
+            push!(corpora, revised)
+        end
     end
     map(c -> c.passages, corpora) |> vcat |> Iterators.flatten |> collect |> CitableTextCorpus 
 end

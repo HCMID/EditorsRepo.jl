@@ -8,10 +8,10 @@ end
 
 @testset "Find archival file for a urn in document edited in multiple files" begin
     repo = joinpath("data","splitdocs") |> repository
-    u = CtsUrn("urn:cts:greekLit:tlg5026.e3.hmt:8.2")
-    @test_broken filename(repo,u) == "e3_scholia08.xml"
+    u = CtsUrn("urn:cts:greekLit:tlg5026.e3.hmt:")
+    @test fileswithin(repo, u) == ["e3_scholia08.xml", "e3_scholia10.xml"]
+    @test filescontaining(repo, addpassage(u,"8.2")) == ["e3_scholia08.xml"]
 end
-
 
 @testset "Lookup orthography for split document" begin
     repo = joinpath("data","splitdocs") |> repository
