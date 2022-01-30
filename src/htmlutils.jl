@@ -31,7 +31,8 @@ function indexingaccuracy_html(r::EditingRepository, surf::Cite2Urn; iiif = Edit
             ""
         elseif length(psgs) != 1
             @warn("Found $(length(psgs)) passages matching indexed URN $(pr[1])")
-            textconent = map(p -> p.text, psgs)
+            @warn("Type of first is $(typeof(psgs[1]))")
+            textcontent = map(p -> p.text, psgs)
             join(textcontent, "\n")
         else
             psgs[1].text
