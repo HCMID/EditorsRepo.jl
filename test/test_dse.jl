@@ -16,20 +16,35 @@ end
 end
 
 #=
-export surfacevizpairs
-export passageurnsforsurface, imagesforpassage
+export 
+export  
 export diplomaticforsurface, normalizedforsurface, tokensforsurface
 =#
-@testset "Test finding textpassages for a physical surface" begin
+@testset "Test finding content by physical surface" begin
     repo = repository(joinpath("data", "mixedrepo"), editions = "editing")
-    Cite2Urn("urn:cite2:trmilli:inscriptions.v1:TL3")
-    @test_broken 1 == 2
+    surf = Cite2Urn("urn:cite2:trmilli:inscriptions.v1:TL3")
+    psgs = passageurnsforsurface(repo, surf, strict = false)
+    @test length(psgs) == 4
+
+    txt = CtsUrn("urn:cts:trmilli:tl.3.v1:1")
+    imgs = imagesforpassage(repo, txt)
+    expectedimg = Cite2Urn("urn:cite2:lycian:hc.v1:2007.02.0060@0.001425,0.000,0.9915,0.2174")
+    @test length(imgs) == 1
+    @test imgs[1] == expectedimg
+
+    vizpairs = surfacevizpairs(repo, surf, strict = false)
+    @test length(vizpairs) == 4
+    @test map(pr -> pr[1], vizpairs) == psgs
+
+    dipl = diplomaticforsurface(repo, surf, strict = false)
+    @test length(dipl) == 4
+
+    norm = normalizedforsurface(repo, surf, strict = false)
+    @test length(norm) == 4
+
+    
 end
 
-@testset "Test finding list of passages in DSE records" begin
-    repo = repository(joinpath("data", "mixedrepo"), editions = "editing")
-    @test_broken 1 == 2
-end
 
 
 
