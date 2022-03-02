@@ -10,25 +10,31 @@ end
 
 
 @testset "Test finding list of surfaces in DSE records" begin
-    repo = EditingRepository("data/mixedrepo/editing", "data/mixedrepo/dse", "data/mixedrepo/config")
-    surfs = [] #surfaces(repo)
-    @test_broken length(surfs) == 3
+    repo = repository(joinpath("data", "mixedrepo"), editions = "editing")
+    surfs = surfaces(repo, strict = false)
+    @test length(surfs) == 3
 end
 
-#repo = EditingRepository("test/data/mixedrepo", "editing", "dse", "config")
-#Cite2Urn("urn:cite2:trmilli:inscriptions.v1:TL3")
-
-@testset "Test finding DSE records for a physical surface" begin
+#=
+export surfacevizpairs
+export passageurnsforsurface, imagesforpassage
+export diplomaticforsurface, normalizedforsurface, tokensforsurface
+=#
+@testset "Test finding textpassages for a physical surface" begin
+    repo = repository(joinpath("data", "mixedrepo"), editions = "editing")
+    Cite2Urn("urn:cite2:trmilli:inscriptions.v1:TL3")
     @test_broken 1 == 2
 end
 
 @testset "Test finding list of passages in DSE records" begin
-      @test_broken 1 == 2
+    repo = repository(joinpath("data", "mixedrepo"), editions = "editing")
+    @test_broken 1 == 2
 end
 
 
 
 @testset "Test finding list of images in DSE records" begin
+    repo = repository(joinpath("data", "mixedrepo"), editions = "editing")
     imgs = [] #images(repo)
     @test_broken length(imgs) == 38
 end
