@@ -15,12 +15,12 @@ include("test_textcatalog.jl")
 include("test_xmlfiles.jl")
 =#
 include("test_splitdocs.jl")
-
+include("test_dse.jl")
 
 #=
 include("test_archivalcorpus.jl")
 
-include("test_dse.jl")
+
 
 include("test_configvalidation.jl")
 include("test_texthandling.jl")
