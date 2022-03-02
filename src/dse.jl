@@ -2,14 +2,19 @@
 $(SIGNATURES)
 List `.cex` files in DSE directory.
 """
-function dsetriples(repo::EditingRepository)
-    dsecollections = []
-    fullpath = dsedir(repo) |> readdir
-    fnames = filter(f -> endswith(f, "cex"), fullpath)        
-    for filename in map(f -> joinpath(dsedir(repo), f) , fnames)
-        push!(dsecollections, fromcex(filename, DSECollection, FileReader))
+function dsetriples(repo::EditingRepository; strict = true)
+    dsecollections = []       
+    for filename in dsefiles(repo)
+        push!(dsecollections, fromcex(filename, DSECollection, FileReader, strict = strict))
     end
-    map(c -> c.data, dsecollections)  |> Iterators.flatten |> collect
+    dsecollections  |> Iterators.flatten |> Iterators.flatten |> collect
+end
+
+
+function dsefiles(repo::EditingRepository)
+    fullpath = dsedir(repo) |> readdir
+    fnames = filter(f -> endswith(f, "cex"), fullpath) 
+    map(f -> joinpath(dsedir(repo), f) , fnames)
 end
 
 

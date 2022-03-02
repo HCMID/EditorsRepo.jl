@@ -1,6 +1,7 @@
 
 @testset "Test constructing repository directly from relative references" begin
     relativedirs = EditingRepository("data/lycian/editing/", "data/lycian/dse/", "data/lycian/config/")
+
     @test  isa(relativedirs, EditingRepository)
 
     @test editionsdir(relativedirs) == "data/lycian/editing/"
