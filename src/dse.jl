@@ -1,6 +1,5 @@
-"""
+"""Create a single composite list of DSE data.
 $(SIGNATURES)
-List `.cex` files in DSE directory.
 """
 function dsetriples(repo::EditingRepository; strict = true)
     dsecollections = []       
@@ -10,7 +9,9 @@ function dsetriples(repo::EditingRepository; strict = true)
     dsecollections  |> Iterators.flatten |> Iterators.flatten |> collect
 end
 
-
+"""File full paths to all `.cex` files in the DSE directory.
+$(SIGNATURES)
+"""
 function dsefiles(repo::EditingRepository)
     fullpath = dsedir(repo) |> readdir
     fnames = filter(f -> endswith(f, "cex"), fullpath) 
@@ -89,6 +90,11 @@ function normalizedforsurface(r::EditingRepository, u::Cite2Urn; strict = true)
     end
     rslts |> Iterators.flatten |> collect
 end
+
+function tokencorpus(r::EditingRepository)
+    
+end
+
 
 function tokensforsurface(r::EditingRepository, u::Cite2Urn; strict = true)
     corpus = tokencorpus(r)

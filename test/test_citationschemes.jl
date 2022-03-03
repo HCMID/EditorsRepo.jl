@@ -9,9 +9,10 @@
     txturn = CtsUrn("urn:cts:trmilli:tl.25.v1:")    
     @test o2converter(repo, txturn) == TEIAnonblock
     @test_broken filename(repo, txturn) == "tl25.xml"
-    #@test orthography(repo, txturn) == lycianAscii()
-    #@test normalizedbuilder(repo, txturn) == LiteralTextBuilder("Literal text builder","rawtext")
-    #@test diplomaticbuilder(repo, txturn) == LiteralTextBuilder("Literal text builder","rawtext")
+    @test orthography(repo, txturn) == lycianAscii()
+    @test normalizedbuilder(repo, txturn) |> typeof ==  EditionBuilders.MidNormalizedBuilder
+    @test diplomaticbuilder(repo, txturn) |> typeof == EditionBuilders.MidDiplomaticBuilder
+    
     #
     missingurn = CtsUrn("urn:cts:trmilli:tl.MISSING:")
     @test_throws ArgumentError o2converter(repo, missingurn)

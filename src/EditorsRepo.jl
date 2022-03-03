@@ -34,6 +34,7 @@ export configdir, dsedir, editionsdir
 export citationconfig
 export filescontaining, fileswithin 
 export o2converter, orthography
+export normalizedbuilder, diplomaticbuilder
 
 # Text catalog    
 export textcatalog,  texturns
