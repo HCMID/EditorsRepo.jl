@@ -15,6 +15,13 @@ function analyzedtokens(r::EditingRepository) :: Vector{Tuple{CitablePassage, To
     tkntuples |> Iterators.flatten |> collect
 end
 
+
+function analyzedtokens(r::EditingRepository, u::CtsUrn) :: Vector{Tuple{CitablePassage, TokenCategory}}
+    tkns = analyzedtokens(r)
+    filter(t -> urncontains(u, urn(t[1])), tkns)
+end
+
+
 """Create a list of `CitablePassage`s from a list of `OrthographicToken`s 
 and a passage URN.
 

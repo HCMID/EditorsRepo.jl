@@ -63,7 +63,7 @@ $(SIGNATURES)
 """
 function lextokens(repo, urn)
     textconfig = citation_df(repo)  
-    ortho = orthographyforurn(textconfig, urn)
+    ortho = orthography(textconfig, urn)
     if isnothing(ortho)
         @warn("No orthography configured for $urn")
         nothing
@@ -91,7 +91,7 @@ $(SIGNATURES)
 """
 function normalized_tokens(repo::EditingRepository, urn::CtsUrn)
     textconfig = citation_df(repo)  
-    ortho = orthographyforurn(textconfig, urn)
+    ortho = orthography(textconfig, urn)
     if isnothing(ortho)
         @warn("No orthography configured for $urn")
         nothing

@@ -20,6 +20,9 @@ import CitablePhysicalText: surfaces
 import CitablePhysicalText: images
 import CitablePhysicalText: passages
 
+import Orthography: orthography
+
+
 # All recognized orthographies:
 using Orthography
 using Lycian

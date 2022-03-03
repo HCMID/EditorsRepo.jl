@@ -113,7 +113,7 @@ end
 """
 Lookup orthography for a text identified by URN.
 $(SIGNATURES)
-If one than one configuration entry matches `txturn`, it is assumed that all entries are configured to use the same orthography, and only the first entry is instantiated and returned.
+If more than one configuration entry matches `txturn`, it is assumed that all entries are configured to use the same orthography, and only the first entry is instantiated and returned.
 """
 function orthography(repo::EditingRepository, txturn::CtsUrn)
     cites = citationconfig(repo)
