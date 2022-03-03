@@ -30,11 +30,11 @@ end
     repo = repository("data/mixedrepo"; editions = "editing")
     citation = citation_df(repo)
     urn = CtsUrn("urn:cts:latinLit:phi0881.phi003.bern88:")
-    ortho = orthographyforurn(citation, urn)
+    ortho = orthography(citation, urn)
     @test supertype(typeof(ortho)) == OrthographicSystem
 
     badurn = CtsUrn("urn:cts:latinLit:FAKETEXT:")
-    fakereader = orthographyforurn(citation, badurn)
+    fakereader = orthography(citation, badurn)
     @test fakereader === nothing
 end
 
@@ -45,7 +45,7 @@ end
     repo = repository("data/mixedrepo"; editions = "editing")
     citation = citation_df(repo)
     urn = CtsUrn("urn:cts:trmilli:tl.25.v1:")
-    ortho = orthographyforurn(citation, urn)
+    ortho = orthography(citation, urn)
     @test supertype(typeof(ortho)) == OrthographicSystem
 end
 

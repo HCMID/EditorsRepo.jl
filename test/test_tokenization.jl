@@ -1,8 +1,16 @@
 
 @testset "Test text tokenization functions" begin
-    repo = repository("data/mixedrepo"; editions =  "editing")
-    urn = CtsUrn("urn:cts:trmilli:tl.25.v1:2")
+    path = joinpath(pwd(),"data", "mixedrepo")
+    repo = repository(path, editions =  "editing")
+    u = CtsUrn("urn:cts:trmilli:tl.25.v1:2")
     expectedtext = "towetE : xssbezE : krop"
+ 
+    tkns =  analyzedtokens(repo, u)
+    @test length(tkns) == 5
+    
+
+
+    #=
     normtext = normalized_passagetext(repo, urn)
     dipltext = diplomatic_passagetext(repo, urn)
 
@@ -17,4 +25,5 @@
     @test length(alltkns) == 37
     lexicaltkns = lextokens(repo, droppassage(urn))
     @test length(lexicaltkns) == 24
+    =#
 end

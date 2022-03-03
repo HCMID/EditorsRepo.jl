@@ -20,6 +20,9 @@ import CitablePhysicalText: surfaces
 import CitablePhysicalText: images
 import CitablePhysicalText: passages
 
+import Orthography: orthography
+
+
 # All recognized orthographies:
 using Orthography
 using Lycian
@@ -34,6 +37,7 @@ export configdir, dsedir, editionsdir
 export citationconfig
 export filescontaining, fileswithin 
 export o2converter, orthography
+export normalizedbuilder, diplomaticbuilder
 
 # Text catalog    
 export textcatalog,  texturns
