@@ -11,9 +11,9 @@
 end
 
 @testset "Test finding online texts in catalog" begin
-    repo = joinpath("data", "hmtextconfig") |> repository
+    repo = joinpath("data", "hmttextconfig") |> repository
     hmtcat = textcatalog(repo)
     @test length(hmtcat) == 15
     online = EditorsRepo.texturns(repo)
-    @test length(hmtcat) == 11
+    @test length(online) == 11
 end
