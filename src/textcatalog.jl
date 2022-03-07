@@ -2,7 +2,9 @@
 """Read a `TextCatalogCollection` for a repository.
 $(SIGNATURES)
 """
-function textcatalog(repo::EditingRepository; catalogname::AbstractString = "catalog.cex", delimiter::AbstractString="|")
+function textcatalog(repo::EditingRepository; 
+    catalogname::AbstractString = "catalog.cex", 
+    delimiter::AbstractString="|")
     catfile = joinpath(configdir(repo), catalogname)
     fromcex(catfile, TextCatalogCollection, FileReader, delimiter = delimiter)
 end
@@ -14,5 +16,6 @@ $(SIGNATURES)
 """
 function texturns(repo::EditingRepository)
     cat = textcatalog(repo)
-    map(e -> urn(e), cat)
+    online = filter(e -> e.online, cat.entries)
+    map(e -> urn(e), online)
 end

@@ -9,3 +9,11 @@
     @test length(onlineurns) == 3
     # Test different signatures for optional params
 end
+
+@testset "Test finding online texts in catalog" begin
+    repo = joinpath("data", "hmttextconfig") |> repository
+    hmtcat = textcatalog(repo)
+    @test length(hmtcat) == 15
+    online = EditorsRepo.texturns(repo)
+    @test length(online) == 11
+end
