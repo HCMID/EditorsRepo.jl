@@ -1,0 +1,1 @@
+Empty directory in repository to test text configuration.
