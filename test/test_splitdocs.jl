@@ -17,10 +17,10 @@ end
     repo = joinpath("data","splitdocs") |> repository
     urn10 =  CtsUrn("urn:cts:greekLit:tlg5026.e3.hmt:10.124r_1")
 
-    orthography(repo, urn10 |> droppassage).codepoints == msGreek().codepoints
+   # orthography(repo, urn10 |> droppassage).codepoints == msGreek().codepoints
 
     urn8 =  CtsUrn("urn:cts:greekLit:tlg5026.e3.hmt:8.2")
-    orthography(repo, urn8 |> droppassage).codepoints == msGreek().codepoints
+    #orthography(repo, urn8 |> droppassage).codepoints == msGreek().codepoints
 end
 
 @testset "Lookup passages in split document" begin
