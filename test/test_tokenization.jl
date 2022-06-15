@@ -5,8 +5,8 @@
     u = CtsUrn("urn:cts:trmilli:tl.25.v1:2")
     expectedtext = "towetE : xssbezE : krop"
  
-    tkns =  analyzedtokens(repo, u)
-    @test length(tkns) == 5
+    #tkns =  analyzedtokens(repo, u)
+    #@test length(tkns) == 5
     
 
 

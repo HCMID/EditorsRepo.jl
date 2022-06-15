@@ -4,9 +4,9 @@ using CitableObject
 using CitableTeiReaders
 using EditorsRepo
 using Orthography, EditionBuilders
-using ManuscriptOrthography
+#using ManuscriptOrthography
 using TypedTables
-using PolytonicGreek, Lycian
+#using PolytonicGreek, Lycian
 using Test
 
 

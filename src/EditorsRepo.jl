@@ -25,9 +25,9 @@ import Orthography: orthography
 
 # All recognized orthographies:
 using Orthography
-using Lycian
-using PolytonicGreek, ManuscriptOrthography
-using AtticGreek
+#using Lycian
+#using PolytonicGreek#, ManuscriptOrthography
+#using AtticGreek
 
 # Repository organization
 export EditingRepository, repository
