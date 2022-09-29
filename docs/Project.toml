@@ -1,7 +1,8 @@
 [deps]
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+EditorsRepo = "3fa2051c-bcb6-4d65-8a68-41ff86d56437"
 
 [compat]
-DocStringExtensions = "0.8"
+DocStringExtensions = "0.9"
 Documenter = "0.27"
