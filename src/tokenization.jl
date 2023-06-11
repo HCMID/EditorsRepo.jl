@@ -2,21 +2,21 @@
 """Compute a list of `OrthographicToken`s based on the normalized edition of all texts in the repository.  The result is a list of tuples pairing a citable text passage for the token and its type.
 $(SIGNATURES)
 """
-function analyzedtokens(r::EditingRepository) :: Vector{Tuple{CitablePassage, TokenCategory}}
+function analyzedtokens(r::EditingRepository):: Vector{CitableToken}
     normed = normalizedcorpus(r)
-    tkntuples = []
+    tkns = []
     for u in texturns(r)
         ortho = orthography(r, u)
         corpus = filter(psg -> urncontains(u, psg.urn),  normed.passages) |> CitableTextCorpus
 
 
-        push!(tkntuples,  tokenize(corpus, ortho, edition = workparts(u)[3], exemplar = "token"))
+        push!(tkns,  tokenize(corpus, ortho, edition = workparts(u)[3], exemplar = "token"))
     end
-    tkntuples |> Iterators.flatten |> collect
+    tkns |> Iterators.flatten |> collect
 end
 
 
-function analyzedtokens(r::EditingRepository, u::CtsUrn) :: Vector{Tuple{CitablePassage, TokenCategory}}
+function analyzedtokens(r::EditingRepository, u::CtsUrn) :: Vector{CitableToken}
     tkns = analyzedtokens(r)
     filter(t -> urncontains(u, urn(t[1])), tkns)
 end
