@@ -15,6 +15,10 @@ function htmltoken(psg::CitablePassage, tokentype, ok::Bool)
     end
 end
 
+function htmltoken(ct::CitableToken, ok::Bool)
+    htmltoken(ct.passage, ct.tokentype, ok)
+end
+
 """Compose HTML for verification of accuracy of DSE indexing of a given surface.
 $(SIGNATURES)
 Juxtapose diplomatic edition of text with displayed image.
@@ -75,17 +79,19 @@ function orthographicvalidity_html(r::EditingRepository, surf::Cite2Urn; strict 
         catentry =  filter(e -> urncontains(ref_urn, e.urn), catalog.entries)[1]
 
         psgurn = dropsubref(psg)
-        if CitableText.isrange(psgurn)
+        if isrange(psgurn)
             ref1 = range_begin(psgurn)
             psgurn = addpassage(psgurn, ref1)
         end
     
         
         psgstring = [textgroup(catentry), ", <i>", work(catentry), "</i> (", version(catentry), "), ", "<b>", passagecomponent(psgurn) , "</b>: "]
-        matchingpairs = filter(pr -> urncontains(psgurn, pr[1].urn),  tkns)
-        for pr in matchingpairs
-            ok = validstring(pr[1].text, ortho)
-            push!(psgstring, htmltoken(pr[1], pr[2], ok))
+
+        # THIS IS THE ERROR:
+        matches = filter(t -> urncontains(psgurn, urn(t)),  tkns)
+        for t in matches
+            ok = validstring(t.passage.text, ortho)
+            push!(psgstring, htmltoken(t, ok))
         end
         push!(results, "<p>" * join(psgstring) * "</p>")
     end
