@@ -20,8 +20,6 @@ import CitablePhysicalText: surfaces
 import CitablePhysicalText: images
 import CitablePhysicalText: passages
 
-import Orthography: orthography
-
 using Orthography
 # All recognized orthographies:
 #= THIS KLUDGE NEEDS TO BE REDONE PROPERLY:
@@ -39,7 +37,7 @@ export configdir, dsedir, editionsdir
 # Citation configuration
 export citationconfig
 export filescontaining, fileswithin 
-export o2converter, orthography
+export o2converter
 export normalizedbuilder, diplomaticbuilder
 
 # Text catalog    
