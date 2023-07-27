@@ -17,7 +17,7 @@
     missingurn = CtsUrn("urn:cts:trmilli:tl.MISSING:")
     @test_throws ArgumentError o2converter(repo, missingurn)
     #@test_throws ArgumentError filename(repo, missingurn)
-    @test_throws ArgumentError orthography(repo, missingurn)
+    @test_throws ArgumentError EditorsRepo.orthography(repo, missingurn)
     @test_throws ArgumentError normalizedbuilder(repo, missingurn)
     @test_throws ArgumentError diplomaticbuilder(repo, missingurn)
 end
