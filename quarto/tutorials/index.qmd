@@ -39,6 +39,67 @@ indexingcompleteness_html(r, pageurn,strict = false) |> Markdown.parse
 ```
 
 
+
+## Break it down in pieces
+
+```{julia}
+#| warning: false
+vizprs = surfacevizpairs(r, pageurn, strict = false)
+corpus = diplomaticcorpus(r)
+```
+```{julia}
+using CitableText
+txtlist = map(vizprs) do pr
+    pr[1]|> droppassage
+end |> unique
+
+mddisplay = []
+for txt in txtlist
+    push!(mddisplay, string("## " , txt))
+    currpassages = filter(pr -> droppassage(pr[1]) == txt, vizprs)
+end
+
+join(mddisplay,"\n") |> Markdown.parse
+
+```
+
+
+```{julia}
+using CitableBase, CitableImage
+
+textlines = []
+
+for txt in txtlist
+    push!(textlines, string("## " , txt, "\n"))
+    currpassages = filter(pr -> droppassage(pr[1]) == txt, vizprs)
+#end
+
+    for pr in currpassages
+    # get text contents
+    psgs = filter(psg -> urncontains(pr[1], psg.urn), corpus.passages)
+    psgtext = if isempty(psgs)
+        @warn("No passages match indexed URN $(pr[1])")
+        ""
+    elseif length(psgs) != 1
+        @warn("Found $(length(psgs)) passages matching indexed URN $(pr[1])")
+        @warn("Type of first is $(typeof(psgs[1]))")
+        textcontent = map(p -> p.text, psgs)
+        join(textcontent, "\n")
+    else
+        psgs[1].text
+    end
+
+    mdtext = string("**", passagecomponent(pr[1]), "** ", psgtext, "\n" )
+    # get image markup
+    mdimg = linkedMarkdownImage(EditorsRepo.DEFAULT_ICT, pr[2], EditorsRepo.DEFAULT_IIIF; caption="image")
+    push!(textlines, "---\n\n" * mdimg * "\n\n" * mdtext )
+end
+end
+join(textlines,"\n") |> Markdown.parse
+```
+
+## The real invocation
+
 ```{julia}
 #| warning: false
 indexingaccuracy_html(r, pageurn, strict = false) |> Markdown.parse
