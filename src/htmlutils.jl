@@ -23,7 +23,7 @@ end
 $(SIGNATURES)
 Juxtapose diplomatic edition of text with displayed image.
 """
-function indexingaccuracy_html(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, height = 500, strict = true)
+function indexingaccuracy_html(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, width = 500, strict = true)
     vizprs = surfacevizpairs(r, surf, strict = strict)
     corpus = diplomaticcorpus(r)
     textlines = []
@@ -44,7 +44,7 @@ function indexingaccuracy_html(r::EditingRepository, surf::Cite2Urn; iiif = Edit
 
         mdtext = string("**", passagecomponent(pr[1]), "** ", psgtext, "\n" )
         # get image markup
-        mdimg = linkedMarkdownImage(ict, pr[2], iiif; ht=height, caption="image")
+        mdimg = linkedMarkdownImage(ict, pr[2], iiif; w=width, caption="image")
         push!(textlines, "---\n\n" * mdimg * "\n\n" * mdtext )
     end
     join(textlines, "\n")
@@ -54,12 +54,12 @@ end
 """Compose HTML for verification of completeness of DSE indexing of a given surface.
 $(SIGNATURES)
 """
-function indexingcompleteness_html(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, height = 150, strict = true)
+function indexingcompleteness_html(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, width = 150, strict = true)
     triples = dsetriples(r, strict = strict)
     surfacetriples = filter(row -> urncontains(surf, row.surface), triples)
     images = map(tr -> tr.image, surfacetriples)
     ictlink = ict * "urn=" * join(images, "&urn=")
-    imgmd = markdownImage(dropsubref(images[1]), iiif; ht = height)
+    imgmd = markdownImage(dropsubref(images[1]), iiif; w = width)
     string("[", imgmd, "](", ictlink, ")")
 end
 

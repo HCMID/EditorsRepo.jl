@@ -1,7 +1,7 @@
 name = "EditorsRepo"
 uuid = "3fa2051c-bcb6-4d65-8a68-41ff86d56437"
 authors = ["nsmith "]
-version = "0.19.0"
+version = "0.20.0"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"

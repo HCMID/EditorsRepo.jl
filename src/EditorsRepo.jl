@@ -27,7 +27,7 @@ See issue 135: https://github.com/HCMID/EditorsRepo.jl/issues/135
 =#
 
 #using Lycian
-using PolytonicGreek, ManuscriptOrthography
+#using PolytonicGreek, ManuscriptOrthography
 #using AtticGreek
 
 # Repository organization
