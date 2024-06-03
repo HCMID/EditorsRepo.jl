@@ -3,3 +3,5 @@
 Manifest.toml
 .vscode/
 debugdse/
+_site/
+_freeze/
