@@ -13,3 +13,29 @@ One important application built with EditorsRepo.jl is the Pluto notebook provid
 ## Define a repository
 
 An `EditingRepository` works with three kinds of data: text editions, indexes of text passages to images and physical surfaces, and configuration data specifying how to transform the edition files into citable texts. The repository expects each type of data to be managed in a separate directory.  By default, their names are `editions`, `config` and `dse`.
+
+
+## Text editions and configuration
+
+### Files
+
+The *catalog* file (default name: `catalog.cex`) is a CITE text catalog.  Its entries represent logical units.
+
+The *citation* file (default name: `citation.cex`) is a delimited text file with entries representing physical files.  It is possible to have a single logical text edited in multiple physical files.
+
+
+
+
+### Functions
+
+Internally, `EditorsRepo` uses these functions to read the configuration of your text documents:
+
+- `fileswithin`.  List all files that are contained by a given URN.
+- `filescontaining`.  List all files that contain a given URN
+
+The following functions use "contained by" logic.
+
+- `o2converter`
+- `diplomaticbuilder`
+- `normalizedbuilder`
+- `orthography`

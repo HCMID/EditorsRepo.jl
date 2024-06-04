@@ -45,6 +45,7 @@ website:
     - title: "Reference"
       contents: 
         - reference/index.qmd
+        - reference/files.qmd
 
     - title: "Concepts"
       contents: 
