@@ -1,0 +1,102 @@
+---
+title: Reference
+---
+
+Look it up here.
+
+
+
+
+
+Graphic summary of pacakge dependencies:
+
+
+```{mermaid}
+graph LR;
+
+
+EditorsRepo --> CitableBase
+EditorsRepo --> CitableCorpus
+EditorsRepo --> CitableImage
+EditorsRepo --> CitableObject
+EditorsRepo --> CitablePhysicalText
+EditorsRepo --> CiteEXchange
+EditorsRepo --> EditionBuilders
+EditorsRepo --> Orthography
+EditorsRepo --> CitableTeiReaders
+EditorsRepo --> CitableParserBuilder
+
+
+
+CitableText --> CitableBase
+click CitableText "https://neelsmith.quarto.pub/citabletext/" "Citing texts"
+CitableObject --> CitableBase
+click CitableObject "https://neelsmith.quarto.pub/citableobject/" "Citing objects"
+CiteEXchange --> CitableBase
+click CiteEXchange "https://neelsmith.quarto.pub/citeexchange/" "Serializing citable data"
+
+
+CitableCorpus --> CitableText
+CitableCorpus --> CiteEXchange
+CitableCorpus --> CitableBase
+click CitableCorpus "https://neelsmith.quarto.pub/citablecorpus/" "Citable text corpora"
+
+CitableImage --> CitableObject
+CitableImage --> CiteEXchange
+CitableImage --> CitableBase
+click CitableImage "https://neelsmith.quarto.pub/citableimage/" "Citable images"
+
+
+CitablePhysicalText --> CitableBase
+CitablePhysicalText --> CitableImage
+CitablePhysicalText --> CitableObject
+CitablePhysicalText --> CitableText
+CitablePhysicalText --> CiteEXchange
+click CitablePhysicalText "https://neelsmith.quarto.pub/citablephysicaltext/" "Citable physical texts"
+
+CitableTeiReaders --> CitableText
+CitableTeiReaders --> CitableCorpus
+click CitableTeiReaders "https://neelsmith.quarto.pub/citableteireaders/" "Make marked up texts citable"
+
+
+EditionBuilders --> CitableText
+EditionBuilders --> CitableCorpus
+click EditionBuilders "https://neelsmith.quarto.pub/editionbuilders/" "Make univocal editions"
+
+Orthography --> CitableCorpus
+Orthography --> CitableText
+click Orthography "https://neelsmith.quarto.pub/orthography/" "Orthographic systems"
+
+
+
+CitableParserBuilder --> CitableBase
+CitableParserBuilder --> CitableText
+CitableParserBuilder --> CitableCorpus
+CitableParserBuilder --> CitableObject
+CitableParserBuilder --> Orthography
+click CitableParserBuilder "https://neelsmith.quarto.pub/citableparserbuilder/" "Build citable parsers"
+
+
+
+
+classDef base fill:#ffffba
+class CitableBase base
+click CitableBase "https://neelsmith.quarto.pub/citablebase/" "Build citable parser"
+
+classDef cite fill:#bae1ff
+class CitableText,CitableObject,CitableImage,CiteEXchange cite
+class CitableCollection,CitableCorpus,CitablePhysicalText cite
+
+classDef mid fill:#baffc9
+class Orthography,CitableTeiReaders,EditionBuilders mid
+
+classDef ortho fill:#ffdfba
+class PolytonicGreek,AtticGreek,ManuscriptOrthography,BiblicalHebrew,LatinOrthography,Lycian ortho
+
+classDef quarto stroke-width:4,stroke:#1E90FF
+
+classDef morph fill:#d8d4f2
+class CitableParserBuilder,Kanones,Tabulae morph
+
+class CitableBase,CitableText,CitableObject,CiteEXchange,CitableImage,CitableCorpus,CitableCollection,CitablePhysicalText,Orthography,CitableTeiReaders,EditionBuilders,CitableParserBuilder,Tabulae quarto
+```

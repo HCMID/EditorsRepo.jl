@@ -23,48 +23,59 @@ end
 $(SIGNATURES)
 Juxtapose diplomatic edition of text with displayed image.
 """
-function indexingaccuracy_html(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, height = 500, strict = true)
-    vizprs = surfacevizpairs(r, surf, strict = strict)
-    corpus = diplomaticcorpus(r)
-    textlines = []
-    for pr in vizprs
-        # get text contents
-        psgs = filter(psg -> urncontains(pr[1], psg.urn), corpus.passages)
-        psgtext = if isempty(psgs)
-            @warn("No passages match indexed URN $(pr[1])")
-            ""
-        elseif length(psgs) != 1
-            @warn("Found $(length(psgs)) passages matching indexed URN $(pr[1])")
-            @warn("Type of first is $(typeof(psgs[1]))")
-            textcontent = map(p -> p.text, psgs)
-            join(textcontent, "\n")
-        else
-            psgs[1].text
-        end
+function indexingaccuracy_md(r::EditingRepository, surf::Cite2Urn; 
+    iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, width = 500, strict = true)
 
-        mdtext = string("**", passagecomponent(pr[1]), "** ", psgtext, "\n" )
-        # get image markup
-        mdimg = linkedMarkdownImage(ict, pr[2], iiif; ht=height, caption="image")
-        push!(textlines, "---\n\n" * mdimg * "\n\n" * mdtext )
+    vizprs = surfacevizpairs(r, surf, strict = strict)
+    txtlist = map(vizprs) do pr
+        pr[1]|> droppassage
+    end |> unique
+
+    corpus = diplomaticcorpus(r)
+    
+    textlines = []
+    for txt in txtlist
+        push!(textlines, string("## " , txt, "\n"))
+        currpassages = filter(pr -> droppassage(pr[1]) == txt, vizprs)
+        for pr in currpassages
+            # get text contents
+            psgs = filter(psg -> urncontains(pr[1], psg.urn), corpus.passages)
+            psgtext = if isempty(psgs)
+                @warn("No passages match indexed URN $(pr[1])")
+                ""
+            elseif length(psgs) != 1
+                @warn("Found $(length(psgs)) passages matching indexed URN $(pr[1])")
+                @warn("Type of first is $(typeof(psgs[1]))")
+                textcontent = map(p -> p.text, psgs)
+                join(textcontent, "\n")
+            else
+                psgs[1].text
+            end
+
+            mdtext = string("**", passagecomponent(pr[1]), "** ", psgtext, "\n" )
+            # get image markup
+            mdimg = linkedMarkdownImage(ict, pr[2], iiif; w=width, caption="image")
+            push!(textlines, "---\n\n" * mdimg * "\n\n" * mdtext )
+        end
     end
     join(textlines, "\n")
     
 end
 
-"""Compose HTML for verification of completeness of DSE indexing of a given surface.
+"""Compose Markdown for verification of completeness of DSE indexing of a given surface.
 $(SIGNATURES)
 """
-function indexingcompleteness_html(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, height = 150, strict = true)
+function indexingcompleteness_md(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, width = 150, strict = true)
     triples = dsetriples(r, strict = strict)
     surfacetriples = filter(row -> urncontains(surf, row.surface), triples)
     images = map(tr -> tr.image, surfacetriples)
     ictlink = ict * "urn=" * join(images, "&urn=")
-    imgmd = markdownImage(dropsubref(images[1]), iiif; ht = height)
+    imgmd = markdownImage(dropsubref(images[1]), iiif; w = width)
     string("[", imgmd, "](", ictlink, ")")
 end
 
 
-"""Compose HTML for verification of orthographic validity.
+"""Compose Markdown for verification of orthographic validity.
 $(SIGNATURES)
 """
 function orthographicvalidity_html(r::EditingRepository, surf::Cite2Urn; strict = true)

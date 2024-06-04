@@ -27,7 +27,7 @@ See issue 135: https://github.com/HCMID/EditorsRepo.jl/issues/135
 =#
 
 #using Lycian
-using PolytonicGreek, ManuscriptOrthography
+#using PolytonicGreek, ManuscriptOrthography
 #using AtticGreek
 
 # Repository organization
@@ -58,8 +58,8 @@ export diplomaticforsurface, normalizedforsurface, tokensforsurface
 
 # HTML utilities
 export htmltoken
-export indexingaccuracy_html
-export indexingcompleteness_html
+export indexingaccuracy_md
+export indexingcompleteness_md
 export orthographicvalidity_html
 
 

@@ -1,0 +1,11 @@
+# Organization of files in an editing repository
+
+
+
+You can optionally provide non-default names for any of these three directories.
+
+```@setup walkthrough
+path = joinpath(ghroot, "test", "data", "mixedrepo")
+repository(path, editions = "editing")
+```
+

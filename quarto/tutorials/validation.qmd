@@ -1,0 +1,44 @@
+# Validating editing and indexing
+
+## Quick start!
+
+```{julia}
+#| echo: false
+#| warning: false
+#| output: false
+root = pwd()  |> dirname |> dirname
+```
+
+
+We'll use a sample repository in the `test/data` directory of this github project.
+
+```{julia}
+using EditorsRepo
+#| output: false
+repo = joinpath(root, "test", "data", "validatortemplate")
+r = repository(repo)
+```
+
+
+The high-level convenience functions start from a physical surface, identified by a `Cite2Urn`.
+```{julia}
+using CitableText, CitableObject
+pageurn = Cite2Urn("urn:cite2:mid:bern88pages.v1:4v")
+```
+
+
+Get HTML with an embedded thumbnail image, linked to a citable image service with all indexed text rectangles overlaid on it. Whew!
+
+```{julia}
+#| warning: false
+using Markdown
+indexingcompleteness_md(r, pageurn,strict = false) |> Markdown.parse
+```
+
+
+Collect text passages on this page, and compare a diplomatic edition with the indexed region of an image.
+
+```{julia}
+#| warning: false
+indexingaccuracy_md(r, pageurn, strict = false) |> Markdown.parse
+```
