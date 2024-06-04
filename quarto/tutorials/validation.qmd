@@ -32,7 +32,7 @@ Get HTML with an embedded thumbnail image, linked to a citable image service wit
 ```{julia}
 #| warning: false
 using Markdown
-indexingcompleteness_html(r, pageurn,strict = false) |> Markdown.parse
+indexingcompleteness_md(r, pageurn,strict = false) |> Markdown.parse
 ```
 
 
@@ -40,5 +40,5 @@ Collect text passages on this page, and compare a diplomatic edition with the in
 
 ```{julia}
 #| warning: false
-indexingaccuracy_html(r, pageurn, strict = false) |> Markdown.parse
+indexingaccuracy_md(r, pageurn, strict = false) |> Markdown.parse
 ```

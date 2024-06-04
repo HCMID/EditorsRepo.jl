@@ -58,8 +58,8 @@ export diplomaticforsurface, normalizedforsurface, tokensforsurface
 
 # HTML utilities
 export htmltoken
-export indexingaccuracy_html
-export indexingcompleteness_html
+export indexingaccuracy_md
+export indexingcompleteness_md
 export orthographicvalidity_html
 
 

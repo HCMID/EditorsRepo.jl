@@ -2,62 +2,79 @@
 # API documentation
 
 
-```@docs
-EditingRepository
-repository
-configdir
-dsedir
-editionsdir
+
+`EditingRepository` 
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+using EditorsRepo
+@doc EditingRepository
 ```
+:::
+
+
+`repository` 
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc repository
+```
+:::
+
+`configdir`
+`dsedir`
+`editionsdir`
+
+Markdown output:
+
+`
 
 Text configuration:
 
-```@docs
-citationconfig
-filename
-o2converter,
-diplomaticbuilder
-normalizedbuilder
-orthography
-```    
+`citationconfig`
+`filename`
+`o2converter`
+`diplomaticbuilder`
+`normalizedbuilder`
+`orthography`
+ 
 
 Text catalog and contents:
 
-```@docs
-textcatalog
-texturns
-archivalcorpus
-diplomaticcorpus
-normalizedcorpus
-```
+`textcatalog`
+`texturns`
+`archivalcorpus`
+`diplomaticcorpus`
+`normalizedcorpus`
+
 
 Classified tokenization:
 
-```@docs
-tokencorpus
-```
+
+`tokencorpus`
+
 
 DSE records:
 
-```@docs
-dsetriples
-passageurnsforsurface
-diplomaticforsurface
-imagesforpassage
-```
+`dsetriples`
+`passageurnsforsurface`
+`diplomaticforsurface`
+`imagesforpassage`
+
 
 HTML utilities:
 
-```@docs
-htmltoken
-```
+`htmltoken`
+
 
 ## Internal functions
 
-```@docs
-EditorsRepo.xmlfiles
-EditorsRepo.textpassages
-EditorsRepo.isref
-EditorsRepo.passages_for_tokens
-EditorsRepo.analyzedtokens
-```
+`EditorsRepo.xmlfiles`
+`EditorsRepo.textpassages`
+`EditorsRepo.isref`
+`EditorsRepo.passages_for_tokens`
+`EditorsRepo.analyzedtokens`

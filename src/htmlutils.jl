@@ -23,7 +23,7 @@ end
 $(SIGNATURES)
 Juxtapose diplomatic edition of text with displayed image.
 """
-function indexingaccuracy_html(r::EditingRepository, surf::Cite2Urn; 
+function indexingaccuracy_md(r::EditingRepository, surf::Cite2Urn; 
     iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, width = 500, strict = true)
 
     vizprs = surfacevizpairs(r, surf, strict = strict)
@@ -62,10 +62,10 @@ function indexingaccuracy_html(r::EditingRepository, surf::Cite2Urn;
     
 end
 
-"""Compose HTML for verification of completeness of DSE indexing of a given surface.
+"""Compose Markdown for verification of completeness of DSE indexing of a given surface.
 $(SIGNATURES)
 """
-function indexingcompleteness_html(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, width = 150, strict = true)
+function indexingcompleteness_md(r::EditingRepository, surf::Cite2Urn; iiif = EditorsRepo.DEFAULT_IIIF, ict = EditorsRepo.DEFAULT_ICT, width = 150, strict = true)
     triples = dsetriples(r, strict = strict)
     surfacetriples = filter(row -> urncontains(surf, row.surface), triples)
     images = map(tr -> tr.image, surfacetriples)
@@ -75,7 +75,7 @@ function indexingcompleteness_html(r::EditingRepository, surf::Cite2Urn; iiif = 
 end
 
 
-"""Compose HTML for verification of orthographic validity.
+"""Compose Markdown for verification of orthographic validity.
 $(SIGNATURES)
 """
 function orthographicvalidity_html(r::EditingRepository, surf::Cite2Urn; strict = true)
