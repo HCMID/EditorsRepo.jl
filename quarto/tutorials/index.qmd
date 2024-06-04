@@ -2,8 +2,13 @@
 title: Tutorials
 ---
 
+Start with one of these tutorials to learn how to use the `EditorsRepo` package.
 
-## Quick start!
+
+
+## Briefest possible example
+
+Create an `EditingRepository` by giving the `repository` function the root directory of your editing repository.
 
 ```{julia}
 #| echo: false
@@ -18,89 +23,14 @@ We'll use a sample repository in the `test/data` directory of this github projec
 ```{julia}
 using EditorsRepo
 #| output: false
-repo = joinpath(root, "test", "data", "validatortemplate")
+repo = joinpath(root, "test", "data", "splitdocs")
 r = repository(repo)
 ```
 
 
-The high-level convenience functions start from a physical surface, identified by a `Cite2Urn`.
-```{julia}
-using CitableText, CitableObject
-pageurn = Cite2Urn("urn:cite2:mid:bern88pages.v1:4v")
-```
-
-
-Get HTML with an embedded thumbnail image, linked to a citable image service with all indexed text rectangles overlaid on it. Whew!
-
-```{julia}
-#| warning: false
-using Markdown
-indexingcompleteness_html(r, pageurn,strict = false) |> Markdown.parse
-```
-
-
-
-## Break it down in pieces
-
-```{julia}
-#| warning: false
-vizprs = surfacevizpairs(r, pageurn, strict = false)
-corpus = diplomaticcorpus(r)
-```
-```{julia}
-using CitableText
-txtlist = map(vizprs) do pr
-    pr[1]|> droppassage
-end |> unique
-
-mddisplay = []
-for txt in txtlist
-    push!(mddisplay, string("## " , txt))
-    currpassages = filter(pr -> droppassage(pr[1]) == txt, vizprs)
-end
-
-join(mddisplay,"\n") |> Markdown.parse
-
-```
+Collect a corpus of normalized texts from the repository.
 
 
 ```{julia}
-using CitableBase, CitableImage
-
-textlines = []
-
-for txt in txtlist
-    push!(textlines, string("## " , txt, "\n"))
-    currpassages = filter(pr -> droppassage(pr[1]) == txt, vizprs)
-#end
-
-    for pr in currpassages
-    # get text contents
-    psgs = filter(psg -> urncontains(pr[1], psg.urn), corpus.passages)
-    psgtext = if isempty(psgs)
-        @warn("No passages match indexed URN $(pr[1])")
-        ""
-    elseif length(psgs) != 1
-        @warn("Found $(length(psgs)) passages matching indexed URN $(pr[1])")
-        @warn("Type of first is $(typeof(psgs[1]))")
-        textcontent = map(p -> p.text, psgs)
-        join(textcontent, "\n")
-    else
-        psgs[1].text
-    end
-
-    mdtext = string("**", passagecomponent(pr[1]), "** ", psgtext, "\n" )
-    # get image markup
-    mdimg = linkedMarkdownImage(EditorsRepo.DEFAULT_ICT, pr[2], EditorsRepo.DEFAULT_IIIF; caption="image")
-    push!(textlines, "---\n\n" * mdimg * "\n\n" * mdtext )
-end
-end
-join(textlines,"\n") |> Markdown.parse
-```
-
-## The real invocation
-
-```{julia}
-#| warning: false
-indexingaccuracy_html(r, pageurn, strict = false) |> Markdown.parse
+normalizedcorpus(r)
 ```
