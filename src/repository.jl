@@ -1,6 +1,6 @@
 """File organization of a repository for HMT editors.
 
-# Members
+**Members**
 
 - `editions` Path to directory with source files for textual editions.
 - `dse`  Path to directory with delimited text files recording text, image and surface relations.

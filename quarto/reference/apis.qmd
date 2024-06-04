@@ -2,6 +2,9 @@
 # API documentation
 
 
+## Public types and functions
+
+### The repository
 
 `EditingRepository` 
 
@@ -26,55 +29,328 @@ using EditorsRepo
 :::
 
 `configdir`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc configdir
+```
+:::
+
 `dsedir`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc dsedir
+```
+:::
+
 `editionsdir`
 
-Markdown output:
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc editionsdir
+```
+:::
 
-`
 
-Text configuration:
+
+
+
+
+### Text configuration
 
 `citationconfig`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc citationconfig
+```
+:::
+
 `filename`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc filename
+```
+:::
+
+
 `o2converter`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc o2converter
+```
+:::
+
 `diplomaticbuilder`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc diplomaticbuilder
+```
+:::
+
 `normalizedbuilder`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc normalizedbuilder
+```
+:::
+
 `orthography`
  
 
-Text catalog and contents:
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc orthography
+```
+:::
+
+### Text catalog and contents
 
 `textcatalog`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc textcatalog
+```
+:::
+
+
 `texturns`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc texturns
+```
+:::
+
 `archivalcorpus`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc archivalcorpus
+```
+:::
+
 `diplomaticcorpus`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc diplomaticcorpus
+```
+:::
+
 `normalizedcorpus`
 
 
-Classified tokenization:
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc normalizedcorpus
+```
+:::
 
 
 `tokencorpus`
 
 
-DSE records:
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc tokencorpus
+```
+:::
+
+
+### Indexing of text and physical artifacts
+
 
 `dsetriples`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc dsetriples
+```
+:::
+
 `passageurnsforsurface`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc passageurnsforsurface
+```
+:::
+
 `diplomaticforsurface`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc diplomaticforsurface
+```
+:::
+
 `imagesforpassage`
 
 
-HTML utilities:
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc imagesforpassage
+```
+:::
+
+
+### Markdown and HTML displays for validation
+
+
+
+`indexingaccuracy_md`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc indexingaccuracy_md
+```
+:::
+
+
+`indexingcompleteness_md`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc indexingcompleteness_md
+```
+:::
+
+
+
+
+
 
 `htmltoken`
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc htmltoken
+```
+:::
+
 
 
 ## Internal functions
 
 `EditorsRepo.xmlfiles`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc EditorsRepo.xmlfiles
+```
+:::
+
 `EditorsRepo.textpassages`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc EditorsRepo.textpassages
+```
+:::
+
 `EditorsRepo.isref`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc EditorsRepo.isref
+```
+:::
+
 `EditorsRepo.passages_for_tokens`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc EditorsRepo.passages_for_tokens
+```
+:::
+
 `EditorsRepo.analyzedtokens`
+
+
+:::{.callout-note appearance="minimal"}
+```{julia}
+#| echo: false
+#| warning: false
+@doc EditorsRepo.analyzedtokens
+```
+:::
+
