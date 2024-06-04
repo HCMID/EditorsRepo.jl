@@ -15,6 +15,9 @@ One important application built with EditorsRepo.jl is the Pluto notebook provid
 An `EditingRepository` works with three kinds of data: text editions, indexes of text passages to images and physical surfaces, and configuration data specifying how to transform the edition files into citable texts. The repository expects each type of data to be managed in a separate directory.  By default, their names are `editions`, `config` and `dse`.
 
 
+The starting point for EditorsRepo.jl is a directory in a local file system that includes subdirectories for standard kinds of content: editions of texts, indexing of texts to citable images and surfaces, and configuration files.
+
+
 ## Text editions and configuration
 
 ### Files

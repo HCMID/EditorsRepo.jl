@@ -1,0 +1,7 @@
+# Organization of files
+
+Required directories and files:
+
+- `config`
+- `dse`
+- `editions`

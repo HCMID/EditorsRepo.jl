@@ -45,7 +45,8 @@ website:
     - title: "Reference"
       contents: 
         - reference/index.qmd
-        - reference/files.qmd
+        - reference/filesystem.qmd
+        - reference/apis.qmd
 
     - title: "Concepts"
       contents: 
