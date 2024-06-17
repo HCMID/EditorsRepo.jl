@@ -4,7 +4,7 @@
 #
 # Serve from repository root with:
 #
-#   julia -e 'using LiveServer; serve(dir="docs/build")'julia -e 'using LiveServer; serve(dir="docs/build")' 
+#   julia -e 'using LiveServer; serve(dir="docs/build"' 
 # 
 using Pkg
 Pkg.activate(".")
@@ -17,12 +17,8 @@ using EditorsRepo
 makedocs(
     sitename = "EditorsRepo",
     pages = [
-        "Home" => "index.md",
-        "A fuller walkthrough" => "walkthrough.md",
-        
-        "API documentation" => [
-            "man/index.md"
-        ]
+        "Home" => "index.md"
+      
     ]
 )
 
