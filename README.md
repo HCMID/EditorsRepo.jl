@@ -10,6 +10,3 @@ This package provides most of the functionality used in HC MID's Pluto notebook 
 
 Documentation: [https://neelsmith.quarto.pub/editorsrepo/](https://neelsmith.quarto.pub/editorsrepo/).
 
-## Roadmap to 1.0
-
-See the [issue tracker](https://github.com/HCMID/EditorsRepo.jl/issues) to read or file issues tagged by release.
