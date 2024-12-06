@@ -1,0 +1,24 @@
+---
+title: Read text corpora
+engine: julia
+---
+
+
+
+```{julia}
+#| echo: false
+#| warning: false
+#| output: false
+root = pwd()  |> dirname |> dirname |> dirname
+using EditorsRepo
+repo = joinpath(root, "test", "data", "splitdocs")
+r = repository(repo)
+```
+
+
+Collect a corpus of normalized texts from the repository.
+
+
+```{julia}
+normalizedcorpus(r)
+```
