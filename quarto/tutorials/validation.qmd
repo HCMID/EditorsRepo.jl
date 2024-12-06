@@ -1,3 +1,7 @@
+---
+engine: julia
+---
+
 # Validating editing and indexing
 
 ## Quick start!
