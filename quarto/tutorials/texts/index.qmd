@@ -11,14 +11,44 @@ engine: julia
 #| output: false
 root = pwd()  |> dirname |> dirname |> dirname
 using EditorsRepo
-repo = joinpath(root, "test", "data", "splitdocs")
-r = repository(repo)
+repo = joinpath(root, "test", "data", "mixedrepo")
+r = repository(repo; editions = "editing")
 ```
 
 
-Collect a corpus of normalized texts from the repository.
+
+```{julia}
+archival = archivalcorpus(r)
+```
+
 
 
 ```{julia}
-normalizedcorpus(r)
+normalized = normalizedcorpus(r)
+```
+
+
+```{julia}
+diplomatic = diplomaticcorpus(r)
+```
+
+
+
+```{julia}
+using CitableBase, CitableText, CitableCorpus
+map(p -> workcomponent(urn(p)), diplomatic.passages) |> unique
+```
+
+
+```{julia}
+archival.passages[2]  |> text
+```
+
+```{julia}
+diplomatic.passages[end]  |> text
+```
+
+
+```{julia}
+normalized.passages[end]  |> text
 ```
