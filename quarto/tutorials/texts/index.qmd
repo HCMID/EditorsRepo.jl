@@ -1,0 +1,54 @@
+---
+title: Read text corpora
+engine: julia
+---
+
+
+
+```{julia}
+#| echo: false
+#| warning: false
+#| output: false
+root = pwd()  |> dirname |> dirname |> dirname
+using EditorsRepo
+repo = joinpath(root, "test", "data", "mixedrepo")
+r = repository(repo; editions = "editing")
+```
+
+
+
+```{julia}
+archival = archivalcorpus(r)
+```
+
+
+
+```{julia}
+normalized = normalizedcorpus(r)
+```
+
+
+```{julia}
+diplomatic = diplomaticcorpus(r)
+```
+
+
+
+```{julia}
+using CitableBase, CitableText, CitableCorpus
+map(p -> workcomponent(urn(p)), diplomatic.passages) |> unique
+```
+
+
+```{julia}
+archival.passages[2]  |> text
+```
+
+```{julia}
+diplomatic.passages[end]  |> text
+```
+
+
+```{julia}
+normalized.passages[end]  |> text
+```

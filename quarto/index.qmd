@@ -1,5 +1,6 @@
 ---
 title: "EditorsRepo"
+engine: julia
 ---
 
 A Julia module for working with an editorial repository organized following HCMID conventions.

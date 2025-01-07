@@ -1,0 +1,55 @@
+---
+title: Directory layout
+engine: julia
+---
+
+Construct an `EditingRepository` from a root directory containing
+all three required directories.
+
+## (1) Archival editions
+
+## (2) DSE records
+
+
+## (3) Configuration files
+
+Create a `config` directory with two files, named `catalog.cex` and `citation.cex`.
+
+
+
+- `catalog.cex`
+
+This is a delimited-text file cataloging a text for use with Canonical Text Services.  Here is an example entry:
+
+
+```
+#!ctscatalog
+urn|citationScheme|groupName|workTitle|versionLabel|exemplarLabel|online|language
+urn:cts:greekLit:tlg5026.e3.hmt:|book, scholion|Homeric scholia|Scholia to the Iliad|Escorial Υ 1.1||true|grc
+```
+
+:::{.callout-note title="Note"}
+Note the required block label `#!ctscatalog` preceding the header line with names of columns.
+:::
+
+
+
+- `citation.cex`
+
+This is a delimited-text file mapping the canonical citation of a text onto a specific source file. 
+
+Here is an example entry:
+
+
+```
+urn|file|converter|diplomatic|normalized|orthography
+urn:cts:greekLit:tlg5026.e3.hmt:8|e3_scholia08.xml|TEIThreeDivsGrouped|MidDiplomaticBuilder("Diplomatic edition builder","dipl")|MidNormalizedBuilder("Normalized edition builder","normed")|msGreek()
+```
+
+
+
+
+If the required directories are named "editions", "dse" and "config",
+`repodir` is the only parameter needed.  Optionally, you may supply names for any of those directories relative to `reporoot`.
+
+

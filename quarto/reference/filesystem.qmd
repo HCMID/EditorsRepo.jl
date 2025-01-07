@@ -1,3 +1,7 @@
+---
+engine: julia
+---
+
 # Organization of files
 
 Required directories and files:
